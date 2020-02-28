@@ -14,6 +14,7 @@ info:
 
     你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
     Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
+
     
     ## 数据格式
 
@@ -22,8 +23,8 @@ info:
     - 请求：请求的格式详见下面各个 API 中的示例
     
     - 响应：响应内容的格式为 JSON
-
-    > 所有的请求 URL 和请求包体内容都是区分大小写的。
+      
+      <div class="info-msg"><i class="fa fa-info-circle"></i>所有的请求 URL 和请求包体内容都是区分大小写的。</div>
 
     ## 调用步骤
 
@@ -55,11 +56,9 @@ paths:
       operationId: acquire
       description: 在开始云端录制之前，你需要调用该方法获取一个 resource ID。
       
-        >  一个 resource ID 只能用于一次云端录制服务。
-      
-      
-        > 请求数限制为每秒钟 10 次。
-      
+        <div class="info-msg"><i class="fa fa-info-circle"></i>一个 resource ID 只能用于一次云端录制服务。</div>
+
+        <div class="info-msg"><i class="fa fa-info-circle"></i>请求数限制为每秒钟 10 次。</div>
        
         调用该方法成功后，你可以从 HTTP 响应包体中的 resourceId 字段得到一个 resource ID。这个 resource ID 的时效为 5 分钟，你需要在 5 分钟内用这个 resource ID 去调用开始云端录制的 API。
       
@@ -89,7 +88,7 @@ paths:
       operationId: start
       description: 获取 resource ID 后，调用该方法开始云端录制。
       
-        > 请求数限制为每秒钟 10 次。
+        <div class="info-msg"><i class="fa fa-info-circle"></i>请求数限制为每秒钟 10 次。</div>
         
       parameters:
         - in: path
