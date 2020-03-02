@@ -1,0 +1,494 @@
+openapi: 3.0.0
+info:
+  description: >
+    Agora WebRTC 开放平台旨在依托 SD-RTN™ 资源，对标准 WebRTC 客户端提供 SFU (Selective Forwarding Unit) 服务。
+
+    简单来说，你可以通过在客户端发送 HTTP 请求使用原生的 WebRTC 协议实现 Agora 通话。
+
+    <br/>
+    ![webrtc开放协议-3](webrtc-open.png)
+
+      <div class="info-msg">
+        <i class="fa fa-info-circle"></i>
+        我们推荐使用安全性较高的 HTTPS 协议发送请求。
+      </div>
+
+      
+    ## 调用步骤
+
+    一次通话的基本流程如下：
+
+    1. 发起 HTTP 请求获取通话资源。
+    
+    2. 获取通话资源后，继续发起推流或者拉流请求。在推流或者拉流的请求中需要填入第一步获取的响应内容，同时填入客户端使用的设备和平台信息上报给 Agora。
+    
+    3. 通话过程中通过 HTTP 请求将通话质量相关的数据上报给 Agora，以便调查问题。
+
+      <div class="warning-msg">
+        <i class="fa fa-warning"></i>
+          如果没有上报数据，将无法调查质量问题。
+      </div>
+
+    ## 示例项目
+
+    我们提供一个 Web 示例项目，你可以[在线体验](https://webdemo.agora.io/webrtc_http_demo/)，并参考[源代码](https://webdemo.agora.io/webrtc_http_demo/js/index.js)。
+    
+    ## 状态码
+
+    下表列出响应包体中可能出现的状态码以及对应的 `detail` 参数值。
+
+      <div class="info-msg">
+        <i class="fa fa-info-circle"></i>该表格仅适用于拉流、推流以及上报请求，获取通话资源请求的响应错误码详见具体响应中的描述。
+      </div>
+
+      | `code` | `detail`                                                     | 描述                                                 |
+      | :----- | :----------------------------------------------------------- | :--------------------------------------------------- |
+      | 200    | "v=0\r\no=- 0 0 IN IP4 127.0.0.1\ ... na=ssrc:55543 label:XrKNrJZpIqv0\r\n" | 请求成功。                                           |
+      | 400    | The request cannot be fulfilled due to bad syntax.           | 参数值存在不合法字符。                               |
+      | 404    | The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible. | 参数缺失。                                           |
+      | 501    | internal error                                               | 内部错误。                                           |
+      | 502    | invalid params                                               | 参数类型或其他错误。                                 |
+      | 503    | pull stream failed                                           | `cname` 或 `streamid` 不存在或其他原因导致的拉流失败。 |
+      | 504    | push stream failed                                           | 推流失败。                                           |
+      | 505    | stats report failed                                          | 上报通话质量失败。                                   |
+
+  version: Feb 21, 2020
+  title: WebRTC 开放平台
+servers:
+  - url: 'https://webrtc-lbs-1.agoraio.cn'
+    description: 用于获取通话资源的服务器。
+tags:
+  - name: WebRTC 开放协议
+
+paths:
+  /api/v1:
+    post:
+      summary: 获取通话资源
+      description: 在开始拉流或者推流之前，你需要首先请求通话资源用于拉流或者推流。
+      tags:
+        - WebRTC 开放协议
+      parameters:
+        - in: header
+          name: Content-Type
+          required: true
+          schema:
+            type: string
+            enum:
+              - application/json
+        - in: header
+          name: X-Packet-Service-Type
+          required: true
+          schema:
+            type: integer
+            enum:
+              - 0
+          description: 必须设置为 0。
+        - in: header
+          name: X-Packet-URI
+          required: true
+          schema:
+            type: integer
+            enum:
+              - 78
+          description: 必须设置为 78。
+        - in: header
+          name: X-Request-From
+          required: false
+          schema:
+            type: string
+          description:
+            客户端 IP 地址。
+
+            - 如果你使用自己的服务器转发请求需要填写原客户端的外网 IP 地址。
+
+            - 如果直接从客户端发送请求则无需填写该字段。
+        - in: query
+          name: action
+          required: true
+          schema:
+            type: string
+            enum:
+              - wrtc_live
+          description: 必须设置为 `wrtc_live`。
+      requestBody:
+        description: 包含频道相关信息的 JSON 对象。
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - cname
+                - flag
+                - key
+                - opid
+                - ts
+                - uid
+              properties:
+                cname:
+                  type: string
+                  description: >-
+                    频道名，长度在 64 字节以内的字符串。以下为支持的字符集范围（共 89 个字符）:
+                    
+                    - 26 个小写字母 a-z
+                    
+                    - 26 个大写字母 A-Z
+                    
+                    - 10 个数字 0-9
+                    
+                    - 空格
+                    
+                    - "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "\|", "~", ","
+                flag:
+                  type: integer
+                  description: 保留字段，必须设置为 4096，表示使用 WebRTC 协议。
+                key:
+                  type: string
+                  description: App ID 或动态密钥 (token)，取决于你的 Agora 项目使用的鉴权机制。详见[校验用户权限](https://docs.agora.io/cn/Agora Platform/token?platform=All Platforms)。
+                opid:
+                  type: integer
+                  format: int64
+                  description: 操作 ID，用于标记该次请求。一个随机的 64 位无符号整数。
+                ts:
+                  type: integer
+                  description: 发送请求的时间，Unix 时间戳，单位为毫秒。
+                uid:
+                  type: integer
+                  format: int32
+                  description: 本地用户的 ID。 32 位无符号整数，设置范围：0 到 (2<sup>32</sup>-1)。建议设为 0，由服务器自动分配一个 `uid`。
+            example:
+              cname: test
+              flag: 4096
+              key: 674664......82bb2a4
+              opid: 133
+              ts: 1575859207102
+              uid: 0
+      responses:
+        '200':
+          description: 操作成功。此处仅列出需要关注的字段。响应中还包含其他字段。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: >-
+                      错误码。0 表示请求成功，其他常见错误有：
+
+                      - 1010100: flag 字段为 0。该字段必须设置为 4096。
+
+                      - 1010101: flag 设置错误。该字段必须设置为 4096。
+
+                      - 1010102: flag 设置错误。该字段必须设置为 4096。
+
+                      - 1010200: 请求的服务当前不可用。
+
+                      - 1010212: WebRTC 服务当前不可用。
+
+                      - 2010005: App ID 设置错误。
+
+                      - 2010007: 频道名不合法。
+                      
+                      - 2010008: 内部错误。
+                      
+                      - 2010009: 动态密钥验证失败。
+                      
+                      - 2010010: 动态密钥失效。生成密钥后需要在一天内使用，超过一天后使用会出现该错误。
+                      
+                      - 2010011: 注册的 App ID 未激活。
+                      
+                      - 2010013: 动态密钥服务过期。
+                      
+                      - 2010014: 未开启动态密钥鉴权，但是在 `key` 字段传入了动态密钥。
+                      
+                      - 2010015: 开启了动态密钥鉴权，但是在 `key` 字段传入了 App ID。
+                  uid:
+                    type: integer
+                    description: 本地用户的 ID。
+                  sid:
+                    type: string
+                    description: 用于标识通话的通话 ID。
+                  server_domain:
+                    type: string
+                    description: 用于拉流/推流/上报数据的服务器地址。
+              example:
+                code: 0
+                uid: 3905114124
+                sid: 8B9 ...... B9F
+                server_domain: xxx.edge.agora.io
+
+  /pullstream/{cname}/{streamid}:
+      post:
+        summary: 拉取远端媒体流
+        description: 成功获取通话资源后，你可以调用该方法拉取远端用户的媒体流。
+          <div class="warning-msg">
+            <i class="fa fa-warning"></i>
+          为防止 uid 相同引起互踢，建议在获取通话资源时设置本地用户 uid 为 0，由服务器自动分配。
+          </div>
+        tags:
+        - WebRTC 开放协议
+        servers:
+          - url: 'https://{server_domain}:8881/v1'
+            description: 用于拉流/推流/上报质量数据的服务器。服务器地址为获取通话资源请求的响应中的 `server_domain` 字段的值。
+            variables:
+              server_domain:
+                default: server_domain
+        parameters:
+          - $ref: '#/components/parameters/channel'
+          - in: path
+            name: streamid
+            required: true
+            description: 要拉取的远端用户 ID。
+            schema:
+              type: integer
+          - $ref: '#/components/parameters/token'
+        requestBody:
+          $ref: '#/components/requestBodies/StreamBody'
+        responses:
+          '200':
+            description: 请求成功。
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                      description: HTTP 状态码。
+                    session:
+                      type: string
+                      description: 用于标识通话的通话 ID。
+                    detail:
+                      type: string
+                      description: Answer SDP。
+                example:
+                  code: 200
+                  session: 8B9.......B9F
+                  detail: v=0\r\no=- 0 0 ...... label:XrKNrJZpIqv0\r\n
+          '503':
+             description: 请求失败
+             content:
+               application/json:
+                 schema:
+                   $ref: '#/components/schemas/StreamFail'
+                 example:
+                   code: 503
+                   session: 8B9.......B9F
+                   detail: pull stream failed
+  
+  /pushstream/{cname}/{streamid}:
+    post:
+      summary: 推送本地媒体流
+      description: 成功获取通话资源后，你可以调用该方法将本地用户的媒体流推送到频道中。
+      tags:
+        - WebRTC 开放协议
+      servers:
+        - url: 'https://{server_domain}:8881/v1'
+          description: 用于拉流/推流/上报质量数据的服务器。服务器地址为获取通话资源请求的响应中的 `server_domain` 字段的值。
+          variables:
+            server_domain:
+              default: server_domain
+      parameters:
+        - $ref: '#/components/parameters/channel'
+        - in: path
+          name: streamid
+          required: true
+          description: 本地用户 ID。即获取通话资源响应中的 `uid`。
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/token'
+      requestBody:
+          $ref: '#/components/requestBodies/StreamBody'
+      responses:
+        '200':
+          description: 请求成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP 状态码。
+                  uid:
+                    type: integer
+                    description: 本地用户 ID，即获取通话资源响应中的 `uid`。
+                  session:
+                    type: string
+                    description: 用于标识通话的通话 ID。
+                  detail:
+                    type: string
+                    description: 请求成功返回 Answer SDP；请求失败返回具体的错误描述。
+        '504':
+          description: 请求失败
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/StreamFail'
+              example:
+                code: 504
+                session: 8B9.......B9F
+                detail: push stream failed
+
+  /statsreport:
+    post:
+      summary: 上报通话质量
+      description: 开始拉流/推流后，你可以调用该方法向 Agora 上报通话质量相关的数据，方便调查问题。我们推荐每 3 秒上报一次。
+        
+        <div class="warning-msg">
+            <i class="fa fa-warning"></i>
+            仅支持上报 <code>StatsReport.type</code> 为 <code>VideoBwe</code> 或者 <code>ssrc</code> 的 <code>StatsReport</code> 数据。
+        </div>
+      tags:
+      - WebRTC 开放协议
+      servers:
+        - url: 'https://{server_domain}:8881/v1'
+          description: 用于拉流/推流/上报质量数据的服务器。服务器地址为获取通话资源请求的响应中的 server_domain 字段的值。
+          variables:
+            server_domain:
+              default: server_domain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sid
+                - type
+                - uid
+                - reports
+              properties:
+                sid:
+                  type: string
+                  description: 通话 ID。拉流/推流请求的响应中 `session` 的值。
+                type:
+                  type: string
+                  description: >
+                    上报通话类型：
+
+                    - "pull_stats": 上报拉流的质量数据。
+
+                    - "push_stats": 上报推流的质量数据。
+                uid:
+                  type: integer
+                  description: 用户 ID。上报拉流的质量数据时填写拉取的远端流的用户 ID；上报推流的质量数据时填写本地用户的 ID。
+                reports:
+                  type: array
+                  description: 由 `StatsReport` 对象组成的数组。注意 `StatsReport` 对象必须要先转换为 JSON 格式，并且 `StatsReport` 的 `timestamp` 字段为符合 ISO 8601 标准的时间字符串。
+                  items:
+                    type: object
+                    description: >
+                      `StatsReport` 是 WebRTC API 直接导出的媒体质量对象，包括了编解码、ICE、连接候选、音视频流及带宽等质量信息，可以直接通过 `PeerConnection.getStats` 获取。
+            example:
+              sid: 8B9......B9F
+              type: push_stats
+              uid: xxxx
+              reports: [
+                { id: "xxx", type: "ssrc", timestamp: "2020-02-21T09:26:19.727Z", values: [["key1", "v1"], ["key2", "v2"], ...] }
+              ]
+      responses:
+        '200':
+          description: 请求成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session:
+                    type: string
+                    description: 通话 ID。
+                  code:
+                    type: integer
+                    description: HTTP 状态码。
+              example:
+                session: 8B9......B9F
+                code: 200
+        '505':
+          description: 请求失败
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/StreamFail'
+              example:
+                code: 505
+                session: 8B9.......B9F
+                detail: stats report failed
+            
+
+components:
+  schemas:
+    StreamFail:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP 状态码。
+        session:
+          type: string
+          description: 用于标识通话的通话 ID。
+        detail:
+          type: string
+          description: 具体的错误描述。
+  
+  requestBodies:
+    StreamBody:
+      description: >-
+        `device_vendor`, `device_model`, `os` 以及 `osVer` 的填写请参考下表。
+
+          |               | Android                          | iOS                                                          | macOS                                                        | Web  | Windows                                                      |
+          | :------------ | :------------------------------- | :----------------------------------------------------------- | :----------------------------------------------------------- | :--- | :----------------------------------------------------------- |
+          | `device_vendor` | android.os.Build.MANUFACTURER    | "Apple"                                                   | "Apple"                                                   | UA   | getPropertyValue(pclsObj, L"Manufacturer")                   |
+          | `device_model`  | android.os.Build.MODEL           | struct utsname systemInfo;uname(&systemInfo) systemInfo.machine | sysctlbyname("hw.model", buf, &length, NULL, 0);             | -    | getPropertyValue(pclsObj, L"Model")                          |
+          | `os`            | "Android"                      | "iOS"                                                      | "macOS"                                                  | -    | "Windows"                                                  |
+          | `osVer`         | android.os.Build.VERSION.SDK_INT | [[[UIDevice currentDevice] systemVersion] UTF8String]        | <li>主版本：[[NSProcessInfo processInfo] operatingSystemVersion].majorVersion</li><li>子版本：[[NSProcessInfo processInfo] operatingSystemVersion].minorVersion</li><li>补丁版本：[[NSProcessInfo processInfo] operatingSystemVersion].patchVersion</li> | -    | sprintf(verStr, "Windows %d.%d.%d", osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber); |
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - ap_response
+              - sdp
+            properties:
+              ap_response:
+                type: string
+                description: 字符串内容为请求通话资源得到的响应包体。
+              sdp: 
+                type: string
+                description: Offer SDP，浏览器中可以通过 `RTCPeerConnection.createOffer().sdp `得到。
+              device_vendor:
+                type: string
+                description: 使用的设备类型。
+              device_model:
+                type: string
+                description: 使用的设备型号。
+              os:
+                type: string
+                description: 使用的操作系统。
+              osVer:
+                type: string
+                description: 使用的操作系统版本。
+          example:
+            device_vendor:
+            device_model:
+            os:
+            os_ver:
+            ap_response: {xxx}
+            sdp: v=0\r\no=- 505525827083 ... 24 ulpfec/90000\r\n
+  
+  parameters:
+    channel:
+      name: cname
+      in: path
+      required: true
+      description: 请求通话资源时填写的频道名，不超过 64 字节。
+      schema:
+        type: string
+        format: ascii
+    token:
+      name: accessToken
+      in: query
+      required: true
+      description: 请求通话资源使用的 `key`。
+      schema:
+        type: string
