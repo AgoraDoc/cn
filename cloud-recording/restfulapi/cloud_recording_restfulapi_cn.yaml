@@ -57,6 +57,8 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
+      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 Try it out 功能暂时无法使用。</div> 
+
   version: 2019.12.16
   title: 云端录制 RESTful API
 servers: 
@@ -192,7 +194,7 @@ paths:
                 resourceId: >-
                   JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG
   /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/sid/{sid}/mode/{mode}/query:
-    post:
+    get:
       tags:
       - "云端录制"
       summary: 查询云端录制状态
