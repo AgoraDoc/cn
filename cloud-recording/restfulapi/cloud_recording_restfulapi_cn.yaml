@@ -77,9 +77,7 @@ paths:
     
         调用该方法成功后，你可以从 HTTP 响应包体中的 resourceId 字段得到一个 resource ID。这个 resource ID 的时效为 5 分钟，你需要在 5 分钟内用这个 resource ID 去调用开始云端录制的 API。
 
-        <div class="info-msg"><i class="fa fa-info-circle"> 一个 resource ID 只能用于一次云端录制服务。</i></div>
-        <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 的请求数限制为每秒钟 10 次。</i></div>    
-      
+        <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项：<ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div>   
       
       parameters:
         - in: path
@@ -272,8 +270,7 @@ paths:
       description: 录制完成后，调用该方法离开频道，停止录制。录制停止后如需再次录制，必须再调用 `acquire` 方法请求一个新的 resource ID。
           
 
-        <div class="info-msg"><i class="fa fa-info-circle"> 当频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</i></div>
-        <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 的请求数限制为每秒钟 10 次。</i></div>  
+       <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项：<ul><li>频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div>
 
       parameters:
         - in: path
@@ -478,15 +475,15 @@ components:
                         设置视频合流布局，`0`、`1`、`2` 为[预设的合流布局](https://docs.agora.io/cn/cloud-recording/cloud_layout_guide?platform=Linux)，`3` 为自定义合流布局。该参数设为 `3` 时必须设置
                         `layoutConfig` 参数。
 
-                        - `0`: 悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多
+                        - 0: 悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多
                         4 行，每行 4 个画面，最多支持共 17 个录制画面。
 
-                        - `1`：自适应布局。根据用户的数量自动调整每个画面的大小，每个用户的画面大小一致，最多支持 17 个录制画面。
+                        - 1：自适应布局。根据用户的数量自动调整每个画面的大小，每个用户的画面大小一致，最多支持 17 个录制画面。
 
-                        - `2`：垂直布局。指定一个用户在屏幕左侧显示大视窗画面，其他用户的小视窗画面在右侧垂直排列，最多两列，一列 8
+                        - 2：垂直布局。指定一个用户在屏幕左侧显示大视窗画面，其他用户的小视窗画面在右侧垂直排列，最多两列，一列 8
                         个画面，最多支持共 17 个录制画面。
 
-                        - `3`：自定义布局。设置 `layoutConfig` 参数自定义合流布局。
+                        - 3：自定义布局。设置 `layoutConfig` 参数自定义合流布局。
                       default: 0
                     backgroundColor:                   
                       type: string
