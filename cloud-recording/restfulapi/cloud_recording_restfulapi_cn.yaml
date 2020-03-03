@@ -25,7 +25,7 @@ info:
     
     - 响应：响应内容的格式为 JSON
       
-      <div class="info-msg"><i class="fa fa-info-circle"></i> 所有的请求 URL 和请求包体内容都是区分大小写的。</div>
+    <div class="info-msg"><i class="fa fa-info-circle"></i> 所有的请求 URL 和请求包体内容都是区分大小写的。</div>
 
     ## 调用步骤
 
@@ -79,7 +79,7 @@ paths:
         调用该方法成功后，你可以从 HTTP 响应包体中的 resourceId 字段得到一个 resource ID。这个 resource ID 的时效为 5 分钟，你需要在 5 分钟内用这个 resource ID 去调用开始云端录制的 API。
 
 
-        <div class="info-msg"><i class="fa fa-info-circle"> 需要注意：</i><ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div> 
+        <div class="info-msg"><ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div> 
       
       
       parameters:
@@ -272,7 +272,7 @@ paths:
       operationId: stop
       description: 录制完成后，调用该方法离开频道，停止录制。录制停止后如需再次录制，必须再调用 `acquire` 方法请求一个新的 resource ID。
           
-        <div class="info-msg"><i class="fa fa-info-circle"> 需要注意：</i><ul><li>当频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div> 
+        <div class="info-msg"><ul><li>当频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div> 
 
       parameters:
         - in: path
@@ -280,7 +280,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 App ID。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-name-appid-a-app-id)。
         - in: path
           name: resourceid
           required: true
@@ -449,6 +449,11 @@ components:
                   description: >-
                     视频转码的详细设置。仅适用于合流模式，单流模式下不能设置该参数。如果不设置将使用默认值。如果设置该参数，请务必填入
                     `width`、`height`、`fps` 和 `bitrate` 字段。请参考[如何设置录制视频的分辨率](https://docs.agora.io/cn/faq/recording_video_profile)设置该参数。
+                  required:
+                    - width
+                    - height
+                    - fps
+                    - bitrate
                   properties:
                     width:
                       type: integer
@@ -487,6 +492,11 @@ components:
                     layoutConfig:
                       type: array
                       description: 由每个用户对应的布局画面设置组成的数组，支持最多 17 个用户画面。当 `mixedVideoLayout` 设为 3 时，可以通过该参数自定义合流布局。
+                      required:
+                        - x_axis
+                        - y_axis
+                        - width
+                        - height
                       items:
                         type: object
                         properties:
@@ -534,6 +544,8 @@ components:
                     subscribeVideoUids: 
                       type: array
                       description: 由 UID 组成的数组，指定录制哪几个用户的视频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。  
+
+                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 `subscribeVideoUids` 和 `subscribeAudioUids` 中的任一参数，则只录  制参数指定的音视频。例如，`subscribeVideoUids` 不为空，`subscribeAudioUids` 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                        
                       items:
                         type: string
                       maxLength: 32
@@ -582,139 +594,139 @@ components:
                     当 `vendor` = 0，即第三方云存储为七牛云时：
                     
                     
-                      - `0`：Huadong 
+                      - 0：Huadong 
                       
-                      - `1`：Huabei 
+                      - 1：Huabei 
                       
-                      - `2`：Huanan 
+                      - 2：Huanan 
                       
-                      - `3`：Beimei  
+                      - 3：Beimei  
                     
                     
                     当 `vendor` = 1，即第三方云存储为 Amazon S3 时：
                     
                     
-                        - `0`：US_EAST_1 
+                        - 0：US_EAST_1 
                         
-                        - `1`：US_EAST_2 
+                        - 1：US_EAST_2 
                         
-                        - `2`：US_WEST_1 
+                        - 2：US_WEST_1 
                         
-                        - `3`：US_WEST_2 
+                        - 3：US_WEST_2 
                         
-                        - `4`：EU_WEST_1 
+                        - 4：EU_WEST_1 
                         
-                        - `5`：EU_WEST_2 
+                        - 5：EU_WEST_2 
                         
-                        - `6`：EU_WEST_3 
+                        - 6：EU_WEST_3 
                         
-                        - `7`：EU_CENTRAL_1 
+                        - 7：EU_CENTRAL_1 
                         
-                        - `8`：AP_SOUTHEAST_1 
+                        - 8：AP_SOUTHEAST_1 
                         
-                        - `9`：AP_SOUTHEAST_2 
+                        - 9：AP_SOUTHEAST_2 
                         
-                        - `10`：AP_NORTHEAST_1 
+                        - 10：AP_NORTHEAST_1 
                         
-                        - `11`：AP_NORTHEAST_2 
+                        - 11：AP_NORTHEAST_2 
                         
-                        - `12`：SA_EAST_1 
+                        - 12：SA_EAST_1 
                         
-                        - `13`：CA_CENTRAL_1 
+                        - 13：CA_CENTRAL_1 
                         
-                        - `14`：AP_SOUTH_1 
+                        - 14：AP_SOUTH_1 
                         
-                        - `15`：CN_NORTH_1 
+                        - 15：CN_NORTH_1 
                         
-                        - `16`：CN_NORTHWEST_1 
+                        - 16：CN_NORTHWEST_1 
                         
-                        - `17`：US_GOV_WEST_1 
+                        - 17：US_GOV_WEST_1 
                     
                     
                     当 `vendor` = 2，即第三方云存储为阿里云时： 
                     
                     
-                      - `0`：CN_Hangzhou 
+                      - 0：CN_Hangzhou 
                       
-                      - `1`：CN_Shanghai 
+                      - 1：CN_Shanghai 
                       
-                      - `2`：CN_Qingdao 
+                      - 2：CN_Qingdao 
                       
-                      - `3`：CN_Beijin 
+                      - 3：CN_Beijin 
                       
-                      - `4`：CN_Zhangjiakou 
+                      - 4：CN_Zhangjiakou 
                       
-                      - `5`：CN_Huhehaote 
+                      - 5：CN_Huhehaote 
                       
-                      - `6`：CN_Shenzhen 
+                      - 6：CN_Shenzhen 
+                    
+                      - 7：CN_Hongkong 
                       
-                      - `7`：CN_Hongkong 
+                      - 8：US_West_1 
                       
-                      - `8`：US_West_1 
+                      - 9：US_East_1 
                       
-                      - `9`：US_East_1 
+                      - 10：AP_Southeast_1 
                       
-                      - `10`：AP_Southeast_1 
+                      - 11：AP_Southeast_2 
                       
-                      - `11`：AP_Southeast_2 
+                      - 12：AP_Southeast_3 
                       
-                      - `12`：AP_Southeast_3 
+                      - 13：AP_Southeast_5 
                       
-                      - `13`：AP_Southeast_5 
+                      - 14：AP_Northeast_1 
                       
-                      - `14`：AP_Northeast_1 
+                      - 15：AP_South_1 
                       
-                      - `15`：AP_South_1 
+                      - 16：EU_Central_1 
+                    
+                      - 17：EU_West_1 
                       
-                      - `16`：EU_Central_1 
-                      
-                      - `17`：EU_West_1 
-                      
-                      - `18`：EU_East_1
+                      - 18：EU_East_1
                     
                     
                      当 `vendor` = 3，即第三方云存储为腾讯云时： 
 
 
-                      - `0`：AP_Beijing_1
+                      - 0：AP_Beijing_1
                       
-                      - `1`：AP_Beijing
+                      - 1：AP_Beijing
                       
-                      - `2`：AP_Shanghai
+                      - 2：AP_Shanghai
                       
-                      - `3`：AP_Guangzhou
+                      - 3：AP_Guangzhou
                       
-                      - `4`：AP_Chengdu 
+                      - 4：AP_Chengdu 
                       
-                      - `5`：AP_Chongqing 
+                      - 5：AP_Chongqing 
                       
-                      - `6`：AP_Shenzhen_FSI 
+                      - 6：AP_Shenzhen_FSI 
                       
-                      - `7`：AP_Shanghai_FSI 
+                      - 7：AP_Shanghai_FSI 
                       
-                      - `8`：AP_Beijing_FSI 
+                      - 8：AP_Beijing_FSI 
                       
-                      - `9`：AP_Hongkong 
+                      - 9：AP_Hongkong 
                       
-                      - `10`：AP_Singapore 
+                      - 10：AP_Singapore 
                       
-                      - `11`：AP_Mumbai 
+                      - 11：AP_Mumbai 
                       
-                      - `12`：AP_Seoul 
+                      - 12：AP_Seoul 
                       
-                      - `13`：AP_Bangkok 
+                      - 13：AP_Bangkok 
                       
-                      - `14`：AP_Tokyo 
+                      - 14：AP_Tokyo 
                       
-                      - `15`：NA_Siliconvalley 
+                      - 15：NA_Siliconvalley 
                       
-                      - `16`：NA_Ashburn 
+                      - 16：NA_Ashburn 
                       
-                      - `17`：NA_Toronto 
+                      - 17：NA_Toronto 
                       
-                      - `18`：EU_Frankfurt 
+                      - 18：EU_Frankfurt 
                       
-                      - `19`：EU_Moscow
+                      - 19：EU_Moscow
 
                 bucket:
                   type: string
@@ -761,13 +773,13 @@ components:
               type: integer
               description: 设置视频合流布局，`0`、`1`、`2` 为[预设的合流布局](https://docs.agora.io/cn/cloud-recording/cloud_layout_guide?platform=Linux)，`3` 为自定义合流布局。该参数设为 `3` 时必须设置 `layoutConfig` 参数。
               
-                - `0`：（默认）悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多 4 行，每行 4 个画面，最多支持共 17 个录制画面。
+                - 0：（默认）悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多 4 行，每行 4 个画面，最多支持共 17 个录制画面。
                 
-                - `1`：自适应布局。根据用户的数量自动调整每个画面的大小，每个用户的画面大小一致，最多支持 17 个录制画面。
+                - 1：自适应布局。根据用户的数量自动调整每个画面的大小，每个用户的画面大小一致，最多支持 17 个录制画面。
                 
-                - `2`：垂直布局。指定一个用户在屏幕左侧显示大视窗画面，其他用户的小视窗画面在右侧垂直排列，最多两列，一列 8 个画面，最多支持共 17 个录制画面。
+                - 2：垂直布局。指定一个用户在屏幕左侧显示大视窗画面，其他用户的小视窗画面在右侧垂直排列，最多两列，一列 8 个画面，最多支持共 17 个录制画面。
                 
-                - `3`：自定义布局。设置 `layoutConfig` 参数自定义合流布局。
+                - 3：自定义布局。设置 `layoutConfig` 参数自定义合流布局。
                 
               default: 0
             backgroundColor:
