@@ -19,13 +19,12 @@ info:
     
     ## 数据格式
 
-    所有的请求都发送给域名：`api.agora.io`。
+    所有的请求都发送给域名：`api.agora.io`。所有的请求 URL 和请求包体内容都是区分大小写的。
 
     - 请求：请求的格式详见下面各个 API 中的示例
     
     - 响应：响应内容的格式为 JSON
       
-    <div class="info-msg"><i class="fa fa-info-circle"></i> 所有的请求 URL 和请求包体内容都是区分大小写的。</div>
 
     ## 调用步骤
 
@@ -78,8 +77,8 @@ paths:
     
         调用该方法成功后，你可以从 HTTP 响应包体中的 resourceId 字段得到一个 resource ID。这个 resource ID 的时效为 5 分钟，你需要在 5 分钟内用这个 resource ID 去调用开始云端录制的 API。
 
-
-        <div class="info-msg"><ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div> 
+        <div class="info-msg"><i class="fa fa-info-circle"> 一个 resource ID 只能用于一次云端录制服务。</i></div>
+        <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 的请求数限制为每秒钟 10 次。</i></div>    
       
       
       parameters:
@@ -88,7 +87,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-name-appid-a-app-id)。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
       requestBody:
         $ref: '#/components/requestBodies/acquire'
       responses:
@@ -116,7 +115,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-name-appid-a-app-id)。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
         - in: path
           name: resourceid
           required: true
@@ -162,7 +161,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-name-appid-a-app-id)。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
         - in: path
           name: resourceid
           required: true
@@ -213,7 +212,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-name-appid-a-app-id)。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
         - in: path
           name: resourceid
           required: true
@@ -272,7 +271,9 @@ paths:
       operationId: stop
       description: 录制完成后，调用该方法离开频道，停止录制。录制停止后如需再次录制，必须再调用 `acquire` 方法请求一个新的 resource ID。
           
-        <div class="info-msg"><ul><li>当频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</li><li>每个 APP ID 的请求数限制为每秒钟 10 次。</li></ul></div> 
+
+        <div class="info-msg"><i class="fa fa-info-circle"> 当频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</i></div>
+        <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 的请求数限制为每秒钟 10 次。</i></div>  
 
       parameters:
         - in: path
@@ -280,7 +281,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-name-appid-a-app-id)。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
         - in: path
           name: resourceid
           required: true
@@ -361,6 +362,7 @@ components:
           properties:
             resourceExpiredHour:
               type: integer
+              default: 72
               description: 云端录制 RESTful API 的调用时效，从成功开启云端录制并获得 `sid` （录制 ID）后开始计算，单位为小时。超时后，你将无法调用 `query`，`updateLayout`，和 `stop` 方法。`resourceExpiredHour` 需大于等于 `1`， 且小于等于 `720`，默认值为 `72`。
     start:
       type: object
@@ -443,30 +445,30 @@ components:
                   default: 0
                 maxIdleTime:
                   type: integer
-                  description: 最长空闲频道时间。默认值为 30 秒，该值需大于等于 5，且小于等于 (2<sup>32</sup>-1)。如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。
+                  default: 30
+                  description: 最长空闲频道时间。该值需大于等于 5，且小于等于 (2<sup>32</sup>-1)。如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。
                 transcodingConfig:
                   type: object
                   description: >-
                     视频转码的详细设置。仅适用于合流模式，单流模式下不能设置该参数。如果不设置将使用默认值。如果设置该参数，请务必填入
                     `width`、`height`、`fps` 和 `bitrate` 字段。请参考[如何设置录制视频的分辨率](https://docs.agora.io/cn/faq/recording_video_profile)设置该参数。
-                  required:
-                    - width
-                    - height
-                    - fps
-                    - bitrate
                   properties:
                     width:
                       type: integer
-                      description: 录制视频的宽度，单位为像素，默认值 360。支持的最大分辨率为 1080p，超过该分辨率会报错。
+                      default: 360
+                      description: 录制视频的宽度，单位为像素。支持的最大分辨率为 1080p，超过该分辨率会报错。
                     height:
                       type: integer
-                      description: 录制视频的高度，单位为像素，默认值 640。支持的最大分辨率为 1080p，超过该分辨率会报错。
+                      default: 640
+                      description: 录制视频的高度，单位为像素。支持的最大分辨率为 1080p，超过该分辨率会报错。
                     fps:
                       type: integer
-                      description: 录制视频的帧率，单位 fps，默认值 15。
+                      default: 15
+                      description: 录制视频的帧率，单位 fps。
                     bitrate:
                       type: integer
-                      description: 录制视频的码率，单位 Kbps，默认值 500。
+                      default: 500
+                      description: 录制视频的码率，单位 Kbps。
                     maxResolutionUid:
                       type: string
                       description: 如果视频合流布局设为垂直布局，用该参数指定显示大视窗画面的用户 ID。
@@ -486,8 +488,9 @@ components:
 
                         - `3`：自定义布局。设置 `layoutConfig` 参数自定义合流布局。
                       default: 0
-                    backgroundColor:
+                    backgroundColor:                   
                       type: string
+                      default: "#000000"
                       description: 屏幕（画布）的背景颜色。支持 RGB 颜色表，字符串格式为 "#" 号后 6 个十六进制数。默认值 "#000000" 黑色。
                     layoutConfig:
                       type: array
@@ -526,9 +529,10 @@ components:
                             description: '该画面高度的相对值，取值范围是 [0.0,1.0]。'
                           alpha:
                             type: number
+                            default: 1.0
                             format: float
                             description: >-
-                              图像的透明度。取值范围是 [0.0,1.0] 。默认值 1.0。0.0 表示图像为透明的，1.0
+                              图像的透明度。取值范围是 [0.0,1.0] 。0.0 表示图像为透明的，1.0
                               表示图像为完全不透明的。
                           render_mode:
                             type: integer
@@ -545,7 +549,7 @@ components:
                       type: array
                       description: 由 UID 组成的数组，指定录制哪几个用户的视频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。  
 
-                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 `subscribeVideoUids` 和 `subscribeAudioUids` 中的任一参数，则只录  制参数指定的音视频。例如，`subscribeVideoUids` 不为空，`subscribeAudioUids` 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                        
+                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只录制参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                        
                       items:
                         type: string
                       maxLength: 32
@@ -554,7 +558,7 @@ components:
                       type: array
                       description: 由 UID 组成的数组，指定录制哪几个用户的音频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。  
                       
-                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 `subscribeVideoUids` 和 `subscribeAudioUids` 中的任一参数，则只录  制参数指定的音视频。例如，`subscribeVideoUids` 不为空，`subscribeAudioUids` 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                  
+                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只录制参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                
                       items:
                         type: string
                       maxLength: 32
@@ -784,6 +788,7 @@ components:
               default: 0
             backgroundColor:
               type: string
+              default: "#000000"
               description: 屏幕（画布）的背景颜色。支持 RGB 颜色表，字符串格式为 "#" 号后 6 个十六进制数。默认值 `"#000000"` 黑色。
             layoutConfig:
               type: array
@@ -817,10 +822,11 @@ components:
                   alpha:
                     type: number
                     format: float
-                    description: 图像的透明度。取值范围是 [0.0,1.0] 。默认值 1.0。0.0 表示图像为透明的，1.0 表示图像为完全不透明的。
+                    default: 1.0
+                    description: 图像的透明度。取值范围是 [0.0,1.0] 。0.0 表示图像为透明的，1.0 表示图像为完全不透明的。
                   render_mode:
                     type: integer
-                    default: "0"
+                    default: 0
                     description: 画面显示模式。
                     
                       - `0`：裁剪模式。优先保证画面被填满。视频尺寸等比缩放，直至整个画面被视频填满。如果视频长宽与显示窗口不同，则视频流会按照画面设置的比例进行周边裁剪或图像拉伸后填满画面。
