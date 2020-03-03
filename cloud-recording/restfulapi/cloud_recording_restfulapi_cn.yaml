@@ -820,17 +820,17 @@ components:
         cname:
           type: string
           required:
-            - true
+            - "true"
           description: 待录制的频道名。
         uid:
           type: string
           required:
-            - true
+            - "true"
           description: 字符串内容为云端录制在频道内使用的用户 ID，需要和你在 acquire 请求中输入的 uid 相同。
         clientRequest:
           type: object
           required:
-            - true
+            - "true"
           description: 特定的客户请求参数，对于该方法无需填入任何内容，为一个空的 JSON。
     acquire_response:
       type: object
