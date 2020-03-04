@@ -8,9 +8,9 @@ info:
     云端录制 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP
     认证并填入 HTTP 请求头部的 `Authorization` 字段：
 
-    - `api_key`: Customer ID
+    - `api_key`: Customer ID（客户 ID）
     
-    - `api_secret`: Customer Certificate
+    - `api_secret`: Customer Certificate（客户证书）
 
 
     你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
@@ -19,11 +19,7 @@ info:
     
     ## 数据格式
 
-    所有的请求都发送给域名：`api.agora.io`。所有的请求 URL 和请求包体内容都是区分大小写的。
-
-    - 请求：请求的格式详见下面各个 API 中的示例
-    
-    - 响应：响应内容的格式为 JSON
+    所有的请求都发送给域名：`api.agora.io`。所有的请求 URL 和请求包体内容都是区分大小写的。响应内容的格式为 JSON。
       
 
     ## 调用步骤
@@ -770,7 +766,7 @@ components:
               description: 如果 `layoutType` 设为 `2`（垂直布局），用该参数指定显示大视窗画面的用户 ID。
             mixedVideoLayout:
               type: integer
-              description: 设置视频合流布局，`0`、`1`、`2` 为[预设的合流布局](https://docs.agora.io/cn/cloud-recording/cloud_layout_guide?platform=Linux)，`3` 为自定义合流布局。该参数设为 `3` 时必须设置 `layoutConfig` 参数。
+              description: 设置视频合流布局，`0`、`1`、`2` 为[预设的合流布局](https://docs.agora.io/cn/cloud-recording/cloud_recording_layout)，`3` 为自定义合流布局。该参数设为 `3` 时必须设置 `layoutConfig` 参数。
               
                 - 0：（默认）悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多 4 行，每行 4 个画面，最多支持共 17 个录制画面。
                 
