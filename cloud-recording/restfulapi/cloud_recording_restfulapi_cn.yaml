@@ -53,7 +53,7 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
-      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 Try it out 功能暂时无法使用。</div> 
+      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 <b>Try it out</b> 功能暂时无法使用。</div> 
 
   version: 2019.12.16
   title: 云端录制 RESTful API
@@ -447,6 +447,11 @@ components:
                   description: >-
                     视频转码的详细设置。仅适用于合流模式，单流模式下不能设置该参数。如果不设置将使用默认值。如果设置该参数，请务必填入
                     `width`、`height`、`fps` 和 `bitrate` 字段。请参考[如何设置录制视频的分辨率](https://docs.agora.io/cn/faq/recording_video_profile)设置该参数。
+                  required:
+                    - width
+                    - height
+                    - fps
+                    - bitrate
                   properties:
                     width:
                       type: integer
