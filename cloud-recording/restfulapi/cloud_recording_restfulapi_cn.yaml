@@ -1046,8 +1046,8 @@ components:
           schema:
             $ref: '#/components/schemas/acquire'
           example:
-            cname: httpClient463224
-            uid: 527841
+            cname: "httpClient463224"
+            uid: "527841"
             clientRequest: {
               resourceExpiredHour: 24
             }
@@ -1059,10 +1059,9 @@ components:
           schema:
             $ref: '#/components/schemas/start'
           example:
-            cname: httpClient463224
-            uid: 527841
+            cname: "httpClient463224"
+            uid: "527841"
             clientRequest:
-              token: <token if any>
               recordingConfig:
                 maxIdleTime: 30
                 streamTypes: 2
@@ -1075,13 +1074,13 @@ components:
                   bitrate: 500
                   fps: 15
                   mixedVideoLayout: 1
-                  backgroundColor: '#FF0000'
+                  backgroundColor: "#FF0000"
                   subscribeVideoUids:
-                    - '123'
-                    - '456'
+                    - "123"
+                    - "456"
                   subscribeAudioUids:
-                    - '123'
-                    - '456'
+                    - “123”
+                    - “456”
                   subscribeUidGroup: 0
               storageConfig:
                 accessKey: xxxxxxf
@@ -1100,8 +1099,8 @@ components:
           schema:
             $ref: '#/components/schemas/updateLayout'
           example:
-            cname: httpClient463224
-            uid: 527841
+            cname: "httpClient463224"
+            uid: "527841"
             clientRequest:
               mixedVideoLayout: 3
               backgroundColor: "#FF0000"
@@ -1134,8 +1133,8 @@ components:
           schema:
             $ref: '#/components/schemas/stop'
           example:
-            cname: httpClient463224
-            uid: 527841
+            cname: "httpClient463224"
+            uid: "527841"
             clientRequest: {}
   securitySchemes:
     agora_auth:
