@@ -60,7 +60,7 @@ info:
 servers: 
   - url: https://api.agora.io
     description: Work environment
-  - url: https://192.168.1.5/api.agora.io
+  - url: https://crossorigin.me/https://api.agora.io
     description: Test environment
 tags: 
 - name: "云端录制"
