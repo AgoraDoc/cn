@@ -1,5 +1,6 @@
 openapi: 3.0.0
 info:
+
   description: >
     阅读本文前请确保你已经了解如何使用 [RESTful API 录制](https://docs.agora.io/cn/cloud-recording/cloud_recording_rest)。
     
@@ -53,7 +54,7 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
-      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 <b>Try it out</b> 功能暂时无法使用。Test1。</div> 
+      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 <b>Try it out</b> 功能暂时无法使用。</div> 
 
   version: 2019.12.16
   title: 云端录制 RESTful API
@@ -64,6 +65,10 @@ servers:
     description: Test environment
 tags: 
 - name: "云端录制"
+
+security:
+  - agora_auth: []
+
 
 paths:
   /v1/apps/{appid}/cloud_recording/acquire:
