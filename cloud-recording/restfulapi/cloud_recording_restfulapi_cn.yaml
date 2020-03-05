@@ -59,6 +59,7 @@ info:
   title: 云端录制 RESTful API
 servers: 
   - url: https://api.agora.io
+  - url: https://192.168.1.5/api.agora.io
 tags: 
 - name: "云端录制"
 
