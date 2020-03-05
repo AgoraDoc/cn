@@ -53,13 +53,15 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
-      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 <b>Try it out</b> 功能暂时无法使用。</div> 
+      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 <b>Try it out</b> 功能暂时无法使用。Test。</div> 
 
   version: 2019.12.16
   title: 云端录制 RESTful API
 servers: 
   - url: https://api.agora.io
+    description: Work environment
   - url: https://192.168.1.5/api.agora.io
+    description: Test environment
 tags: 
 - name: "云端录制"
 
