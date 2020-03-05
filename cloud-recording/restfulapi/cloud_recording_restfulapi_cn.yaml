@@ -1126,6 +1126,10 @@ components:
               ]
       description: 该 API 需要在请求包体中传入以下参数。
       required: true
+    query:
+      content:
+        application/json:
+          schema: {}
     stop:
       description: 该 API 需要在请求包体中传入以下参数。
       content:
