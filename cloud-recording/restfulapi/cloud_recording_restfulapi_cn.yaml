@@ -1059,6 +1059,7 @@ components:
           schema:
             $ref: '#/components/schemas/start'
           example:
+            token: "<token if any>"
             cname: "httpClient463224"
             uid: "527841"
             clientRequest:
