@@ -209,7 +209,8 @@ paths:
         `query` 请求仅在会话内有效。如果录制启动错误，或录制已结束，调用 `query` 将返回 404。建议你同时使用回调服务，以获得云端录制所有的事件通知和具体信息。如需使用回调服务，请参考 [API 回调](https://docs.agora.io/cn/cloud-recording/cloud_recording_callback_rest)。
 
         <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 每秒钟的请求数限制为 10 次。</i></div> 
-
+      requestBody:
+        $ref: '#/components/requestBodies/query'
       parameters:
         - in: path
           name: appid
