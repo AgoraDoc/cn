@@ -6,6 +6,7 @@ info:
     实时消息 RESTful API 目前支持以下两种功能：
 
     - 厂商事件查询：查询用户事件和频道事件。
+    
     - 点对点或频道历史消息查询。
   
     <div class="info-msg">
@@ -34,7 +35,8 @@ info:
 
         如果你已经在服务端生成了 RTM Token，你也可以选用 Token Authentication 认证。你需要再发送 HTTP 请求时在 HTTP 请求头部的 x-agora-token 字段和 x-agora-uid 字段分别填入：
 
-        - 服务端生成的 RTM Token
+        - 服务端生成的 RTM Token。 
+
         - 生成 RTM Token 时使用的 uid。
 
          **示例代码**
@@ -69,6 +71,7 @@ info:
     ### 厂商事件查询的 API 调用步骤
 
     - 查询用户上下线事件：直接调用 `user_events` 方法。
+
     - 查询用户上下线事件：直接调用 `channel_events` 方法。
 
     ### 历史消息查询的 API 调用步骤
@@ -350,6 +353,7 @@ components:
             资源准备情况：
 
             - 资源准备完成： "ok"
+
             - 资源还未准备完成，请稍后重试： "in progress" <sup>2</sup>
 
             <div class="info-msg">
@@ -370,6 +374,7 @@ components:
             资源准备情况：
 
             - 资源准备完成： "ok"
+
             - 资源还未准备完成，请稍后重试： "in progress" <sup>2</sup>
 
             <div class="info-msg">
@@ -403,6 +408,7 @@ components:
             本次请求结果。
 
             - "success": 成功；
+
             - "failure": 失败。
 
         request_id:
@@ -424,8 +430,9 @@ components:
            description: >-
              事件类型：
              - "Login": 用户登录（上线）事件；
+
              - "Logout": 用户登出（下线）事件。
-             
+
          ts: 
            type: integer
            description: 时间戳（ms）。
@@ -439,6 +446,7 @@ components:
             本次请求结果。
               
               - "success": 成功；
+
               - "failure": 失败。           
         request_id:
           type: string
@@ -459,6 +467,7 @@ components:
             事件类型：
 
             - "Join": 用户加入频道事件，
+
             - "Leave": 用户离开频道事件。
          ts: 
            type: integer
