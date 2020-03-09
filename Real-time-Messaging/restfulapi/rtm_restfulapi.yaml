@@ -2,16 +2,13 @@ openapi: 3.0.0
 info:
 
   description: >
-
     实时消息 RESTful API 目前支持以下两种功能：
 
     - 厂商事件查询：查询用户事件和频道事件。
 
     - 点对点或频道历史消息查询。
   
-    <div class="info-msg">
-        <i class="fa fa-info-circle"></i><ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
-    </div>
+
     
     ## 认证
 
@@ -426,7 +423,7 @@ components:
            type: string
            description: >-
              事件类型：
-             
+
              - "Login": 用户登录（上线）事件；
 
              - "Logout": 用户登出（下线）事件。
