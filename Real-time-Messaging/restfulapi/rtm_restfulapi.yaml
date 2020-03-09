@@ -11,44 +11,44 @@ info:
         <i class="fa fa-info-circle"></i><ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
     </div>
     
-    ## 认证
+      ## 认证
 
-    实时消息 RESTful API 仅支持 HTTPS 协议。你可以通过以下任意一种认证方式：
+      实时消息 RESTful API 仅支持 HTTPS 协议。你可以通过以下任意一种认证方式：
 
-    <li><a href="#basicauth"><span>Basic Authentication</span></a></li>
-    <li><a href="#tokenauth"><span>Token Authentication</span></a></li>
+      <li><a href="#basicauth"><span>Basic Authentication</span></a></li>
+      <li><a href="#tokenauth"><span>Token Authentication</span></a></li>
 
-    ### <a name="basicauth"></a>Basic Authentication
+        ### <a name="basicauth"></a>Basic Authentication
     
-    发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
+        发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
 
-    - `api_key`: Customer ID
+        - `api_key`: Customer ID
     
-    - `api_secret`: Customer Certificate
+        - `api_secret`: Customer Certificate
 
-    你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
-    Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
+        你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
+        Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
 
-    ### <a name="tokenauth"></a>Token Authentication
+        ### <a name="tokenauth"></a>Token Authentication
 
-    如果你已经在服务端生成了 RTM Token，你也可以选用 Token Authentication 认证。你需要再发送 HTTP 请求时在 HTTP 请求头部的 x-agora-token 字段和 x-agora-uid 字段分别填入：
+        如果你已经在服务端生成了 RTM Token，你也可以选用 Token Authentication 认证。你需要再发送 HTTP 请求时在 HTTP 请求头部的 x-agora-token 字段和 x-agora-uid 字段分别填入：
 
-    - 服务端生成的 RTM Token
-    - 生成 RTM Token 时使用的 uid。
+        - 服务端生成的 RTM Token
+        - 生成 RTM Token 时使用的 uid。
 
-    **示例代码**
+        **示例代码**
 
-    ```java
-      Request request = new Request.Builder()
-      ...
-      // 在 HTTP 请求头部的 x-agora-token 字段填入获取的 RTM Token
-      .addHeader("x-agora-token", "<Your RTM Token>")
-    	// 在 HTTP 请求头部的 x-agora-uid 字段填入用于生成该 RTM Token 的 uid
-    	.addHeader("x-agora-uid", "<Your uid used to generate the RTM Token>")
-      ...
-    ```
+        ```java
+          Request request = new Request.Builder()
+         ...
+         // 在 HTTP 请求头部的 x-agora-token 字段填入获取的 RTM Token
+         .addHeader("x-agora-token", "<Your RTM Token>")
+       	// 在 HTTP 请求头部的 x-agora-uid 字段填入用于生成该 RTM Token 的 uid
+        	.addHeader("x-agora-uid", "<Your uid used to generate the RTM Token>")
+         ...
+        ```
 
-    > 关于如何生成 RTM Token，详见 [校验用户权限](https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms)。
+        > 关于如何生成 RTM Token，详见 [校验用户权限](https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms)。
     
     ## 数据格式
 
