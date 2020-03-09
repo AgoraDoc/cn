@@ -49,9 +49,9 @@ info:
         .addHeader("x-agora-uid", "<Your uid used to generate the RTM Token>")
       ```
 
-        <div class="info-msg">
-          <i class="fa fa-info-circle"></i> 关于如何生成 RTM Token，详见<a href="https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms">校验用户权限</a>
-        </div>
+      <div class="info-msg">
+        <i class="fa fa-info-circle"></i> 关于如何生成 RTM Token，详见<a href="https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms">校验用户权限</a>
+      </div>
     
     ## 数据格式
 
@@ -78,9 +78,9 @@ info:
 
       2. 调用 GET 方法查询历史消息。
 
-        <div class="info-msg">
-          <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 GET 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， GET 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 GET 方法。
-        </div>
+      <div class="info-msg">
+        <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 GET 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， GET 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 GET 方法。
+      </div>
 
     ## 响应状态码
 
@@ -178,12 +178,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/appid'
       requestBody:
-        $ref: '#/components/requestBodies/message_history'  
-        example:
-          filter: { source: "src_account", description: "dst_account", start_time: "2019-08-01T01:22:10Z", end_time: "2019-08-01T01:32:10Z" } 
-          offset: 100
-          limit: 20
-          order: asc    
+        $ref: '#/components/requestBodies/message_history' 
       responses:
         '200':
           description: 操作成功
@@ -252,7 +247,7 @@ paths:
               example:
                 result: success
                 code: ok
-                count: 123
+                count: 126
 components:
   schemas:
     message_history_query_response:
@@ -495,12 +490,20 @@ components:
       content: 
         application/json:
           schema:
-            $ref: '#/components/schemas/message_history'          
+            $ref: '#/components/schemas/message_history'    
+          example:
+            filter: { source: "src_account", description: "dst_account", start_time: "2019-08-01T01:22:10Z", end_time: "2019-08-01T01:32:10Z" } 
+            offset: 100
+            limit: 20
+            order: asc   
+
     count:
       content: 
         application/json:
           schema:
-            $ref: '#/components/schemas/count'    
+            $ref: '#/components/schemas/count' 
+          example:
+             
 
   securitySchemes:
     agora_auth:
