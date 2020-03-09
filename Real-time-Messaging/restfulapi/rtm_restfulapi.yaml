@@ -404,6 +404,7 @@ components:
 
             - "success": 成功；
             - "failure": 失败。
+
         request_id:
           type: string
           description: 本次请求唯一的 ID。
@@ -424,6 +425,7 @@ components:
              事件类型：
              - "Login": 用户登录（上线）事件；
              - "Logout": 用户登出（下线）事件。
+             
          ts: 
            type: integer
            description: 时间戳（ms）。
