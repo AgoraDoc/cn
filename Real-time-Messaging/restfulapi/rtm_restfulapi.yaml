@@ -61,9 +61,6 @@ info:
     
     - 响应：响应内容的格式为 JSON。
       
-      <div class="info-msg">
-        <i class="fa fa-info-circle"></i>关于如何生成 RTM Token，详见 [校验用户权限](https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms)。
-      </div>
 
     ## API 调用步骤
 
@@ -77,12 +74,12 @@ info:
 
       以下是进行历史消息查询的一般步骤：
 
-      1. 通过 `query` 请求获取 handle 资源。
+      1. 通过 POST 请求获取 handle 资源。
 
-      2. 调用 `get` 方法查询历史消息。
+      2. 调用 GET 方法查询历史消息。
 
         <div class="info-msg">
-          <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 `get` 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， `get` 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 `get` 方法。
+          <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 GET 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， GET 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 GET 方法。
         </div>
 
     ## 响应状态码
@@ -206,7 +203,7 @@ paths:
       - "实时消息-历史消息"
       summary: 获取历史消息
       operationId: get
-      description: 该方法从历史消息 `query`方法返回的历史消息资源获取历史消息
+      description: 该方法从历史消息 POST 方法返回的历史消息资源获取历史消息
 
 
          <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 的请求数限制为每秒钟 10 次。</i></div> 
