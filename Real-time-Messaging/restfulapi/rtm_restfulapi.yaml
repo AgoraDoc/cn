@@ -1,5 +1,6 @@
 openapi: 3.0.0
 info:
+
   description: >
     实时消息 RESTful API 目前支持以下两种功能：
 
@@ -14,8 +15,8 @@ info:
 
     实时消息 RESTful API 仅支持 HTTPS 协议。你可以通过以下任意一种认证方式：
 
-    - [Basic Authentication](#basicauth)
-    - [Token Authentication](#tokenauth)
+    <li><a href="#basicauth"><span>Basic Authentication</span></a></li>
+    <li><a href="#tokenauth"><span>Token Authentication</span></a></li>
 
     ### <a name="basicauth"></a>Basic Authentication
     
