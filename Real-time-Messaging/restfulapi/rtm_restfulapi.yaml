@@ -2,6 +2,7 @@ openapi: 3.0.0
 info:
 
   description: >
+
     实时消息 RESTful API 目前支持以下两种功能：
 
     - 厂商事件查询：查询用户事件和频道事件。
@@ -11,12 +12,12 @@ info:
         <i class="fa fa-info-circle"></i><ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
     </div>
     
-      ## 认证
+    ## 认证
 
       实时消息 RESTful API 仅支持 HTTPS 协议。你可以通过以下任意一种认证方式：
 
-      <li><a href="#basicauth"><span>Basic Authentication</span></a></li>
-      <li><a href="#tokenauth"><span>Token Authentication</span></a></li>
+      <li><a href="#basicauth">Basic Authentication</a></li>
+      <li><a href="#tokenauth">Token Authentication</a></li>
 
         ### <a name="basicauth"></a>Basic Authentication
     
@@ -36,7 +37,7 @@ info:
         - 服务端生成的 RTM Token
         - 生成 RTM Token 时使用的 uid。
 
-        **示例代码**
+         **示例代码**
 
         ```java
           Request request = new Request.Builder()
@@ -46,9 +47,10 @@ info:
        	// 在 HTTP 请求头部的 x-agora-uid 字段填入用于生成该 RTM Token 的 uid
         	.addHeader("x-agora-uid", "<Your uid used to generate the RTM Token>")
          ...
-        ```
 
-        > 关于如何生成 RTM Token，详见 [校验用户权限](https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms)。
+        <div class="info-msg">
+        <i class="fa fa-info-circle"></i> 关于如何生成 RTM Token，详见<a href="https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms">校验用户权限</a>
+    </div>
     
     ## 数据格式
 
@@ -199,7 +201,7 @@ paths:
                 location: ~/rtm/message/history/query/123456123456
 
   /dev/v2/project/{appid}/rtm/message/history/query/{handle}:
-    post:
+    get:
       tags:
       - "实时消息-历史消息"
       summary: 获取历史消息
