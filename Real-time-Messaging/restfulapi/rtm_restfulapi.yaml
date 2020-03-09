@@ -61,29 +61,29 @@ info:
     
     - 响应：响应内容的格式为 JSON。
       
-    <div class="info-msg">
+      <div class="info-msg">
         <i class="fa fa-info-circle"></i>关于如何生成 RTM Token，详见 [校验用户权限](https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms)。
-    </div>
+      </div>
 
     ## API 调用步骤
 
-    ### 厂商事件查询的 API 调用步骤
+      ### 厂商事件查询的 API 调用步骤
 
-    - 查询用户上下线事件：直接调用 `user_events` 方法。
+      - 查询用户上下线事件：直接调用 `user_events` 方法。
 
-    - 查询用户上下线事件：直接调用 `channel_events` 方法。
+      - 查询用户上下线事件：直接调用 `channel_events` 方法。
 
-    ### 历史消息查询的 API 调用步骤
+      ### 历史消息查询的 API 调用步骤
 
-    以下是进行历史消息查询的一般步骤：
+      以下是进行历史消息查询的一般步骤：
 
-    1. 通过 `query` 请求获取 handle 资源。
+      1. 通过 `query` 请求获取 handle 资源。
 
-    2. 调用 `get` 方法查询历史消息。
+      2. 调用 `get` 方法查询历史消息。
 
-      <div class="info-msg">
-        <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 `get` 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， `get` 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 `get` 方法。
-      </div>
+        <div class="info-msg">
+          <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 `get` 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， `get` 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 `get` 方法。
+        </div>
 
     ## 响应状态码
 
