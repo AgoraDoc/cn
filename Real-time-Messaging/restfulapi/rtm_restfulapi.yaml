@@ -8,7 +8,9 @@ info:
 
     - 点对点或频道历史消息查询。
   
-
+      <div class="info-msg">
+        <i class="fa fa-info-circle"></i><ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
+      </div>
     
     ## 认证
 
@@ -47,9 +49,9 @@ info:
       .addHeader("x-agora-uid", "<Your uid used to generate the RTM Token>")
       ...
 
-    <div class="info-msg">
+      <div class="info-msg">
         <i class="fa fa-info-circle"></i> 关于如何生成 RTM Token，详见<a href="https://docs.agora.io/cn/Real-time-Messaging/rtm_token?platform=All%20Platforms">校验用户权限</a>
-    </div>
+      </div>
     
     ## 数据格式
 
@@ -79,17 +81,17 @@ info:
 
     2. 调用 `get` 方法查询历史消息。
 
-    <div class="info-msg">
+      <div class="info-msg">
         <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 `get` 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， `get` 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 `get` 方法。
-    </div>
+      </div>
 
     ## 响应状态码
 
     下表列出实时消息 RESTful API 常见 HTTP 响应状态码：
     
 
-      | 状态码 | 描述                                               |
-      | :----- | :-------------------------------------------     |
+      | 状态码 | 描述                                           |
+      | :----- | :------------------------------------------- |
       | 200    | 请求成功。    |
       | 400    | 请求的语法错误（如参数错误）。请根据返回提示检查。    |
       | 408    | <li>厂商事件查询：服务器请求超时或服务器无响应，建议稍后重试。</li><li>历史消息查询：成功请求并创建了新的资源。</li>  |
@@ -100,6 +102,7 @@ info:
   title: 实时消息 RESTful API
 servers: 
   - url: https://api.agora.io
+    description: Official Environment
 tags: 
 - name: "实时消息"
 
