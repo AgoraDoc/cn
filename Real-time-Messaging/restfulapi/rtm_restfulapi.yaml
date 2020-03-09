@@ -183,7 +183,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/message_history'  
         example:
-          filter: {source: "src_account", description: "dst_account", start_time: "2019-08-01T01:22:10Z", end_time: "2019-08-01T01:32:10Z"} 
+          filter: { source: "src_account", description: "dst_account", start_time: "2019-08-01T01:22:10Z", end_time: "2019-08-01T01:32:10Z" } 
           offset: 100
           limit: 20
           order: asc    
