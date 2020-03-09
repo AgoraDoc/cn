@@ -426,6 +426,7 @@ components:
            type: string
            description: >-
              事件类型：
+             
              - "Login": 用户登录（上线）事件；
 
              - "Logout": 用户登出（下线）事件。
