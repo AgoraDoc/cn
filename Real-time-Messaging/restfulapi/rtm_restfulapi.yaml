@@ -2,14 +2,11 @@ openapi: 3.0.0
 info:
 
   description: >
-    实时消息 RESTful API 目前支持以下两种功能：
+    实时消息 RESTful API 目前支持厂商事件查询。你可以使用该功能查询用户事件和频道事件。
 
-    - 厂商事件查询：查询用户事件和频道事件。
-
-    - 点对点或频道历史消息查询。
   
       <div class="info-msg">
-        <i class="fa fa-info-circle"></i> 注意事项：<ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
+        <i class="fa fa-info-circle"></i> 注意事项：厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。
       </div>
     
     ## 认证
@@ -65,25 +62,13 @@ info:
     - 响应：响应内容的格式为 JSON。
       
 
-    ## API 调用步骤
+    ## 厂商事件查询的 API 调用步骤
 
-      ### 厂商事件查询的 API 调用步骤
+    - 查询用户上下线事件：直接调用 `user_events` 方法。
 
-      - 查询用户上下线事件：直接调用 `user_events` 方法。
+    - 查询用户上下线事件：直接调用 `channel_events` 方法。
 
-      - 查询用户上下线事件：直接调用 `channel_events` 方法。
 
-      ### 历史消息查询的 API 调用步骤
-
-      以下是进行历史消息查询的一般步骤：
-
-      1. 通过 POST 请求获取 handle 资源。
-
-      2. 调用 GET 方法查询历史消息。
-
-      <div class="info-msg">
-        <i class="fa fa-info-circle"></i> 获取 handle 之后的一段时间内，都可以调用 GET 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， GET 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 GET 方法。
-      </div>
 
     ## 响应状态码
 
@@ -171,87 +156,7 @@ paths:
                 limit: 20
                 order: 
   
-  /dev/v2/project/{appid}/rtm/message/history/query:
-    post:
-      tags:
-      - "实时消息-历史消息"
-      summary: 创建历史消息查询资源
-      operationId: query
-      description: 该方法向 Agora RTM 服务器申请历史消息查询资源。若请求成功，你可以通过 GET 方法从服务器返回的 location 获取查询到的历史消息。
 
-      parameters:
-        - $ref: '#/components/parameters/appid'
-      requestBody:
-        $ref: '#/components/requestBodies/message_history' 
-      responses:
-        '200':
-          description: 操作成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/message_history_query_response'
-              example:
-                result: success
-                offset: 100
-                order: asc
-                location: ~/rtm/message/history/query/123456123456
-
-  /dev/v2/project/{appid}/rtm/message/history/query/{handle}:
-    get:
-      tags:
-      - "实时消息-历史消息"
-      summary: 获取历史消息
-      operationId: get
-      description: 该方法从历史消息 POST 方法返回的历史消息资源获取历史消息
-
-
-         <div class="info-msg"><i class="fa fa-info-circle"> 每个 APP ID 的请求数限制为每秒钟 10 次。</i></div> 
-
-      parameters:
-        - $ref: '#/components/parameters/appid'
-        - $ref: '#/components/parameters/handle'
-      responses:
-        '200':
-          description: 操作成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/get_response'
-              example:
-                result: success
-                code: ok 
-                message: 
-                  - src: src
-                    dst: dst
-                    payload: 123
-                    ts: 123
-                  - src: src
-                    dst: dst
-                    payload: 12354
-                    ts: 155
-
-  /dev/v2/project/{appid}/rtm/message/history/count:
-    get:
-      tags:
-      - "实时消息-历史消息"
-      summary: 获取历史消息数目
-      operationId: count
-      description: 获取历史消息数目
-      parameters:
-        - $ref: '#/components/parameters/appid'
-      requestBody:
-        $ref: '#/components/requestBodies/count'
-      responses:
-        '200':
-          description: 操作成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/count_response'
-              example:
-                result: success
-                code: ok
-                count: 126
 components:
   schemas:
     message_history_query_response:
