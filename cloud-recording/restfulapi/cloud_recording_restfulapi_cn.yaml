@@ -54,15 +54,13 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
-      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持通过浏览器调用，该页面的 <b>Try it out</b> 功能暂时无法使用。</div> 
+      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持跨域请求，该页面的 <b>Try it out</b> 功能可以生成正常的 curl 命令，但无法得到返回值。你可以将 curl 命令复制到你的终端，从终端发送 API 请求并获得返回值。另外，你需要点击 Authorize 并填入你的 Customer ID 和 Customer Certificate，以进行鉴权。</div> 
 
   version: 2019.12.16
   title: 云端录制 RESTful API
 servers: 
   - url: https://api.agora.io
-    description: Work environment
-  - url: https://crossorigin.me/https://api.agora.io
-    description: Test environment
+
 tags: 
 - name: "云端录制"
 
@@ -194,7 +192,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/updateLayout_response'
               example:
-                sid: 38f8e3cfdc474cd56fc1ceba380d7e1a
+                sid: "38f8e3cfdc474cd56fc1ceba380d7e1a"
                 resourceId: >-
                   JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG
   /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/sid/{sid}/mode/{mode}/query:
@@ -251,11 +249,11 @@ paths:
                   fileList: [
                     {
                       filename: "xxx.m3u8",
-                      "trackType": "audio_and_video",
-                      "uid": "123",
-                      "mixedAllUser": "true",
-                      "isPlayable": "true",
-                      "sliceStartTime": "1562724971626"
+                      trackType: "audio_and_video",
+                      uid: "123",
+                      mixedAllUser: "true",
+                      isPlayable: "true",
+                      sliceStartTime: "1562724971626"
                     },  
                     {
                       filename: "xxx.m3u8",
@@ -321,11 +319,11 @@ paths:
                   fileList: [
                     {
                       filename: "xxx.m3u8",
-                      "trackType": "audio_and_video",
-                      "uid": "123",
-                      "mixedAllUser": "true",
-                      "isPlayable": "true",
-                      "sliceStartTime": "1562724971626"
+                      trackType: "audio_and_video",
+                      uid: "123",
+                      mixedAllUser: "true",
+                      isPlayable: "true",
+                      sliceStartTime: "1562724971626"
                     },  
                     {
                       filename: "xxx.m3u8",
@@ -1132,6 +1130,7 @@ components:
       content:
         application/json:
           schema: {}
+      description: 该 API 不需要在请求包体中传入任何参数。
     stop:
       description: 该 API 需要在请求包体中传入以下参数。
       content:
