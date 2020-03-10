@@ -54,7 +54,7 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
-      <div class="info-msg"><i class="fa fa-info-circle"></i> 由于云端录制 RESTful API 不支持跨域请求，该页面的 <b>Try it out</b> 功能可以生成正常的 curl 命令，但无法得到返回值。你可以将 curl 命令复制到你的终端，从终端发送 API 请求并获得返回值。另外，你需要点击 Authorize 并填入你的 Customer ID 和 Customer Certificate，以进行鉴权。</div> 
+       <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项：<ul><li>由于云端录制 RESTful API 不支持跨域请求，该页面的 <b>Try it out</b> 功能可以生成正常的 curl 命令，但无法得到返回值。你可以将 curl 命令复制到你的终端，从终端发送 API 请求并获得返回值。</li><li>使用 <b>Try it out</b> 功能前，你需要点击 <b>Authorize</b> 并填入你的 Customer ID 和 Customer Certificate，以进行鉴权。</li></ul></div>
 
   version: 2019.12.16
   title: 云端录制 RESTful API
@@ -1083,14 +1083,14 @@ components:
                     - “456”
                   subscribeUidGroup: 0
               storageConfig:
-                accessKey: xxxxxxf
+                accessKey: "xxxxxxf"
                 region: 3
-                bucket: xxxxx
-                secretKey: xxxxx
+                bucket: "xxxxx"
+                secretKey: "xxxxx"
                 vendor: 2
                 fileNamePrefix:
-                  - directory1
-                  - directory2
+                  - "directory1"
+                  - "directory2"
       description: 该 API 需要在请求包体中传入以下参数。
       required: true
     updateLayout:
@@ -1130,6 +1130,7 @@ components:
       content:
         application/json:
           schema: {}
+          example: {}
       description: 该 API 不需要在请求包体中传入任何参数。
     stop:
       description: 该 API 需要在请求包体中传入以下参数。
