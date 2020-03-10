@@ -9,17 +9,17 @@ info:
     - 点对点或频道历史消息查询。
   
       <div class="info-msg">
-        <i class="fa fa-info-circle"></i><ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
+        <i class="fa fa-info-circle"></i> 注意事项：<ul><li>厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。</i><li>当前版本的 RESTful API 仅支持文本历史消息查询，不支持自定义二进制消息。</i><li>查询历史消息 RESTful API 的 qps 限制为：单厂商（App ID）每秒 100 次。</i></ul>
       </div>
     
     ## 认证
 
     实时消息 RESTful API 仅支持 HTTPS 协议。你可以通过以下任意一种认证方式：
 
-    <li><a href="#basicauth">Basic Authentication</a></li>
-    <li><a href="#tokenauth">Token Authentication</a></li>
+    <li><a href="#basicauth">Basic 认证</a></li>
+    <li><a href="#tokenauth">Token 认证</a></li>
 
-      ### <a name="basicauth"></a>Basic Authentication
+      ### <a name="basicauth"></a>Basic 认证
     
       发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
 
@@ -30,7 +30,7 @@ info:
       你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
       Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
 
-      ### <a name="tokenauth"></a>Token Authentication
+      ### <a name="tokenauth"></a>Token 认证
 
       如果你已经在服务端生成了 RTM Token，你也可以选用 Token Authentication 认证。你需要再发送 HTTP 请求时在 HTTP 请求头部的 x-agora-token 字段和 x-agora-uid 字段分别填入：
 
@@ -44,8 +44,11 @@ info:
         Request request = new Request.Builder()
         ...
         // 在 HTTP 请求头部的 x-agora-token 字段填入获取的 RTM Token
+
         .addHeader("x-agora-token", "<Your RTM Token>")
+
         // 在 HTTP 请求头部的 x-agora-uid 字段填入用于生成该 RTM Token 的 uid
+
         .addHeader("x-agora-uid", "<Your uid used to generate the RTM Token>")
       ```
 
@@ -79,7 +82,7 @@ info:
       2. 调用 GET 方法查询历史消息。
 
       <div class="info-msg">
-        <i class="fa fa-info-circle"></i>获取 handle 之后的一段时间内，都可以调用 GET 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， GET 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 GET 方法。
+        <i class="fa fa-info-circle"></i> 获取 handle 之后的一段时间内，都可以调用 GET 方法去获取这个 handle 的提供的历史消息。由于后台需要一定准备时间， GET 方法可能会失败。如果这种情况出现，你可以稍等片刻再次调用 GET 方法。
       </div>
 
     ## 响应状态码
@@ -100,8 +103,9 @@ info:
 servers: 
   - url: https://api.agora.io
     description: Official Environment
-tags: 
-- name: "实时消息"
+security:
+  - agora_auth: []
+
 
 paths:
   /dev/v2/project/{appid}/rtm/vendor/user_events:
@@ -113,11 +117,11 @@ paths:
       description: 该方法从 Agora RTM 服务器指定的地址获取用户上下线事件。
 
           <div class="warning-msg">
-            <i class="fa fa-warning"></i>
+            <i class="fa fa-warning"></i> 注意事项：<ul>
           <li>RTM 后台最多存储 2000 条事件。</li>
           <li>单次返回最多 1000 条事件。</li>
           <li>我们对事件按区域缓存，因此不保证来自不同区域的事件的事件顺序的正确性。</li>
-          <li>我们只在同一区域内同步事件，不在区域间同步。所以，你从某区域拉取了事件后，如果你从另一个区域再次拉取仍然会得到相同的事件。</li>
+          <li>我们只在同一区域内同步事件，不在区域间同步。所以，你从某区域拉取了事件后，如果你从另一个区域再次拉取仍然会得到相同的事件。</li></ul>
           </div>
 
       parameters:
@@ -503,7 +507,8 @@ components:
           schema:
             $ref: '#/components/schemas/count' 
           example:
-             
+            
+
 
   securitySchemes:
     agora_auth:
