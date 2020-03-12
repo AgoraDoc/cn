@@ -383,6 +383,7 @@ components:
           type: object
           required:
             - storageConfig
+            - recordingConfig
           description: 特定的客户请求参数。
           properties:
             token:
@@ -391,6 +392,8 @@ components:
             recordingConfig:
               type: object
               description: 录制的详细设置。
+              required:
+                - channelType
               properties:
                 streamTypes:
                   type: integer
