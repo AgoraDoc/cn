@@ -6,7 +6,7 @@ info:
 
   
       <div class="info-msg">
-        <i class="fa fa-info-circle"></i> 注意事项：厂商事件查询 RESTful API 的 qps 限制为：单厂商（App ID）每秒 10 次。
+        <i class="fa fa-info-circle"></i> 注意事项：厂商事件查询 RESTful API 的 qps 限制为：每个 App ID 每秒 10 次。
       </div>
     
     ## 认证
