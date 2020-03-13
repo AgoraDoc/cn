@@ -451,7 +451,10 @@ components:
                 maxIdleTime:
                   type: integer
                   default: 30
-                  description: 最长空闲频道时间。该值需大于等于 5，且小于等于 (2<sup>32</sup>-1)。如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。
+                  description: >-
+                    最长空闲频道时间。该值需大于等于 5，且小于等于 (2<sup>32</sup>-1)。
+
+                    <div class="info-msg"><i class="fa fa-info-circle"></i> Note: <ul><li>如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。</li><li>直播场景下，如果频道内有观众但无主播，一旦无主播的状态超过 <note>maxIdleTime</note>，录制程序会自动退出。</li></div>
                 transcodingConfig:
                   type: object
                   description: >-
