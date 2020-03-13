@@ -8,7 +8,10 @@ info:
     <br/>
     ![webrtc开放协议-3](webrtc-open.png)
 
-      <div class="alert note">我们推荐使用安全性较高的 HTTPS 协议发送请求。</div>
+      <div class="info-msg">
+        <i class="fa fa-info-circle"></i>
+        我们推荐使用安全性较高的 HTTPS 协议发送请求。
+      </div>
 
       
     ## 调用步骤
