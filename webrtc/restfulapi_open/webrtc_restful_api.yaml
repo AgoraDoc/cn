@@ -143,7 +143,7 @@ paths:
                   description: 保留字段，必须设置为 4096，表示使用 WebRTC 协议。
                 key:
                   type: string
-                  description: App ID 或动态密钥 (token)，取决于你的 Agora 项目使用的鉴权机制。详见[校验用户权限](https://docs.agora.io/cn/Agora Platform/token)。
+                  description: App ID 或动态密钥 (token)，取决于你的 Agora 项目使用的鉴权机制。详见[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
                 opid:
                   type: integer
                   format: int64
