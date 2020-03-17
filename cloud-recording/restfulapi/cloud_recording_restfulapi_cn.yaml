@@ -395,6 +395,16 @@ components:
               required:
                 - channelType
               properties:
+                channelType:
+                   type: integer
+                   description: 频道模式。频道模式必须与 Agora Native/Web SDK 的设置一致，否则可能导致问题。
+                     
+                     - 0：通信模式
+                     
+                     - 1：直播模式
+                     
+                   default: 0
+               
                 streamTypes:
                   type: integer
                   description: 录制的媒体流类型。
@@ -417,17 +427,7 @@ components:
                   default: 0
                 secret:
                   type: string
-                  description: 启用解密模式后，设置的解密密码。
-                channelType:
-                   type: integer
-                   description: 频道模式。频道模式必须与 Agora Native/Web SDK 的设置一致，否则可能导致问题。
-                     
-                     - 0：通信模式
-                     
-                     - 1：直播模式
-                     
-                   default: 0
-                    
+                  description: 启用解密模式后，设置的解密密码。     
                 audioProfile:
                   type: integer
                   description: 设置录制文件的音频采样率，码率，编码模式和声道数。目前单流模式下不能设置该参数。
@@ -454,7 +454,7 @@ components:
                   description: >-
                     最长空闲频道时间。该值需大于等于 5，且小于等于 (2<sup>32</sup>-1)。
 
-                    <div class="info-msg"><i class="fa fa-info-circle"></i> Note: <ul><li>如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。</li><li>直播场景下，如果频道内有观众但无主播，一旦无主播的状态超过 <note>maxIdleTime</note>，录制程序会自动退出。</li></div>
+                    <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项: <ul><li>如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。</li><li>直播场景下，如果频道内有观众但无主播，一旦无主播的状态超过 <code>maxIdleTime</code>，录制程序会自动退出。</li></div>
                 transcodingConfig:
                   type: object
                   description: >-
