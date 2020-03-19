@@ -33,26 +33,7 @@ info:
 
     我们提供一个 Web 示例项目，你可以[在线体验](https://webdemo.agora.io/webrtc_http_demo/)，并参考[源代码](https://webdemo.agora.io/webrtc_http_demo/js/index.js)。
     
-    ## 状态码
-
-    下表列出响应包体中可能出现的状态码以及对应的 `detail` 参数值。
-
-      <div class="info-msg">
-        <i class="fa fa-info-circle"></i>该表格仅适用于拉流、推流以及上报请求，获取通话资源请求的响应错误码详见具体响应中的描述。
-      </div>
-
-      | `code` | `detail`                                                     | 描述                                                 |
-      | :----- | :----------------------------------------------------------- | :--------------------------------------------------- |
-      | 200    | "v=0\r\no=- 0 0 IN IP4 127.0.0.1\ ... na=ssrc:55543 label:XrKNrJZpIqv0\r\n" | 请求成功。                                           |
-      | 400    | The request cannot be fulfilled due to bad syntax.           | 参数值存在不合法字符。                               |
-      | 404    | The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible. | 参数缺失。                                           |
-      | 501    | internal error                                               | 内部错误。                                           |
-      | 502    | invalid params                                               | 参数类型或其他错误。                                 |
-      | 503    | pull stream failed                                           | `cname` 或 `streamid` 不存在或其他原因导致的拉流失败。 |
-      | 504    | push stream failed                                           | 推流失败。                                           |
-      | 505    | stats report failed                                          | 上报通话质量失败。                                   |
-
-  version: Feb 21, 2020
+  version: March 17, 2020
   title: WebRTC 开放平台
 servers:
   - url: 'https://webrtc-lbs-1.agoraio.cn'
@@ -265,8 +246,12 @@ paths:
                   code: 200
                   session: 8B9.......B9F
                   detail: v=0\r\no=- 0 0 ...... label:XrKNrJZpIqv0\r\n
+          '501':
+            $ref: '#/components/responses/501'
+          '502':
+            $ref: '#/components/responses/502'
           '503':
-             description: 请求失败
+             description: 拉流失败。
              content:
                application/json:
                  schema:
@@ -274,7 +259,7 @@ paths:
                  example:
                    code: 503
                    session: 8B9.......B9F
-                   detail: pull stream failed
+                   detail: Failed to pull the stream.
   
   /pushstream/{cname}/{streamid}:
     post:
@@ -318,9 +303,18 @@ paths:
                     description: 用于标识通话的通话 ID。
                   detail:
                     type: string
-                    description: 请求成功返回 Answer SDP；请求失败返回具体的错误描述。
+                    description: Answer SDP。
+              example:
+                code: 200
+                uid: 123
+                session: 8B9......B9F
+                detail: v=0\r\no=- 0 0 ...... label:XrKNrJZpIqv0\r\n
+        '501':
+          $ref: '#/components/responses/501'
+        '502':
+          $ref: '#/components/responses/502'
         '504':
-          description: 请求失败
+          description: 推流失败。
           content:
             application/json:
               schema: 
@@ -328,7 +322,7 @@ paths:
               example:
                 code: 504
                 session: 8B9.......B9F
-                detail: push stream failed
+                detail: Failed to push the stream.
 
   /statsreport:
     post:
@@ -403,8 +397,12 @@ paths:
               example:
                 session: 8B9......B9F
                 code: 200
+        '501':
+          $ref: '#/components/responses/501'
+        '502':
+          $ref: '#/components/responses/502'
         '505':
-          description: 请求失败
+          description: 上报通话质量失败。
           content:
             application/json:
               schema: 
@@ -412,7 +410,7 @@ paths:
               example:
                 code: 505
                 session: 8B9.......B9F
-                detail: stats report failed
+                detail: Failed to report statistics.
             
 
 components:
@@ -429,6 +427,29 @@ components:
         detail:
           type: string
           description: 具体的错误描述。
+
+  responses:
+    501:
+      description: 内部错误。
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/StreamFail'
+          example:
+            code: 501
+            session: 8B9.......B9F
+            detail: An internal error occurred.
+    502:
+      description: 参数类型错误或参数值不合法。
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/StreamFail'
+          example:
+            code: 502
+            session: 8B9.......B9F
+            detail: Invalid parameter.
+
   
   requestBodies:
     StreamBody:
