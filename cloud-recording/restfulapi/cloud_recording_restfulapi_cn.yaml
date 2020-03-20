@@ -54,7 +54,7 @@ info:
       | 500    | 服务器内部错误，无法完成请求。                     |
       | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
 
-       <div class="alert.note">使用 <b>Try it out</b> 功能前，你需要点击 <b>Authorize</b> 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 <b>Username</b> 和 <b>Password</b>，然后点击 <b>Authorize</b>，完成鉴权。</div>
+       <div class="info-msg"><i class="fa fa-info-circle"></i> 使用 <b>Try it out</b> 功能前，你需要点击 <b>Authorize</b> 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 <b>Username</b> 和 <b>Password</b>，然后点击 <b>Authorize</b>，完成鉴权。</div>
 
   version: 2019.12.16
   title: 云端录制 RESTful API
