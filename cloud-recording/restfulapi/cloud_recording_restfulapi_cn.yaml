@@ -15,12 +15,12 @@ info:
 
 
     你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
-    Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
+    Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。你也可以使用本页的 **Try it out** 功能生成该字段。
 
     
     ## 数据格式
 
-    所有的请求都发送给域名：`api.agora.io`。所有的请求 URL 和请求包体内容都是区分大小写的。响应内容的格式为 JSON。
+    所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。   
       
 
     ## 调用步骤
@@ -38,23 +38,21 @@ info:
     `query` 请求查询云端录制的状态。完整示例代码请参考[云端录制快速开始示例代码](https://docs.agora.io/cn/cloud-recording/cloud_recording_rest#demo-rest)。
 
 
-    ## 响应状态码
+    ## 常见错误
 
-    下表列出云端录制常见 HTTP 响应状态码
+    [常见错误](https://docs.agora.io/cn/cloud-recording/common_errors)列出了使用云端录制 RESTful API 过程中常见的错误码或错误信息。
+
+    ## 调试 RESTful API
+
+    你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试步骤如下：
     
+    1. 点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
-      | 状态码 | 描述                                               |
-      | :----- | :-------------------------------------------     |
-      | 200    | 请求成功。                                         |
-      | 201    | 成功请求并创建了新的资源。                         |
-      | 206    | 整个录制过程中没有用户发流，或部分录制文件没有上传到第三方云存储。     |
-      | 400    | 请求的语法错误（如参数错误），服务器无法理解。     |
-      | 401    | 未经授权的（App ID/Customer Certificate匹配错误）。    |
-      | 404    | 服务器无法根据请求找到资源（网页）。               |
-      | 500    | 服务器内部错误，无法完成请求。                     |
-      | 504    | 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。 |
+    2. 点击展开某个需要调试的 API，然后点击 **Try it out**。
 
-       <div class="info-msg">使用 <b>Try it out</b> 功能前，你需要点击 <b>Authorize</b> 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 <b>Username</b> 和 <b>Password</b>，然后点击 <b>Authorize</b>，完成鉴权。</div>
+    3. 在输入框中填入参数值，并编辑请求包体后，点击 **Execute** 发送请求。
+
+    4. 你可以在 **Server response** 中查看响应。同时，你可以在 **Curl** 窗口查看发起请求的 curl 命令。 
 
   version: 2019.12.16
   title: 云端录制 RESTful API
@@ -101,6 +99,16 @@ paths:
                 $ref: '#/components/schemas/acquire_response'
               example:
                 resourceId: JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG 
+        '201':
+          $ref: '#/components/responses/201' 
+        '400':
+          $ref: '#/components/responses/400' 
+        '401':
+          $ref: '#/components/responses/401' 
+        '500':
+          $ref: '#/components/responses/500' 
+        '504':
+          $ref: '#/components/responses/504' 
   /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/mode/{mode}/start:
     post:
       tags:
@@ -144,6 +152,16 @@ paths:
                 sid: 38f8e3cfdc474cd56fc1ceba380d7e1a
                 resourceId: >-
                   JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG
+        '201':
+          $ref: '#/components/responses/201' 
+        '400':
+          $ref: '#/components/responses/400' 
+        '401':
+          $ref: '#/components/responses/401' 
+        '500':
+          $ref: '#/components/responses/500' 
+        '504':
+          $ref: '#/components/responses/504' 
   /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/sid/{sid}/mode/{mode}/updateLayout:
     post:
       tags:
@@ -195,6 +213,16 @@ paths:
                 sid: "38f8e3cfdc474cd56fc1ceba380d7e1a"
                 resourceId: >-
                   JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG
+        '400':
+          $ref: '#/components/responses/400' 
+        '401':
+          $ref: '#/components/responses/401' 
+        '404':
+          $ref: '#/components/responses/404' 
+        '500':
+          $ref: '#/components/responses/500' 
+        '504':
+          $ref: '#/components/responses/504' 
   /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/sid/{sid}/mode/{mode}/query:
     get:
       tags:
@@ -266,6 +294,18 @@ paths:
                    ]
                 status: "5"
                 sliceStartTime: "1562724971626"
+        '206':
+          $ref: '#/components/responses/206' 
+        '400':
+          $ref: '#/components/responses/400' 
+        '401':
+          $ref: '#/components/responses/401' 
+        '404':
+          $ref: '#/components/responses/404' 
+        '500':
+          $ref: '#/components/responses/500' 
+        '504':
+          $ref: '#/components/responses/504' 
   /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/sid/{sid}/mode/{mode}/stop:
     post:
       tags:
@@ -335,6 +375,18 @@ paths:
                    }
                    ]
                 uploadingStatus: "uploaded"
+        '206':
+          $ref: '#/components/responses/206' 
+        '400':
+          $ref: '#/components/responses/400' 
+        '401':
+          $ref: '#/components/responses/401' 
+        '404':
+          $ref: '#/components/responses/404' 
+        '500':
+          $ref: '#/components/responses/500' 
+        '504':
+          $ref: '#/components/responses/504' 
 components:
   schemas:
     acquire:
@@ -1146,6 +1198,21 @@ components:
             cname: "httpClient463224"
             uid: "527841"
             clientRequest: {}
+  responses:
+    201:
+      description: 成功请求并创建了新的资源。   
+    206:
+      description: 整个录制过程中没有用户发流，或部分录制文件没有上传到第三方云存储。
+    400:
+      description: 请求的语法错误（如参数错误），服务器无法理解。
+    401:
+      description: 未经授权的（App ID/Customer Certificate匹配错误）。
+    404:
+      description: 服务器无法根据请求找到资源（网页）。
+    500:
+      description: 服务器内部错误，无法完成请求。
+    504:
+      description: 服务器内部错误。充当网关或代理的服务器未从远端服务器获取请求。
   securitySchemes:
     agora_auth:
       type: http
