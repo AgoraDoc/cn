@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
 
   description: >
-    阅读本文前请确保你已经了解如何使用 [RESTful API 录制](https://docs.agora.io/cn/cloud-recording/cloud_recording_rest)。
+    该文包含云端录制 RESTful API 的详细信息，同时提供 **Try it out** 功能，使你在文档页内即能进行 RESTful API 的调试。
     
     ## 认证
 
@@ -53,6 +53,9 @@ info:
     3. 在输入框中填入参数值，并编辑请求包体后，点击 **Execute** 发送请求。
 
     4. 你可以在 **Server response** 中查看响应。同时，你可以在 **Curl** 窗口查看发起请求的 curl 命令。 
+
+
+    <img src="https://web-cdn.agora.io/docs-files/1584927661410" alt="Authorize" width=40%>
 
   version: 2019.12.16
   title: 云端录制 RESTful API
