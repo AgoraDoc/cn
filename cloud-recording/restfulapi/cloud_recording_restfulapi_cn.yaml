@@ -613,7 +613,7 @@ components:
 
                               - 1：缩放模式。优先保证视频内容全部显示。视频尺寸等比缩放，直至视频窗口的一边与画面边框对齐。如果视频尺寸与画面尺寸不一致，在保持长宽比的前提下，将视频进行缩放后填满画面，缩放后的视频四周会有一圈黑边。
                             default: 0
-                    subscribeVideoUids: 
+                subscribeVideoUids: 
                       type: array
                       description: 由 UID 组成的数组，指定录制哪几个用户的视频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。  
 
@@ -622,7 +622,7 @@ components:
                         type: string
                       maxLength: 32
                       example: ["123","456"]
-                    subscribeAudioUids:
+                subscribeAudioUids:
                       type: array
                       description: 由 UID 组成的数组，指定录制哪几个用户的音频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。  
                       
@@ -632,7 +632,7 @@ components:
                       maxLength: 32
                       example: ["123","456"]
                         
-                    subscribeUidGroup:
+                subscribeUidGroup:
                       type: integer
                       description: 预估的订阅人数峰值。在单流模式下，为必填参数。举例来说，如果 `subscribeVideoUids` 为 `["100","101","102"]`，`subscribeAudioUids` 为 `["101","102","103"]`，则订阅人数为 4 人。
 
@@ -1137,13 +1137,13 @@ components:
                   fps: 15
                   mixedVideoLayout: 1
                   backgroundColor: "#FF0000"
-                  subscribeVideoUids:
+                subscribeVideoUids:
                     - "123"
                     - "456"
-                  subscribeAudioUids:
+                subscribeAudioUids:
                     - “123”
                     - “456”
-                  subscribeUidGroup: 0
+                subscribeUidGroup: 0
               storageConfig:
                 accessKey: "xxxxxxf"
                 region: 3
