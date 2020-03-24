@@ -157,6 +157,8 @@ paths:
                 sid: 38f8e3cfdc474cd56fc1ceba380d7e1a
                 resourceId: >-
                   JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG
+        '206':
+          $ref: '#/components/responses/206' 
         '201':
           $ref: '#/components/responses/201' 
         '400':
@@ -297,8 +299,8 @@ paths:
                       sliceStartTime: "1562724971626"
                    }
                    ]
-                status: "5"
-                sliceStartTime: "1562724971626"
+                  status: "5"
+                  sliceStartTime: "1562724971626"
         '206':
           $ref: '#/components/responses/206' 
         '400':
@@ -379,7 +381,7 @@ paths:
                       sliceStartTime: "1562724971626"
                    }
                    ]
-                uploadingStatus: "uploaded"
+                  uploadingStatus: "uploaded"
         '206':
           $ref: '#/components/responses/206' 
         '400':
@@ -451,6 +453,7 @@ components:
               description: 录制的详细设置。
               required:
                 - channelType
+                - subscribeUidGroup
               properties:
                 channelType:
                    type: integer
@@ -460,8 +463,7 @@ components:
                      
                      - 1：直播模式
                      
-                   default: 0
-               
+                   default: 0             
                 streamTypes:
                   type: integer
                   description: 录制的媒体流类型。
@@ -630,8 +632,7 @@ components:
                       items:
                         type: string
                       maxLength: 32
-                      example: ["123","456"]
-                        
+                      example: ["123","456"]                       
                 subscribeUidGroup:
                       type: integer
                       description: 预估的订阅人数峰值。在单流模式下，为必填参数。举例来说，如果 `subscribeVideoUids` 为 `["100","101","102"]`，`subscribeAudioUids` 为 `["101","102","103"]`，则订阅人数为 4 人。
@@ -642,11 +643,16 @@ components:
                         
                         - 2：8 到 12 个 UID
                         
-                        - 3：13 到 17 个 UID
-                      
+                        - 3：13 到 17 个 UID                    
             storageConfig:
               type: object
               description: 第三方云存储的设置。
+              required:
+                - vendor
+                - region
+                - bucket
+                - accessKey
+                - secretKey
               properties:
                 vendor:
                   type: integer
