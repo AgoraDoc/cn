@@ -1135,7 +1135,7 @@ components:
                 maxIdleTime: 30
                 streamTypes: 2
                 channelType: 0
-                videoStreamType: 1
+                videoStreamType: 0
                 transcodingConfig:
                   height: 640
                   width: 360
