@@ -17,7 +17,7 @@ info:
     你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
     Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。你也可以使用本页的 **Try it out** 功能生成该字段。
 
-    
+
     ## 数据格式
 
     所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。   
@@ -52,10 +52,12 @@ info:
 
     3. 在输入框中填入参数值，并编辑请求包体后，点击 **Execute** 发送请求。
 
-    4. 你可以在 **Server response** 中查看响应。同时，你可以在 **Curl** 窗口查看发起请求的 curl 命令。 
+    
+    请求成功后，你可以在 **Server response** 中查看响应。同时，你可以在 **Curl** 窗口查看发起请求的 curl 命令。 
 
+    <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
-    <img src="https://web-cdn.agora.io/docs-files/1584927661410" alt="Authorize" width=40%>
+    <img src="https://web-cdn.agora.io/docs-files/1585028767775" alt="Authorize" width=40%>
 
   version: 2019.12.16
   title: 云端录制 RESTful API
