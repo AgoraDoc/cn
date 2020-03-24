@@ -57,7 +57,7 @@ info:
 
     <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
-    <img src="https://web-cdn.agora.io/docs-files/1585028767775" alt="Authorize" width=40%>
+    <img src="https://web-cdn.agora.io/docs-files/1585030160877" alt="Authorize" width=40%>
 
   version: 2019.12.16
   title: 云端录制 RESTful API
@@ -1121,10 +1121,10 @@ components:
           schema:
             $ref: '#/components/schemas/start'
           example:
-            token: "<token if any>"
             cname: "httpClient463224"
             uid: "527841"
             clientRequest:
+              token: "<token if any>"
               recordingConfig:
                 maxIdleTime: 30
                 streamTypes: 2
