@@ -6,13 +6,11 @@ info:
     
     ## 认证
 
-    云端录制 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP
-    认证并填入 HTTP 请求头部的 `Authorization` 字段：
+    云端录制 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
 
-    - `api_key`: Customer ID（客户 ID）
-    
-    - `api_secret`: Customer Certificate（客户证书）
-
+      - `api_key`: Customer ID （客户 ID）
+      
+      - `api_secret`: Customer Certificate （客户证书）
 
     你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
     Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。你也可以使用本页的 **Try it out** 功能生成该字段。
@@ -20,7 +18,7 @@ info:
 
     ## 数据格式
 
-    所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。   
+    所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。
       
 
     ## 调用步骤
@@ -44,20 +42,14 @@ info:
 
     ## 调试 RESTful API
 
-    你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试步骤如下：
-    
-    1. 点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
+    你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
-    2. 点击展开某个需要调试的 API，然后点击 **Try it out**。
 
-    3. 在输入框中填入参数值，并编辑请求包体后，点击 **Execute** 发送请求。
+    <img src="https://web-cdn.agora.io/docs-files/1585555550831" alt="Authorize">
 
-    
-    请求成功后，你可以在 **Server response** 中查看响应。同时，你可以在 **Curl** 窗口查看发起请求的 curl 命令。 
 
     <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
-    <img src="https://web-cdn.agora.io/docs-files/1585030160877" alt="Authorize" width=40%>
 
   version: 2019.12.16
   title: 云端录制 RESTful API
