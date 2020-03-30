@@ -45,7 +45,7 @@ info:
     你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
 
-    <img src="https://web-cdn.agora.io/docs-files/1585555550831" alt="Authorize">
+    <img src="https://web-cdn.agora.io/docs-files/1585555550831" alt="Authorize" width="50%" align="left" border="1">
 
 
     <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
