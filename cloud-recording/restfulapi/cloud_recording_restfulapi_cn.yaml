@@ -48,7 +48,7 @@ info:
     <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1585555550831" alt="Authorize" width="50%">
 
 
-    <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
+    <div class="info-msg"><i class="fa fa-info-circle"></i> 在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
 
   version: 2019.12.16
@@ -76,7 +76,7 @@ paths:
     
         调用该方法成功后，你可以从 HTTP 响应包体中的 resourceId 字段得到一个 resource ID。这个 resource ID 的时效为 5 分钟，你需要在 5 分钟内用这个 resource ID 去调用开始云端录制的 API。
 
-        <div class="info-msg">注意事项：<ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 APP ID 每秒钟的请求数限制为 10 次。如需提高此限制，请联系 support@agora.io。</li></ul></div>   
+        <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项：<ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 APP ID 每秒钟的请求数限制为 10 次。如需提高此限制，请联系 support@agora.io。</li></ul></div>   
       
       parameters:
         - in: path
@@ -114,7 +114,7 @@ paths:
       operationId: start
       description: 获取 resource ID 后，调用该方法开始云端录制。
       
-        <div class="info-msg">每个 APP ID 每秒钟的请求数限制为 10 次。</i></div>  
+        <div class="info-msg"><i class="fa fa-info-circle"></i> 每个 APP ID 每秒钟的请求数限制为 10 次。</i></div>  
         
       parameters:
         - in: path
@@ -170,7 +170,7 @@ paths:
 
         每次调用该方法都会覆盖原来的布局设置，例如在开始录制时设置了 `backgroundColor` 为 `"#FF0000"`（红色），调用该方法更新合流布局时如果不设置 `backgroundColor` 参数，背景色会变为默认值黑色。
         
-        <div class="info-msg">每个 APP ID 每秒钟的请求数限制为 10 次。</i></div> 
+        <div class="info-msg"><i class="fa fa-info-circle"></i> 每个 APP ID 每秒钟的请求数限制为 10 次。</i></div> 
 
       parameters:
         - in: path
@@ -231,7 +231,7 @@ paths:
 
         `query` 请求仅在会话内有效。如果录制启动错误，或录制已结束，调用 `query` 将返回 404。建议你同时使用回调服务，以获得云端录制所有的事件通知和具体信息。如需使用回调服务，请参考 [API 回调](https://docs.agora.io/cn/cloud-recording/cloud_recording_callback_rest)。
 
-        <div class="info-msg">每个 APP ID 每秒钟的请求数限制为 10 次。</i></div> 
+        <div class="info-msg"><i class="fa fa-info-circle"></i> 每个 APP ID 每秒钟的请求数限制为 10 次。</i></div> 
       requestBody:
         $ref: '#/components/requestBodies/query'
       parameters:
@@ -312,7 +312,7 @@ paths:
       description: 录制完成后，调用该方法离开频道，停止录制。录制停止后如需再次录制，必须再调用 `acquire` 方法请求一个新的 resource ID。
           
 
-       <div class="info-msg">注意事项：<ul><li>频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</li><li>每个 APP ID 每秒钟的请求数限制为 10 次。</li></ul></div>
+       <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项：<ul><li>频道空闲（无用户）超过预设时间（默认为 30 秒） 后，云端录制也会自动退出频道停止录制。</li><li>每个 APP ID 每秒钟的请求数限制为 10 次。</li></ul></div>
 
       parameters:
         - in: path
@@ -503,7 +503,7 @@ components:
                   description: >-
                     最长空闲频道时间。该值需大于等于 5，且小于等于 (2<sup>32</sup>-1)。
 
-                    <div class="info-msg">注意事项: <ul><li>如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。</li><li>直播场景下，如果频道内有观众但无主播，一旦无主播的状态超过 <code>maxIdleTime</code>，录制程序会自动退出。</li></div>
+                    <div class="info-msg"><i class="fa fa-info-circle"></i> 注意事项: <ul><li>如果频道内无用户的状态持续超过该时间，录制程序会自动退出。如果频道内有用户，但用户没有发流，不算作无用户状态。</li><li>直播场景下，如果频道内有观众但无主播，一旦无主播的状态超过 <code>maxIdleTime</code>，录制程序会自动退出。</li></div>
                 transcodingConfig:
                   type: object
                   description: >-
