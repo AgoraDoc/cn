@@ -518,11 +518,11 @@ components:
                     width:
                       type: integer
                       default: 360
-                      description: 录制视频的宽度，单位为像素。支持的最大分辨率为 1080p，超过该分辨率会报错。
+                      description: 录制视频的宽度，单位为像素。`width` 不能超过 1920，且 `width` 和 `height` 的乘积不能超过 1920 * 1080，超过最大值会报错。
                     height:
                       type: integer
                       default: 640
-                      description: 录制视频的高度，单位为像素。支持的最大分辨率为 1080p，超过该分辨率会报错。
+                      description: 录制视频的高度，单位为像素。`height` 不能超过 1920，且 `width` 和 `height` 的乘积不能超过 1920 * 1080，超过最大值会报错。
                     fps:
                       type: integer
                       default: 15
