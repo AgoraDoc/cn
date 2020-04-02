@@ -112,7 +112,13 @@ paths:
       - "云端录制"
       summary: 开始云端录制
       operationId: start
-      description: 获取 resource ID 后，调用该方法开始云端录制。
+      description: 获取 resource ID 后，调用该方法开始云端录制。当你成功调用 `start` 方法后，云端录制会执行如下操作：
+
+        1. 根据你的订阅设置（`recordingConfig`）订阅频道中的媒体流。
+
+        2. 根据你的录制文件设置 （`recordingFileConfig`）将媒体流录制成指定的文件格式，或根据截图设置        （`snapshotConfig）`对视频流进行截图。
+
+        3. 根据你的第三方云存储设置（`storageConfig`），将录制文件或截图上传到第三方云存储。
       
         <div class="info-msg">注意事项：每个 APP ID 每秒钟的请求数限制为 10 次。</i></div>  
         
@@ -440,7 +446,7 @@ components:
               description: 用于鉴权的[动态密钥](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-namekeya%E5%8A%A8%E6%80%81%E5%AF%86%E9%92%A5)。如果待录制的频道使用了动态密钥，请务必在该参数中传入一个动态密钥，详见[校验用户权限](https://docs.agora.io/cn/cloud-recording/token?platform=All%20Platforms)。
             recordingConfig:
               type: object
-              description: 录制的详细设置。
+              description: 媒体流订阅的详细设置。云端录制会根据此设置订阅频道内的媒体流，并生成录制文件或截图。
               required:
                 - channelType
                 - subscribeUidGroup
@@ -456,13 +462,13 @@ components:
                    default: 0             
                 streamTypes:
                   type: integer
-                  description: 录制的媒体流类型。
+                  description: 订阅的媒体流类型。
                   
-                    - 0：仅录制音频
+                    - 0：仅订阅音频
                     
-                    - 1：仅录制视频
+                    - 1：仅订阅视频
                     
-                    - 2：录制音频和视频
+                    - 2：订阅音频和视频
                     
                   default: 2
                 decryptionMode:
@@ -479,7 +485,7 @@ components:
                   description: 启用解密模式后，设置的解密密码。     
                 audioProfile:
                   type: integer
-                  description: 设置录制文件的音频采样率，码率，编码模式和声道数。目前单流模式下不能设置该参数。
+                  description: 设置输出音频的采样率，码率，编码模式和声道数。目前单流模式下不能设置该参数。
                     
                     - 0：48 KHz 采样率，音乐编码，单声道，编码码率约 48 Kbps
                     
@@ -490,7 +496,7 @@ components:
                   default: 0
                 videoStreamType:
                   type: integer
-                  description: 录制的视频流类型。如果频道中有用户开启了双流模式，你可以选择录制视频大流或者小流。
+                  description: 订阅的视频流类型。如果频道中有用户开启了双流模式，你可以选择订阅视频大流或者小流。
                   
                     - 0：视频大流，即高分辨率高码率的视频流
                     
@@ -518,19 +524,19 @@ components:
                     width:
                       type: integer
                       default: 360
-                      description: 录制视频的宽度，单位为像素。`width` 不能超过 1920，且 `width` 和 `height` 的乘积不能超过 1920 * 1080，超过最大值会报错。
+                      description: 视频的宽度，单位为像素。`width` 不能超过 1920，且 `width` 和 `height` 的乘积不能超过 1920 * 1080，超过最大值会报错。
                     height:
                       type: integer
                       default: 640
-                      description: 录制视频的高度，单位为像素。`height` 不能超过 1920，且 `width` 和 `height` 的乘积不能超过 1920 * 1080，超过最大值会报错。
+                      description: 视频的高度，单位为像素。`height` 不能超过 1920，且 `width` 和 `height` 的乘积不能超过 1920 * 1080，超过最大值会报错。
                     fps:
                       type: integer
                       default: 15
-                      description: 录制视频的帧率，单位 fps。
+                      description: 视频的帧率，单位 fps。
                     bitrate:
                       type: integer
                       default: 500
-                      description: 录制视频的码率，单位 Kbps。
+                      description: 视频的码率，单位 Kbps。
                     maxResolutionUid:
                       type: string
                       description: 如果视频合流布局设为垂直布局，用该参数指定显示大视窗画面的用户 ID。
@@ -541,12 +547,12 @@ components:
                         `layoutConfig` 参数。
 
                         - 0: 悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多
-                        4 行，每行 4 个画面，最多支持共 17 个录制画面。
+                        4 行，每行 4 个画面，最多支持共 17 个画面。
 
-                        - 1：自适应布局。根据用户的数量自动调整每个画面的大小，每个用户的画面大小一致，最多支持 17 个录制画面。
+                        - 1：自适应布局。根据用户的数量自动调整每个画面的大小，每个用户的画面大小一致，最多支持 17 个画面。
 
                         - 2：垂直布局。指定一个用户在屏幕左侧显示大视窗画面，其他用户的小视窗画面在右侧垂直排列，最多两列，一列 8
-                        个画面，最多支持共 17 个录制画面。
+                        个画面，最多支持共 17 个画面。
 
                         - 3：自定义布局。设置 `layoutConfig` 参数自定义合流布局。
                       default: 0
@@ -607,18 +613,18 @@ components:
                             default: 0
                 subscribeVideoUids: 
                       type: array
-                      description: 由 UID 组成的数组，指定录制哪几个用户的视频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。  
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。  
 
-                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只录制参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                        
+                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只订阅参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                        
                       items:
                         type: string
                       maxLength: 32
                       example: ["123","456"]
                 subscribeAudioUids:
                       type: array
-                      description: 由 UID 组成的数组，指定录制哪几个用户的音频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。  
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。  
                       
-                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只录制参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                
+                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只订阅参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                
                       items:
                         type: string
                       maxLength: 32
@@ -634,6 +640,42 @@ components:
                         - 2：8 到 12 个 UID
                         
                         - 3：13 到 17 个 UID                    
+            recordingFileConfig:  
+              type: object
+              description: 录制文件的详细设置。
+              properties:
+                avFileType: 
+                  type: array
+                  default: ["hls"]
+                  description: 由多个字符串组成的数组，指定录制的视频文件类型。目前只支持默认值 ["hls"]，即录制生成 M3U8 和 TS 文件。
+                  items:
+                    type: string
+            snapshotConfig: 
+              type: object
+              description: 截图的详细设置。使用云端录制进行截图，需要注意以下参数的设置。设置错误会收到报错，或无法生成截图文件。
+
+                - 请求 URL 中的 `mode` 参数必须设为 `individual。`
+
+                - `不可设置 recordingFileConfig。`
+
+                - `streamType` 必须设置为 1 或 2
+
+                - 如果设置了 `subscribeAudioUid`，则必须同时设置 `subscribeVideoUids`。
+
+              required:
+                - fileType
+              properties:
+                captureInterval:
+                  type: integer
+                  default: 10
+                  minimum: 5
+                  maximum: 3600
+                  description: 截图周期（s），云端录制会按此周期定期截图。
+                fileType:
+                  type: array
+                  description: 指定截图的文件格式。目前只支持 ["jpg"]，即生成 JPG 截图文件。
+                  items:
+                    type: string
             storageConfig:
               type: object
               description: 第三方云存储的设置。
@@ -950,7 +992,7 @@ components:
           properties:
             fileListMode:
               type: string
-              description: 表示 `fileList` 字段的数据格式。
+              description: 表示 `fileList` 字段的数据格式。如果你设置了 `snapshotConfig`，则不会返回该字段。
               
                 - "string"：`fileList` 为 String 类型。合流模式下，`fileListMode` 为 `"string"`。
                 
@@ -958,7 +1000,7 @@ components:
               
             fileList:
               type: array
-              description: 当 `fileListMode` 为 `"string"` 时，`fileList` 为 String 类型，录制产生的 M3U8 文件的文件名。当 `fileListMode` 为 `"json"` 时, `fileList` 为 JSONArray 类型，由每个录制文件的具体信息组成的数组。
+              description: 当 `fileListMode` 为 `"string"` 时，`fileList` 为 String 类型，录制产生的 M3U8 文件的文件名。当 `fileListMode` 为 `"json"` 时, `fileList` 为 JSONArray 类型，由每个录制文件的具体信息组成的数组。如果你设置了 `snapshotConfig`，则不会返回该字段。
               items:
                 properties:
                   filename:
@@ -1040,8 +1082,7 @@ components:
           properties:
             fileListMode:
               type: string
-              description: 表示 `fileList` 字段的数据格式。
-              
+              description: 表示 `fileList` 字段的数据格式。如果你设置了 `snapshotConfig`，则不会返回该字段。              
               
                 - "string"：`fileList` 为 String 类型。合流模式下，`fileListMode` 为 `"string"`。
                 
@@ -1049,7 +1090,7 @@ components:
                 
             fileList:
               type: array
-              description: 当 `fileListMode` 为 `"string"` 时，`fileList` 为 String 类型，录制产生的 M3U8 文件的文件名。当 `fileListMode` 为 `"json"` 时, `fileList` 为 JSONArray 类型，由每个录制文件的具体信息组成的数组。
+              description: 当 `fileListMode` 为 `"string"` 时，`fileList` 为 String 类型，录制产生的 M3U8 文件的文件名。当 `fileListMode` 为 `"json"` 时, `fileList` 为 JSONArray 类型，由每个录制文件的具体信息组成的数组。如果你设置了 `snapshotConfig`，则不会返回该字段。
               items:
                 properties:
                   filename:
@@ -1116,39 +1157,78 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/start'
-          example:
-            cname: "httpClient463224"
-            uid: "527841"
-            clientRequest:
-              token: "<token if any>"
-              recordingConfig:
-                maxIdleTime: 30
-                streamTypes: 2
-                channelType: 0
-                videoStreamType: 0
-                transcodingConfig:
-                  height: 640
-                  width: 360
-                  bitrate: 500
-                  fps: 15
-                  mixedVideoLayout: 1
-                  backgroundColor: "#FF0000"
-                subscribeVideoUids:
-                    - "123"
-                    - "456"
-                subscribeAudioUids:
-                    - “123”
-                    - “456”
-                subscribeUidGroup: 0
-              storageConfig:
-                accessKey: "xxxxxxf"
-                region: 3
-                bucket: "xxxxx"
-                secretKey: "xxxxx"
-                vendor: 2
-                fileNamePrefix:
-                  - "directory1"
-                  - "directory2"
+          examples:
+            录制:
+              value:
+                cname: "httpClient463224"
+                uid: "527841"
+                clientRequest:
+                  token: "<token if any>"
+                  recordingConfig:
+                    maxIdleTime: 30
+                    streamTypes: 2
+                    channelType: 0
+                    videoStreamType: 0
+                    transcodingConfig:
+                      height: 640
+                      width: 360
+                      bitrate: 500
+                      fps: 15
+                      mixedVideoLayout: 1
+                      backgroundColor: "#FF0000"
+                    subscribeVideoUids:
+                        - "123"
+                        - "456"
+                    subscribeAudioUids:
+                        - “123”
+                        - “456”
+                    subscribeUidGroup: 0
+                  recordingFileConfig:
+                    avFileType: ["hls"]
+                  storageConfig:
+                    accessKey: "xxxxxxf"
+                    region: 3
+                    bucket: "xxxxx"
+                    secretKey: "xxxxx"
+                    vendor: 2
+                    fileNamePrefix:
+                      - "directory1"
+                      - "directory2"
+            截图:
+              value:
+                uid: "527841"
+                cname: "httpClient463224"
+                clientRequest: {
+                    token: "<token if any>",
+                    recordingConfig: {
+                        maxIdleTime: 30,
+                        streamTypes: 2,
+                        channelType": 0, 
+                        transcodingConfig: {
+                            height: 640, 
+                            width: 360,
+                            bitrate: 500, 
+                            fps: 15, 
+                            mixedVideoLayout: 1,
+                            backgroundColor: "#FF0000"
+                                    },
+                        subscribeVideoUids: ["123","456"], 
+                        subscribeAudioUids: ["123","456"],
+                        subscribeUidGroup: 0
+                    }, 
+                    snapshotConfig: {
+                        captureInterval: 5,
+                        fileType: ["jpg"]
+                    },
+                    storageConfig: {
+                        accessKey: "xxxxxxf",
+                        region: 3,
+                        bucket: "xxxxx",
+                        secretKey: "xxxxx",
+                        vendor: 2,
+                        fileNamePrefix: ["directory1","directory2"]
+                    }
+                }
       description: 该 API 需要在请求包体中传入以下参数。
       required: true
     updateLayout:
