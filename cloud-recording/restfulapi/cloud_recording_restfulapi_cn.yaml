@@ -51,7 +51,7 @@ info:
     <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
 
-  version: 2019.12.16
+  version: 2020.04.10
   title: 云端录制 RESTful API
 servers: 
   - url: https://api.agora.io
