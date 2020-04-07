@@ -1204,16 +1204,6 @@ components:
                         maxIdleTime: 30,
                         streamTypes: 2,
                         channelType": 0, 
-                        transcodingConfig: {
-                            height: 640, 
-                            width: 360,
-                            bitrate: 500, 
-                            fps: 15, 
-                            mixedVideoLayout: 1,
-                            backgroundColor: "#FF0000"
-                                    },
-                        subscribeVideoUids: ["123","456"], 
-                        subscribeAudioUids: ["123","456"],
                         subscribeUidGroup: 0
                     }, 
                     snapshotConfig: {
