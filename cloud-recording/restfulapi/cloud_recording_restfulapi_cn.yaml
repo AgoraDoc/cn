@@ -656,7 +656,7 @@ components:
 
                 - 请求 URL 中的 `mode` 参数必须设为 `individual。`
 
-                - `不可设置 recordingFileConfig。`
+                - 不可设置 `recordingFileConfig`。
 
                 - `streamType` 必须设置为 1 或 2
 
@@ -1203,7 +1203,7 @@ components:
                     recordingConfig: {
                         maxIdleTime: 30,
                         streamTypes: 2,
-                        channelType": 0, 
+                        channelType: 0, 
                         subscribeUidGroup: 0
                     }, 
                     snapshotConfig: {
