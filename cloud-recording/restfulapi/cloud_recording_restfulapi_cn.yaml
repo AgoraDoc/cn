@@ -84,7 +84,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#appid)。
       requestBody:
         $ref: '#/components/requestBodies/acquire'
       responses:
@@ -114,7 +114,7 @@ paths:
       operationId: start
       description: 获取 resource ID 后，调用该方法开始云端录制。当你成功调用 `start` 方法后，云端录制会执行如下操作：
 
-        1. 根据你的订阅设置（`recordingConfig`）订阅频道中的媒体流。
+        1. 根据你的[订阅](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#sub)设置（`recordingConfig`）订阅频道中的媒体流。
 
         2. 根据你的录制文件设置 （`recordingFileConfig`）将媒体流录制成指定的文件格式，或根据截图设置        （`snapshotConfig）`对视频流进行截图。
 
@@ -141,7 +141,11 @@ paths:
           schema:
             type: string
           description: >-
-              录制模式，支持单流模式 `individual` 和合流模式 `mix` （默认模式）。单流模式下，分开录制频道内每个 UID 的音频流和视频流，每个 UID 均有其对应的音频文件和视频文件。合流模式下，频道内所有 UID 的音视频混合录制为一个音视频文件。
+              录制模式，支持单流模式 `individual` 和合流模式 `mix` （默认模式）。
+              
+              - 单流模式下，分开录制频道内每个 UID 的音频流和视频流，每个 UID 均有其对应的音频文件和视频文件。
+              
+              - 合流模式下，频道内所有 UID 的音视频混合录制为一个音视频文件。
       requestBody:
         $ref: '#/components/requestBodies/start'
       responses:
@@ -443,7 +447,7 @@ components:
           properties:
             token:
               type: string
-              description: 用于鉴权的[动态密钥](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-namekeya%E5%8A%A8%E6%80%81%E5%AF%86%E9%92%A5)。如果待录制的频道使用了动态密钥，请务必在该参数中传入一个动态密钥，详见[校验用户权限](https://docs.agora.io/cn/cloud-recording/token?platform=All%20Platforms)。
+              description: 用于鉴权的[动态密钥](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#token)。如果待录制的频道使用了动态密钥，请务必在该参数中传入一个动态密钥，详见[校验用户权限](https://docs.agora.io/cn/cloud-recording/token?platform=All%20Platforms)。
             recordingConfig:
               type: object
               description: 媒体流订阅的详细设置。云端录制会根据此设置订阅频道内的媒体流，并生成录制文件或截图。
@@ -453,11 +457,11 @@ components:
               properties:
                 channelType:
                    type: integer
-                   description: 频道模式。频道模式必须与 Agora Native/Web SDK 的设置一致，否则可能导致问题。
+                   description: 频道场景。频道场景必须与 Agora RTC Native/Web SDK 的设置一致，否则可能导致问题。
                      
-                     - 0：通信模式
+                     - 0：通信场景
                      
-                     - 1：直播模式
+                     - 1：直播场景
                      
                    default: 0             
                 streamTypes:
@@ -485,13 +489,13 @@ components:
                   description: 启用解密模式后，设置的解密密码。     
                 audioProfile:
                   type: integer
-                  description: 设置输出音频的采样率，码率，编码模式和声道数。目前单流模式下不能设置该参数。
+                  description: 设置输出音频的采样率、码率、编码模式和声道数。目前单流模式下不能设置该参数。
                     
                     - 0：48 KHz 采样率，音乐编码，单声道，编码码率约 48 Kbps
                     
-                    - 1：48 KHz 采样率，音乐编码, 单声道，编码码率约 128 Kbps
+                    - 1：48 KHz 采样率，音乐编码，单声道，编码码率约 128 Kbps
                     
-                    - 2：48 KHz 采样率，音乐编码, 双声道，编码码率约 192 Kbps
+                    - 2：48 KHz 采样率，音乐编码，双声道，编码码率约 192 Kbps
                      
                   default: 0
                 videoStreamType:
