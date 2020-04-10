@@ -658,7 +658,7 @@ components:
               type: object
               description: 截图的详细设置。使用云端录制进行截图，需要注意以下参数的设置。设置错误会收到报错，或无法生成截图文件。
 
-                - 请求 URL 中的 `mode` 参数必须设为 `individual。`
+                - 请求 URL 中的 `mode` 参数必须设为 `individual`。
 
                 - 不可设置 `recordingFileConfig`。
 
