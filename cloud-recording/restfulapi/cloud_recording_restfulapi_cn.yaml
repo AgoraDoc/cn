@@ -662,7 +662,7 @@ components:
 
                 - 不可设置 `recordingFileConfig`。
 
-                - `streamType` 必须设置为 1 或 2
+                - `streamType` 必须设置为 1 或 2。
 
                 - 如果设置了 `subscribeAudioUid`，则必须同时设置 `subscribeVideoUids`。
 
