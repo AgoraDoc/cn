@@ -55,18 +55,14 @@ info:
     
     ## 数据格式
 
-    所有的请求都发送给域名：`api.agora.io`。
-
-    - 请求：请求的格式详见下面各个 API 中的示例。
-    
-    - 响应：响应内容的格式为 JSON。
+    所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。
       
 
-    ## 厂商事件查询的 API 调用步骤
+    ## API 调用步骤
 
-    - 查询用户上下线事件：直接调用 `user_events` 方法。
+    - 查询用户上线或下线事件：直接调用 `user_events` 方法。
 
-    - 查询用户上下线事件：直接调用 `channel_events` 方法。
+    - 查询用户加入或离开事件：直接调用 `channel_events` 方法。
 
 
 
@@ -79,7 +75,7 @@ info:
       | :----- | :------------------------------------------- |
       | 200    | 请求成功。    |
       | 400    | 请求的语法错误（如参数错误）。请根据返回提示检查。    |
-      | 408    | <li>厂商事件查询：服务器请求超时或服务器无响应，建议稍后重试。</li><li>历史消息查询：成功请求并创建了新的资源。</li>  |
+      | 408    | 服务器请求超时或服务器无响应，建议稍后重试。  |
 
     ## 调试 RESTful API
 
@@ -99,9 +95,9 @@ paths:
     get:
       tags:
       - "获取用户事件"
-      summary: 获取用户上线下线事件
+      summary: 获取用户上线或下线事件
       operationId: user_events   
-      description: 该方法从 Agora RTM 服务器指定的地址获取用户上线下线事件。
+      description: 该方法从 Agora RTM 服务器指定的地址获取用户上线或下线事件。
 
           <div class="warning-msg">
             <i class="fa fa-warning"></i> 注意事项：<ul>
@@ -115,7 +111,7 @@ paths:
         - $ref: '#/components/parameters/appid'
       responses:
         '200':
-          description: 成功从 Agora RTM 服务器指定的地址获取用户上线下线事件。
+          description: 成功从 Agora RTM 服务器指定的地址获取用户上线或下线事件。
           content:
             application/json:
               schema:
@@ -129,9 +125,9 @@ paths:
     get:
       tags:
       - "获取频道事件"
-      summary: 获取用户加入离开频道事件
+      summary: 获取用户加入或离开频道事件
       operationId: channel_events
-      description: 该方法从 Agora RTM 服务器指定的地址获取用户加入离开频道事件。
+      description: 该方法从 Agora RTM 服务器指定的地址获取用户加入或离开频道事件。
       
           <div class="warning-msg">
             <i class="fa fa-warning"></i>
@@ -145,7 +141,7 @@ paths:
         - $ref: '#/components/parameters/appid'
       responses:
         '200':
-          description: 成功获取用户加入离开频道事件。
+          description: 成功获取用户加入或离开频道事件。
           content:
             application/json:
               schema:
@@ -179,7 +175,7 @@ components:
           description: 本次请求唯一的 ID。
         events:
           type: object
-          description: 用户上线下线事件。
+          description: 用户上线或下线事件。
           $ref: '#/components/schemas/user_events'
 
     user_events:
@@ -217,7 +213,7 @@ components:
           description: 本次请求唯一的 ID。
         events:
           type: object
-          description: 用户上线下线事件。
+          description: 用户上线或下线事件。
           $ref: '#/components/schemas/channel_events'
     channel_events:
       type: object
