@@ -100,7 +100,7 @@ paths:
       description: 该方法从 Agora RTM 服务器指定的地址获取用户上线或下线事件。
 
           <div class="warning-msg">
-            <i class="fa fa-warning"></i> 注意事项：<ul>
+          <i class="fa fa-warning"></i> 注意事项：<ul>
           <li>RTM 后台最多存储 2000 条事件。</li>
           <li>单次返回最多 1000 条事件。</li>
           <li>我们对事件按地理区域缓存，因此不保证来自不同地理区域的事件的事件顺序的正确性。</li>
@@ -130,7 +130,7 @@ paths:
       description: 该方法从 Agora RTM 服务器指定的地址获取用户加入或离开频道事件。
       
           <div class="warning-msg">
-            <i class="fa fa-warning"></i>
+            <i class="fa fa-warning"></i> 注意事项：<ul>
             <li>RTM 后台最多存储 2000 条事件。</li>
             <li>单次返回最多 1000 条事件。</li>
             <li>我们对事件按区域缓存，因此不保证来自不同区域的事件的事件顺序的正确性。</li>
