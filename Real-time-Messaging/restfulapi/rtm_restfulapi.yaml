@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
 
   description: >
-    实时消息 RESTful API 目前支持厂商事件查询。你可以使用该功能查询用户事件和频道事件。
+    你可以使用实时消息 RESTful API 查询用户事件和频道事件。
 
   
       <div class="info-msg">
