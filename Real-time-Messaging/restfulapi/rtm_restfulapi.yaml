@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
 
   description: >
-    你可以使用实时消息 RESTful API 查询用户事件和频道事件。
+    你可以使用 Agora RTM RESTful API 查询用户事件和频道事件。
 
   
       <div class="info-msg">
@@ -11,7 +11,7 @@ info:
     
     ## 认证
 
-    实时消息 RESTful API 仅支持 HTTPS 协议。你可以使用以下任意一种认证方式：
+    Agora RTM RESTful API 仅支持 HTTPS 协议。你可以使用以下任意一种认证方式：
 
     <li><a href="#basicauth">Basic 认证</a></li>
     <li><a href="#tokenauth">Token 认证</a></li>
@@ -68,7 +68,7 @@ info:
 
     ## 响应状态码
 
-    下表列出实时消息 RESTful API 常见 HTTP 响应状态码：
+    下表列出 Agora RTM RESTful API 常见 HTTP 响应状态码：
     
 
       | 状态码 | 描述                                           |
@@ -82,7 +82,7 @@ info:
     你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
   version: Beta
-  title: 实时消息 RESTful API
+  title: Agora RTM RESTful API
 servers: 
   - url: https://api.agora.io
     description: Official Environment
