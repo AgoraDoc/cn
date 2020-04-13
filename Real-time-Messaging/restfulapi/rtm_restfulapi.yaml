@@ -68,7 +68,7 @@ info:
 
     ## 响应状态码
 
-    下表列出 Agora RTM RESTful API 常见 HTTP 响应状态码：
+    下表列出了 Agora RTM RESTful API 常见 HTTP 响应状态码：
     
 
       | 状态码 | 描述                                           |
