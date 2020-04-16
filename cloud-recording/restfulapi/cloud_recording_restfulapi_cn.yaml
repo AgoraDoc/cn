@@ -508,7 +508,7 @@ components:
                   type: object
                   description: >-
                     视频转码的详细设置。仅适用于合流模式，单流模式下不能设置该参数。如果不设置将使用默认值。如果设置该参数，请务必填入
-                    `width`、`height`、`fps` 和 `bitrate` 字段。请参考[如何设置录制视频的分辨率](https://docs.agora.io/cn/faq/recording_video_profile)设置该参数。
+                    `width`、`height`、`fps` 和 `bitrate` 字段。请参考[设置输出视频属性](https://docs.agora.io/cn/cloud-recording/recording_video_profile)设置该参数。
                   required:
                     - width
                     - height
