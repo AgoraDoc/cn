@@ -537,7 +537,7 @@ components:
                     mixedVideoLayout:
                       type: integer
                       description: >-
-                        设置视频合流布局，`0`、`1`、`2` 为[预设的合流布局](https://docs.agora.io/cn/cloud-recording/cloud_layout_guide?platform=Linux)，`3` 为自定义合流布局。该参数设为 `3` 时必须设置
+                        设置视频合流布局，`0`、`1`、`2` 为[预设的合流布局](https://docs.agora.io/cn/cloud-recording/cloud_recording_layout?platform=Linux)，`3` 为自定义合流布局。该参数设为 `3` 时必须设置
                         `layoutConfig` 参数。
 
                         - 0: 悬浮布局。第一个加入频道的用户在屏幕上会显示为大视窗，铺满整个画布，其他用户的视频画面会显示为小视窗，从下到上水平排列，最多
