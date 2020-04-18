@@ -2,16 +2,10 @@ openapi: 3.0.0
 info:
 
   description: >
-    你可以使用 Agora RTM RESTful API 查询用户事件和频道事件。
-
-  
-      <div class="info-msg">
-        <i class="fa fa-info-circle"></i> 注意事项：对于每个 App ID， RESTful API 每秒钟的请求数不能超过 10 次。
-      </div>
     
     ## 认证
 
-    Agora RTM RESTful API 仅支持 HTTPS 协议。你可以使用以下任意一种认证方式：
+    实时消息 RESTful API 仅支持 HTTPS 协议。你可以使用以下任意一种认证方式：
 
     <li><a href="#basicauth">Basic 认证</a></li>
     <li><a href="#tokenauth">Token 认证</a></li>
@@ -68,7 +62,7 @@ info:
 
     ## 响应状态码
 
-    下表列出了 Agora RTM RESTful API 常见 HTTP 响应状态码：
+    下表列出了实时消息 RESTful API 常见 HTTP 响应状态码：
     
 
       | 状态码 | 描述                                           |
@@ -82,7 +76,7 @@ info:
     你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
   version: Beta
-  title: Agora RTM RESTful API
+  title: 实时消息 RESTful API
 servers: 
   - url: https://api.agora.io
     description: Official Environment
@@ -101,10 +95,11 @@ paths:
 
           <div class="warning-msg">
           <i class="fa fa-warning"></i> 注意事项：<ul>
+          <li>对于每个 App ID， RESTful API 每秒钟的请求数不能超过 10 次。</li>
           <li>RTM 后台最多存储 2000 条事件。</li>
           <li>单次返回最多 1000 条事件。</li>
-          <li>我们对事件按地理区域缓存，因此不保证来自不同地理区域的事件的事件顺序的正确性。</li>
-          <li>我们只在同一地理区域内同步事件，不在地理区域间同步。所以，你从某地理区域拉取了事件后，如果你从另一个区域再次拉取仍然会得到相同的事件。</li></ul>
+          <li>我们对事件按地理区域缓存，因此不保证来自不同地理区域（跨国或者跨洲）的事件的事件顺序的正确性。</li>
+          <li>我们只在同一地理区域内同步事件，不在地理区域间同步。所以，你从某地理区域拉取了事件后，如果你从另一个区域再次拉取可能会得到相同的事件。</li></ul>
           </div>
 
       parameters:
@@ -131,6 +126,7 @@ paths:
       
           <div class="warning-msg">
             <i class="fa fa-warning"></i> 注意事项：<ul>
+            <li>对于每个 App ID， RESTful API 每秒钟的请求数不能超过 10 次。</li>
             <li>RTM 后台最多存储 2000 条事件。</li>
             <li>单次返回最多 1000 条事件。</li>
             <li>我们对事件按区域缓存，因此不保证来自不同区域的事件的事件顺序的正确性。</li>
