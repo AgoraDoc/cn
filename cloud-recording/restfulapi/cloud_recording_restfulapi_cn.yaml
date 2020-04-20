@@ -206,7 +206,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 录制模式，支持单流模式 individual 和合流模式 mix （默认模式）。
+          description: 录制模式，仅支持合流模式 mix （默认模式）。
       requestBody:
         $ref: '#/components/requestBodies/updateLayout'       
       responses:
