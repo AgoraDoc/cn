@@ -2,16 +2,10 @@ openapi: 3.0.0
 info:
 
   description: >
-    实时消息 RESTful API 目前支持厂商事件查询。你可以使用该功能查询用户事件和频道事件。
-
-  
-      <div class="info-msg">
-        <i class="fa fa-info-circle"></i> 注意事项：厂商事件查询 RESTful API 的 qps 限制为：每个 App ID 每秒 10 次。
-      </div>
     
     ## 认证
 
-    实时消息 RESTful API 仅支持 HTTPS 协议。你可以通过以下任意一种认证方式：
+    实时消息 RESTful API 仅支持 HTTPS 协议。你可以使用以下任意一种认证方式：
 
     <li><a href="#basicauth">Basic 认证</a></li>
     <li><a href="#tokenauth">Token 认证</a></li>
@@ -55,33 +49,31 @@ info:
     
     ## 数据格式
 
-    所有的请求都发送给域名：`api.agora.io`。
-
-    - 请求：请求的格式详见下面各个 API 中的示例。
-    
-    - 响应：响应内容的格式为 JSON。
+    所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。
       
 
-    ## 厂商事件查询的 API 调用步骤
+    ## API 调用步骤
 
-    - 查询用户上下线事件：直接调用 `user_events` 方法。
+    - 查询用户上线或下线事件：直接调用 `user_events` 方法。
 
-    - 查询用户上下线事件：直接调用 `channel_events` 方法。
+    - 查询用户加入或离开事件：直接调用 `channel_events` 方法。
 
 
 
     ## 响应状态码
 
-    下表列出实时消息 RESTful API 常见 HTTP 响应状态码：
+    下表列出了实时消息 RESTful API 常见 HTTP 响应状态码：
     
 
       | 状态码 | 描述                                           |
       | :----- | :------------------------------------------- |
       | 200    | 请求成功。    |
-      | 400    | 请求的语法错误（如参数错误）。请根据返回提示检查。    |
-      | 408    | <li>厂商事件查询：服务器请求超时或服务器无响应，建议稍后重试。</li><li>历史消息查询：成功请求并创建了新的资源。</li>  |
-      | 410    | 资源已经失效，请重新调用 POST 方法创建新的查询资源。                     |
+      | 400    | 请求的语法错误。    |
+      | 408    | 服务器请求超时或服务器无响应。  |
 
+    ## 调试 RESTful API
+
+    你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
   version: Beta
   title: 实时消息 RESTful API
@@ -96,24 +88,25 @@ paths:
   /dev/v2/project/{appid}/rtm/vendor/user_events:
     get:
       tags:
-      - "实时消息-厂商事件"
-      summary: 获取用户上下线事件
+      - "获取用户事件"
+      summary: 获取用户上线或下线事件
       operationId: user_events   
-      description: 该方法从 Agora RTM 服务器指定的地址获取用户上下线事件。
+      description: 该方法从 Agora RTM 服务器指定的地址获取用户上线或下线事件。
 
           <div class="warning-msg">
-            <i class="fa fa-warning"></i> 注意事项：<ul>
+          <i class="fa fa-warning"></i> 注意事项：<ul>
+          <li>每个 App ID 每秒钟的请求数不能超过 10 次。</li>
           <li>RTM 后台最多存储 2000 条事件。</li>
           <li>单次返回最多 1000 条事件。</li>
-          <li>我们对事件按区域缓存，因此不保证来自不同区域的事件的事件顺序的正确性。</li>
-          <li>我们只在同一区域内同步事件，不在区域间同步。所以，你从某区域拉取了事件后，如果你从另一个区域再次拉取仍然会得到相同的事件。</li></ul>
+          <li>Agora 对事件按地理区域缓存，因此不保证来自不同地理区域（跨国或者跨洲）的事件的事件顺序的正确性。</li>
+          <li>Agora 只在同一地理区域内同步事件，不在地理区域间同步。所以，你从某地理区域拉取了事件后，如果你从另一个区域再次拉取可能会得到相同的事件。</li></ul>
           </div>
 
       parameters:
         - $ref: '#/components/parameters/appid'
       responses:
         '200':
-          description: 成功从 Agora RTM 服务器指定的地址获取用户上下线事件。
+          description: 成功从 Agora RTM 服务器指定的地址获取用户上线或下线事件。
           content:
             application/json:
               schema:
@@ -126,24 +119,25 @@ paths:
   /dev/v2/project/{appid}/rtm/vendor/channel_events:
     get:
       tags:
-      - "实时消息-厂商事件"
-      summary: 获取频道登入登出事件 API
+      - "获取频道事件"
+      summary: 获取用户加入或离开频道事件
       operationId: channel_events
-      description: 该方法从 Agora RTM 服务器指定的地址获取获取频道登入登出事件。
+      description: 该方法从 Agora RTM 服务器指定的地址获取用户加入或离开频道事件。
       
           <div class="warning-msg">
-            <i class="fa fa-warning"></i>
+            <i class="fa fa-warning"></i> 注意事项：<ul>
+            <li>每个 App ID 每秒钟的请求数不能超过 10 次。</li>
             <li>RTM 后台最多存储 2000 条事件。</li>
             <li>单次返回最多 1000 条事件。</li>
-            <li>我们对事件按区域缓存，因此不保证来自不同区域的事件的事件顺序的正确性。</li>
-            <li>我们只在同一区域内同步事件，不在区域间同步。所以，你从某区域拉取了事件后，如果你从另一个区域再次拉取仍然会得到相同的事件。</li>
+            <li>Agora 对事件按地理区域缓存，因此不保证来自不同地理区域（跨国或者跨洲）的事件的事件顺序的正确性。</li>
+            <li>Agora 只在同一地理区域内同步事件，不在地理区域间同步。所以，你从某地理区域拉取了事件后，如果你从另一个区域再次拉取可能会得到相同的事件。</li>
           </div> 
         
       parameters:
         - $ref: '#/components/parameters/appid'
       responses:
         '200':
-          description: 成功获取频道登入登出事件。
+          description: 成功获取用户加入或离开频道事件。
           content:
             application/json:
               schema:
@@ -159,143 +153,6 @@ paths:
 
 components:
   schemas:
-    message_history_query_response:
-      type: object
-      properties:
-        result:
-          type: string
-          description: 请求结果。
-        offset:
-          type: integer
-          description: 当前时间段内的消息偏移量。
-        limit:
-          type: integer
-          description: 单页历史消息条数。
-        location:
-          type: string
-          description: 历史消息资源地址。你可以从这个 URL 调用 GET 方法 获取查询结果。
-        
-    message_history:
-      type: object
-      required:
-        - filter
-        - offset
-        - limit
-        - order
-      properties:
-        filter:
-          type: object
-          description: >-
-            筛选条件
-
-            <div class="info-msg">
-              <i class="fa fa-info-circle"></i><sup>1</sup> source 和 destination 的匹配原则详见下表：
-            </div>
-
-              | `source` | `destination` | 说明                                          |
-              | :------- | :------------ | :-------------------------------------------- |
-              | null     | null          | `source` 和 `destination` 不得同时为空。        |
-              | null     | UserA         | UserA 在指定时间内收到的所有消息。                |
-              | null     | ChannelA      | ChannelA 在指定时间段内收到的所有频道消息。        |
-              | UserA    | null          | UserA 在指定时间段内发送的所有消息。               |
-              | channelA | 任意字符串      | 返回空值。                                     |
-              | UserA    | UserB         | UserA 在指定时间段内发送给 UserB 的所有点对点消息。 |
-              | UserA    | ChannelA      | UserA 在指定时间段内发送到 ChannelA 的所有频道消息。|
-
-          properties:
-            source:
-              type: string
-              description: （视情况）消息发送方。<sup>1</sup>
-            destination:
-              type: string  
-              description: （视情况）消息接收方。<sup>1</sup>
-            start_time:
-              type: string
-              description: （必选）历史消息查询起始时间。使用 [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) 标准为 UTC 时间。
-            end_time:
-              type: string
-              description: （必选）历史消息查询结束时间。使用 [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) 标准为 UTC 时间。      
-        offset:
-          type: integer
-          description: 当前时间段内的消息偏移量。
-        limit:
-          type: integer
-          description: 单页历史消息条数。可选值：<ul><li>20</li><li>50</li><li>100</li></ul>  
-        order:
-          type: string
-          description: （可选）排序方法 <ul><li> 按时间顺序（默认）： asc </li><li>按时间倒序： desc </li></ul>
-    count:
-      type: object
-      properties:
-        source:
-          type: string
-          description: （视情况）消息发送方。<sup>1</sup>
-        destination:
-          type: string  
-          description: （视情况）消息接收方。<sup>1</sup>
-        start_time:
-          type: string
-          description: （必选）历史消息查询起始时间。使用 [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) 标准为 UTC 时间。
-        end_time:
-          type: string
-          description: （必选）历史消息查询结束时间。使用 [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) 标准为 UTC 时间。
-    count_response:
-      type: object
-      properties:
-        result:
-          type: string
-          description: 本次请求结果
-        code:
-          type: string
-          description: >-
-            资源准备情况：
-
-            - 资源准备完成： "ok"
-
-            - 资源还未准备完成，请稍后重试： "in progress" <sup>2</sup>
-
-            <div class="info-msg">
-                <i class="fa fa-info-circle"></i><sup>2</sup> 当服务器返回 "in progress" 时，请间隔 2 秒再发起 count 请求。
-            </div> 
-        count:
-          type: integer
-          description: 历史消息数目。 
-    get_response:
-      type: object
-      properties:
-        result:
-          type: string
-          description: 本次请求结果
-        code:
-          type: string
-          description: >-
-            资源准备情况：
-
-            - 资源准备完成： "ok"
-
-            - 资源还未准备完成，请稍后重试： "in progress" <sup>2</sup>
-
-            <div class="info-msg">
-                <i class="fa fa-info-circle"></i><sup>2</sup> 当服务器返回 "in progress" 时，请间隔 2 秒再发起 count 请求。
-            </div> 
-        message:
-          type: array
-          items:
-            type: object
-            properties:
-              src:
-                type: string
-                description: 消息发送方。
-              dst:
-                type: string
-                description: 消息接收方。
-              payload:
-                type: string
-                description: 消息体。当前版本仅支持文本消息。
-              ts:
-                type: string
-                description: 服务器接收时间。使用 [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) 标准为 UTC 时间。
-               
     
     user_event_response:
       type: object
@@ -314,7 +171,7 @@ components:
           description: 本次请求唯一的 ID。
         events:
           type: object
-          description: 用户登录登出事件。
+          description: 用户上线或下线事件。
           $ref: '#/components/schemas/user_events'
 
     user_events:
@@ -328,9 +185,9 @@ components:
            description: >-
              事件类型：
 
-             - "Login": 用户登录（上线）事件；
+             - "Login": 用户上线事件；
 
-             - "Logout": 用户登出（下线）事件。
+             - "Logout": 用户下线事件。
 
          ts: 
            type: integer
@@ -352,7 +209,7 @@ components:
           description: 本次请求唯一的 ID。
         events:
           type: object
-          description: 用户登录登出事件。
+          description: 用户上线或下线事件。
           $ref: '#/components/schemas/channel_events'
     channel_events:
       type: object
@@ -384,35 +241,8 @@ components:
       schema:
         type: string
 
-    handle:
-      name: handle
-      in: path
-      required: true
-      description: >-
-        历史消息查询资源，可以从历史消息 `query` 方法的响应包体的 `location` 字段获取。
-      schema:
-        type: string
 
 
-  requestBodies:
-    message_history:
-      content: 
-        application/json:
-          schema:
-            $ref: '#/components/schemas/message_history'    
-          example:
-            filter: { source: "src_account", description: "dst_account", start_time: "2019-08-01T01:22:10Z", end_time: "2019-08-01T01:32:10Z" } 
-            offset: 100
-            limit: 20
-            order: asc   
-
-    count:
-      content: 
-        application/json:
-          schema:
-            $ref: '#/components/schemas/count' 
-          example:
-            
 
 
   securitySchemes:
