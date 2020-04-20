@@ -56,7 +56,7 @@ info:
 
     - 查询用户上线或下线事件：直接调用 `user_events` 方法。
 
-    - 查询用户加入或离开事件：直接调用 `channel_events` 方法。
+    - 查询用户加入或离开频道事件：直接调用 `channel_events` 方法。
 
 
 
