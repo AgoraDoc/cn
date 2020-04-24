@@ -18,7 +18,7 @@ info:
     
       - `api_secret`: Customer Certificate
 
-      你可以在控制台的 [RESTful API](https://console.agora.io/restful?_ga=2.175816613.605592384.1576459020-1595988498.1574647397) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
+      你可以在控制台的 [RESTful API](https://console.agora.io/restfulApi) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
       Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
 
       ### <a name="tokenauth"></a>Token 认证
@@ -54,9 +54,9 @@ info:
 
     ## API 调用步骤
 
-    - 查询用户上线或下线事件：直接调用 `user_events` 方法。
+    - 查询用户上线或下线事件：调用 `user_events` 方法。
 
-    - 查询用户加入或离开频道事件：直接调用 `channel_events` 方法。
+    - 查询用户加入或离开频道事件：调用 `channel_events` 方法。
 
 
 
