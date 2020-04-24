@@ -845,7 +845,7 @@ components:
                   description: 第三方云存储的 bucket。
                 accessKey:
                   type: string
-                  description: 第三方云存储的 access key。
+                  description: 第三方云存储的 access key。建议提供只写权限的访问密钥。
                 secretKey:
                   type: string
                   description: 第三方云存储的 secret key。
