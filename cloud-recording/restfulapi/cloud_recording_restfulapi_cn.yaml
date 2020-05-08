@@ -76,7 +76,7 @@ paths:
     
         调用该方法成功后，你可以从 HTTP 响应包体中的 `resourceId` 字段得到一个 resource ID。这个 resource ID 的时效为 5 分钟，你需要在 5 分钟内用这个 resource ID 去调用开始云端录制的 API。
 
-        <div class="info-msg">注意事项：<ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 App ID 每秒钟的请求数限制为 10 次。如需提高此限制，请联系 <a href="mailto:support@agora.io">support@agora.io</a>。</li></ul></div>   
+        <div class="info-msg">注意事项：<ul><li>一个 resource ID 只能用于一次云端录制服务。</li><li>每个 App ID 每秒钟的请求数限制为 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</li></ul></div>   
       
       parameters:
         - in: path
