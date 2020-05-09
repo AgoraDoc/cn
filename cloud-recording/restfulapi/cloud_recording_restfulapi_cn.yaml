@@ -701,6 +701,9 @@ components:
                     - 2：[阿里云](https://www.aliyun.com/product/oss)
                     
                     - 3：[腾讯云](https://cloud.tencent.com/product/cos)
+
+                    - 4：[金山云](https://www.ksyun.com/post/product/KS3.html)
+
                 region:
                   type: integer
                   description: 第三方云存储指定的地区信息。
@@ -839,6 +842,29 @@ components:
                       - 18：EU_Frankfurt 
                       
                       - 19：EU_Moscow
+
+                     
+                     当 `vendor` = 4，即第三方云存储为金山云时：
+
+                      - 0：CN_Hangzhou
+                      
+                      - 1：CN_Shanghai
+                      
+                      - 2：CN_Qingdao
+                      
+                      - 3：CN_Beijing
+                      
+                      - 4：CN_Guangzhou
+                      
+                      - 5：CN_Hongkong
+                      
+                      - 6：JR_Beijing
+                      
+                      - 7：JR_Shanghai
+                      
+                      - 8：NA_Russia_1
+                      
+                      - 9：NA_Singapore_1
 
                 bucket:
                   type: string
