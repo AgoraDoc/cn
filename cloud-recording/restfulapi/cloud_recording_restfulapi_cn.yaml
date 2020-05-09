@@ -286,21 +286,21 @@ paths:
                       filename: "xxx.m3u8",
                       trackType: "audio_and_video",
                       uid: "123",
-                      mixedAllUser: "true",
-                      isPlayable: "true",
-                      sliceStartTime: "1562724971626"
+                      mixedAllUser: true,
+                      isPlayable: true,
+                      sliceStartTime: 1562724971626
                     },  
                     {
                       filename: "xxx.m3u8",
                       trackType: "audio_and_video",
                       uid: "456",
-                      mixedAllUser: "true",
-                      isPlayable: "true",
-                      sliceStartTime: "1562724971626"
+                      mixedAllUser: true,
+                      isPlayable: true,
+                      sliceStartTime: 1562724971626
                    }
                    ]
                   status: "5"
-                  sliceStartTime: "1562724971626"
+                  sliceStartTime: 1562724971626
         '206':
           $ref: '#/components/responses/206' 
         '400':
@@ -368,17 +368,17 @@ paths:
                       filename: "xxx.m3u8",
                       trackType: "audio_and_video",
                       uid: "123",
-                      mixedAllUser: "true",
-                      isPlayable: "true",
-                      sliceStartTime: "1562724971626"
+                      mixedAllUser: true,
+                      isPlayable: true,
+                      sliceStartTime: 1562724971626
                     },  
                     {
                       filename: "xxx.m3u8",
                       trackType: "audio_and_video",
                       uid: "456",
-                      mixedAllUser: "true",
-                      isPlayable: "true",
-                      sliceStartTime: "1562724971626"
+                      mixedAllUser: true,
+                      isPlayable: true,
+                      sliceStartTime: 1562724971626
                    }
                    ]
                   uploadingStatus: "uploaded"
@@ -1024,23 +1024,23 @@ components:
                     type: string
                     description: 用户 UID，表示录制的是哪个用户的音频流或视频流。
                   mixedAllUser:
-                    type: string
+                    type: boolean
                     description: 用户是否是分开录制的。
                     
-                      - "true"：所有用户合并在一个录制文件中。
+                      - true：所有用户合并在一个录制文件中。
                       
-                      - "false"：每个用户分开录制。
+                      - false：每个用户分开录制。
                       
                   isPlayable:
-                    type: string
+                    type: boolean
                     description: 是否可以在线播放。
                   
-                      - "true"：可以在线播放。
+                      - true：可以在线播放。
                       
-                      - "false"：无法在线播放。
+                      - false：无法在线播放。
                       
                   sliceStartTime:
-                    type: string
+                    type: integer
                     description: 该文件的录制开始时间，Unix 时间戳，单位为毫秒。
             status:
               type: integer
@@ -1069,7 +1069,7 @@ components:
                 
                 
             sliceStartTime:
-             type: string
+             type: integer
              description: 录制开始的时间，Unix 时间戳，单位为毫秒。
     stop_response:
       type: object
@@ -1114,24 +1114,24 @@ components:
                     type: string
                     description: 用户 UID，表示录制的是哪个用户的音频流或视频流。
                   mixedAllUser:
-                    type: string
+                    type: boolean
                     description: 用户是否是分开录制的。
                     
-                      - "true"：所有用户合并在一个录制文件中。
+                      - true：所有用户合并在一个录制文件中。
                       
-                      - "false"：每个用户分开录制。
+                      - false：每个用户分开录制。
                       
                   isPlayable:
-                    type: string
+                    type: boolean
                     description: 是否可以在线播放。
                   
                   
-                      - "true"：可以在线播放。
+                      - true：可以在线播放。
                       
-                      - "false"：无法在线播放。
+                      - false：无法在线播放。
                       
                   sliceStartTime:
-                    type: string
+                    type: integer
                     description: 该文件的录制开始时间，Unix 时间戳，单位为毫秒。
             uploadingStatus:
               type: string
