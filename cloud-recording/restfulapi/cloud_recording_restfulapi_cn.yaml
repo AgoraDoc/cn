@@ -713,7 +713,7 @@ components:
                       example: ["345","789"]                      
                 subscribeUidGroup:
                       type: integer
-                      description: 预估的订阅人数峰值。在单流模式下，为必填参数。举例来说，如果 `subscribeVideoUids` 为 `["100","101","102"]`，`subscribeAudioUids` 为 `["101","102","103"]`，则订阅人数为 4 人。
+                      description: 预估的订阅人数峰值。**在单流模式下，为必填参数**。举例来说，如果 `subscribeVideoUids` 为 `["100","101","102"]`，`subscribeAudioUids` 为 `["101","102","103"]`，则订阅人数为 4 人。
 
                         - 0：1 到 2 个 UID
                         
