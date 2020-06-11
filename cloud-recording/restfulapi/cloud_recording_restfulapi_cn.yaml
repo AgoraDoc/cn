@@ -51,7 +51,7 @@ info:
     <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
 
-  version: 2020.04.10
+  version: 2020.06.12
   title: 云端录制 RESTful API
 servers: 
   - url: https://api.agora.io
@@ -677,36 +677,36 @@ components:
                             default: 0
                 subscribeVideoUids: 
                       type: array
-                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。不推荐使用空数组。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
 
-                        <div class="warning-msg"><i class="fa fa-warning"></i> <ul><li>如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。</li><li>如果你设置了视频的订阅名单，但没有设置音频的订阅名单，云端录制服务不会订阅任何音频流。</li></ul></div>                        
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i> <ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>0</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了视频的订阅名单，但没有设置音频的订阅名单，云端录制服务不会订阅任何音频流。</li></ul></div>                        
                       items:
                         type: string
                       maxLength: 32
                       example: ["123","456"]
                 unSubscribeVideoUids:
                       type: array
-                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的视频流。云端录制会订阅频道内除指定 UID 外所有 UID 的视频流。不推荐使用空数组。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的视频流。云端录制会订阅频道内除指定 UID 外所有 UID 的视频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
                       
-                        <div class="warning-msg"><i class="fa fa-warning"></i> <ul><li>如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。</li><li>如果你设置了视频的订阅名单，但没有设置音频的订阅名单，云端录制服务不会订阅任何音频流。</li></ul></div>                
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i> <ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>0</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了视频的订阅名单，但没有设置音频的订阅名单，云端录制服务不会订阅任何音频流。</li></ul></div>                
                       items:
                         type: string
                       maxLength: 32
                       example: ["345","789"] 
                 subscribeAudioUids:
                       type: array
-                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。不推荐使用空数组。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
                       
-                        <div class="warning-msg"><i class="fa fa-warning"></i> <ul><li>如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。</li><li>如果你设置了音频的订阅名单，但没有设置视频的订阅名单，云端录制服务不会订阅任何视频流。</li></ul></div>                
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i> <ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>1</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了音频的订阅名单，但没有设置视频的订阅名单，云端录制服务不会订阅任何视频流。</li></ul></div>                
                       items:
                         type: string
                       maxLength: 32
                       example: ["123","456"]   
                 unSubscribeAudioUids:
                       type: array
-                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的音频流。云端录制会订阅频道内除指定 UID 外所有 UID 的音频流。不推荐使用空数组。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的音频流。云端录制会订阅频道内除指定 UID 外所有 UID 的音频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
                       
-                        <div class="warning-msg"><i class="fa fa-warning"></i><ul><li>如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。</li><li>如果你设置了音频的订阅名单，但没有设置视频的订阅名单，云端录制服务不会订阅任何视频流。</li></ul></div>                
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i><ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>1</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了音频的订阅名单，但没有设置视频的订阅名单，云端录制服务不会订阅任何视频流。</li></ul></div>                
                       items:
                         type: string
                       maxLength: 32
@@ -992,14 +992,14 @@ components:
               properties:
                subscribeAudioUids:
                       type: array
-                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。数组不可为空。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。 
                       items:
                         type: string
                       maxLength: 32
                       example: ["123","456"]   
                unSubscribeAudioUids:
                       type: array
-                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的音频流。云端录制会订阅频道内除指定 UID 外所有 UID 的音频流。数组不可为空。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。     
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的音频流。云端录制会订阅频道内除指定 UID 外所有 UID 的音频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。     
                       items:
                         type: string
                       maxLength: 32
@@ -1010,14 +1010,14 @@ components:
               properties:
                 subscribeVideoUids: 
                       type: array
-                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。数组不可为空。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。                    
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。                    
                       items:
                         type: string
                       maxLength: 32
                       example: ["123","456"]
                 unSubscribeVideoUids:
                       type: array
-                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的视频流。云端录制会订阅频道内除指定 UID 外所有 UID 的视频流。数组不可为空。详见[设置订阅名单](https://docs-preview.agoralab.co/cn/cloud-recording/cloud_recording_subscription?platform=All%20Platforms&versionId=6e88cc30-aa61-11ea-aa07-c5bcc14a9a95)。                 
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的视频流。云端录制会订阅频道内除指定 UID 外所有 UID 的视频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。                 
                       items:
                         type: string
                       maxLength: 32
