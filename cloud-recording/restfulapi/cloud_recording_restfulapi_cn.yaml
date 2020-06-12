@@ -51,7 +51,7 @@ info:
     <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
 
 
-  version: 2020.04.10
+  version: 2020.06.12
   title: 云端录制 RESTful API
 servers: 
   - url: https://api.agora.io
@@ -165,6 +165,66 @@ paths:
           $ref: '#/components/responses/400' 
         '401':
           $ref: '#/components/responses/401' 
+        '500':
+          $ref: '#/components/responses/500' 
+        '504':
+          $ref: '#/components/responses/504' 
+  /v1/apps/{appid}/cloud_recording/resourceid/{resourceid}/sid/{sid}/mode/{mode}/update:
+    post:
+      tags:
+      - "云端录制"
+      summary: 更新订阅名单
+      operationId: update
+      description: 在录制过程中，可以随时调用该方法更新订阅的 UID 名单。
+
+
+        每次调用该方法都会覆盖原来的布局设置。
+        <div class="info-msg">注意事项：每个 App ID 每秒钟的请求数限制为 10 次。</i></div> 
+
+      parameters:
+        - in: path
+          name: appid
+          required: true
+          schema:
+            type: string
+          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id)。
+        - in: path
+          name: resourceid
+          required: true
+          schema:
+            type: string
+          description: 通过 `acquire` 请求获取的 resource ID。
+        - in: path
+          name: sid
+          required: true
+          schema:
+            type: string
+          description: 通过 `start` 请求获取的录制 ID。
+        - in: path
+          name: mode
+          required: true
+          schema:
+            type: string
+          description: 录制模式，支持单流模式 `individual` 和合流模式 `mix`（默认模式）。
+      requestBody:
+        $ref: '#/components/requestBodies/update'       
+      responses:
+        '200':
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update_response'
+              example:
+                sid: "38f8e3cfdc474cd56fc1ceba380d7e1a"
+                resourceId: >-
+                  JyvK8nXHuV1BE64GDkAaBGEscvtHW7v8BrQoRPCHxmeVxwY22-x-kv4GdPcjZeMzoCBUCOr9q-k6wBWMC7SaAkZ_4nO3JLqYwM1bL1n6wKnnD9EC9waxJboci9KUz2WZ4YJrmcJmA7xWkzs_L3AnNwdtcI1kr_u1cWFmi9BWAWAlNd7S7gfoGuH0tGi6CNaOomvr7-ILjPXdCYwgty1hwT6tbAuaW1eqR0kOYTO0Z1SobpBxu1czSFh1GbzGvTZG
+        '400':
+          $ref: '#/components/responses/400' 
+        '401':
+          $ref: '#/components/responses/401' 
+        '404':
+          $ref: '#/components/responses/404' 
         '500':
           $ref: '#/components/responses/500' 
         '504':
@@ -617,25 +677,43 @@ components:
                             default: 0
                 subscribeVideoUids: 
                       type: array
-                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 0。  
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
 
-                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只订阅参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                        
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i> <ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>0</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了视频的订阅名单，但没有设置音频的订阅名单，云端录制服务不会订阅任何音频流。</li></ul></div>                        
                       items:
                         type: string
                       maxLength: 32
                       example: ["123","456"]
-                subscribeAudioUids:
+                unSubscribeVideoUids:
                       type: array
-                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。如果设置了该参数，`recordingConfig` 中的 `streamTypes` 不可为 1。  
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的视频流。云端录制会订阅频道内除指定 UID 外所有 UID 的视频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
                       
-                        <div class="warning-msg"><i class="fa   fa-warning"></i> 一旦设置 <code>subscribeVideoUids</code> 和 <code>subscribeAudioUids</code> 中的任一参数，则只订阅参数指定的音视频。例如，<code>subscribeVideoUids</code> 不为空，<code>subscribeAudioUids</code> 为空，则只录制指定用户的视频，不录制音频。如果这两个参数均为空，则录制加入频道的所有用户。</div>                
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i> <ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>0</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了视频的订阅名单，但没有设置音频的订阅名单，云端录制服务不会订阅任何音频流。</li></ul></div>                
                       items:
                         type: string
                       maxLength: 32
-                      example: ["123","456"]                       
+                      example: ["345","789"] 
+                subscribeAudioUids:
+                      type: array
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
+                      
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i> <ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>1</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了音频的订阅名单，但没有设置视频的订阅名单，云端录制服务不会订阅任何视频流。</li></ul></div>                
+                      items:
+                        type: string
+                      maxLength: 32
+                      example: ["123","456"]   
+                unSubscribeAudioUids:
+                      type: array
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的音频流。云端录制会订阅频道内除指定 UID 外所有 UID 的音频流。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。
+                      
+                        <div class="warning-msg"><i class="fa fa-warning">注意事项：</i><ul><li>如果设置了该参数，<code>recordingConfig</code> 中的 <code>streamTypes</code> 不可为 <code>1</code>。</li><li>不推荐使用空数组。</li><li>如果你设置了音频的订阅名单，但没有设置视频的订阅名单，云端录制服务不会订阅任何视频流。</li></ul></div>                
+                      items:
+                        type: string
+                      maxLength: 32
+                      example: ["345","789"]                      
                 subscribeUidGroup:
                       type: integer
-                      description: 预估的订阅人数峰值。在单流模式下，为必填参数。举例来说，如果 `subscribeVideoUids` 为 `["100","101","102"]`，`subscribeAudioUids` 为 `["101","102","103"]`，则订阅人数为 4 人。
+                      description: 预估的订阅人数峰值。**在单流模式下，为必填参数**。举例来说，如果 `subscribeVideoUids` 为 `["100","101","102"]`，`subscribeAudioUids` 为 `["101","102","103"]`，则订阅人数为 4 人。
 
                         - 0：1 到 2 个 UID
                         
@@ -717,7 +795,9 @@ components:
                       
                       - 2：Huanan 
                       
-                      - 3：Beimei  
+                      - 3：Beimei 
+
+                      - 4：Dongnanya 
                     
                     
                     当 `vendor` = 1，即第三方云存储为 Amazon S3 时：
@@ -887,6 +967,63 @@ components:
                     
                   items:
                     type: string
+    update:
+      type: object
+      required:
+        - cname
+        - uid
+        - clientRequest
+      properties:
+        cname:
+          type: string
+          description: 待录制的频道名。
+        uid:
+          type: string
+          description: 字符串内容为云端录制在频道内使用的用户 ID，需要和你在 `acquire` 请求中输入的 uid 相同。
+        clientRequest:
+          type: object
+          description: 特定的客户请求参数。
+          properties:
+           streamSubscribe:
+            type: object
+            description: 用于更新订阅名单。
+            properties:
+             audioUidList:
+              type: object
+              description: 音频订阅名单。如果 `recordingConfig` 中的 `streamTypes` 为 `1`（只订阅视频），设置该参数会报错。
+              properties:
+               subscribeAudioUids:
+                      type: array
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的音频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。 
+                      items:
+                        type: string
+                      maxLength: 32
+                      example: ["123","456"]   
+               unSubscribeAudioUids:
+                      type: array
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的音频流。云端录制会订阅频道内除指定 UID 外所有 UID 的音频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。     
+                      items:
+                        type: string
+                      maxLength: 32
+                      example: ["345","789"]  
+             videoUidList:
+              type: object
+              description: 视频订阅名单。如果 `recordingConfig` 中的 `streamTypes` 为 `0`（只订阅音频），设置该参数会报错。
+              properties:
+                subscribeVideoUids: 
+                      type: array
+                      description: 由 UID 组成的数组，指定订阅哪几个用户的视频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。                    
+                      items:
+                        type: string
+                      maxLength: 32
+                      example: ["123","456"]
+                unSubscribeVideoUids:
+                      type: array
+                      description: 由 UID 组成的数组，指定不订阅哪几个 UID 的视频流。云端录制会订阅频道内除指定 UID 外所有 UID 的视频流。数组不可为空。详见[设置订阅名单](https://docs.agora.io/cn/cloud-recording/cloud_recording_subscription)。                 
+                      items:
+                        type: string
+                      maxLength: 32
+                      example: ["345","789"] 
     updateLayout:
       type: object
       required:
@@ -990,6 +1127,15 @@ components:
           description: 云端录制资源 resource ID，使用这个 resource ID 可以开始一段云端录制。这个 resource ID 的有效期为
             5 分钟，超时需要重新请求。
     start_response:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          description: 云端录制使用的 resource ID。
+        sid:
+          type: string
+          description: 录制 ID。成功开始云端录制后，你会得到一个 sid （录制 ID)。该 ID 是一次录制周期的唯一标识。
+    update_response:
       type: object
       properties:
         resourceId:
@@ -1249,6 +1395,27 @@ components:
                         fileNamePrefix: ["directory1","directory2"]
                     }
                 }
+      description: 该 API 需要在请求包体中传入以下参数。
+      required: true
+    update:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/update'
+          example:
+            cname: "httpClient463224"
+            uid: "527841"
+            clientRequest: {
+              "streamSubscribe": 
+              {
+                "audioUidList": {
+                  "subscribeAudioUids": ["#allstream#"]
+                                },
+                "videoUidList": {
+                  "unSubscribeVideoUids": ["444", "555", "666"]
+                                }
+              }
+                           }        
       description: 该 API 需要在请求包体中传入以下参数。
       required: true
     updateLayout:
