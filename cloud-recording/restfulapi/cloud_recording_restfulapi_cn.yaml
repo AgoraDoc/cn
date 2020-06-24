@@ -470,7 +470,7 @@ components:
           type: string
           description: >-
             字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，32 位无符号整数，例如 `"527841"`。
-            
+
             需满足以下条件：
 
               - 取值范围 1 到 (2<sup>32</sup>-1)，不可设置为 0。
@@ -499,7 +499,7 @@ components:
           description: 待录制的频道名。
         uid:
           type: string
-          description: 字符串内容为云端录制在频道内使用的用户 ID，需要和你在 `acquire` 请求中输入的 uid 相同。
+          description: 字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，需要和你在 `acquire` 请求中输入的 UID 相同。
         clientRequest:
           type: object
           required:
@@ -981,7 +981,7 @@ components:
           description: 待录制的频道名。
         uid:
           type: string
-          description: 字符串内容为云端录制在频道内使用的用户 ID，需要和你在 `acquire` 请求中输入的 uid 相同。
+          description: 字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，需要和你在 `acquire` 请求中输入的 UID 相同。
         clientRequest:
           type: object
           description: 特定的客户请求参数。
@@ -1038,7 +1038,7 @@ components:
           description: 待录制的频道名。
         uid:
           type: string
-          description: 字符串内容为云端录制在频道内使用的用户 ID，需要和你在 `acquire` 请求中输入的 uid 相同。
+          description: 字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，需要和你在 `acquire` 请求中输入的 UID 相同。
         clientRequest:
           type: object
           description: 特定的客户请求参数。
@@ -1117,7 +1117,7 @@ components:
           description: 待录制的频道名。
         uid:
           type: string
-          description: 字符串内容为云端录制在频道内使用的用户 ID，需要和你在 acquire 请求中输入的 uid 相同。
+          description: 字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，需要和你在 `acquire` 请求中输入的 UID 相同。
         clientRequest:
           type: object
           description: 特定的客户请求参数，对于该方法无需填入任何内容，为一个空的 JSON。
