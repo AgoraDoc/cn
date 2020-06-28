@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>控制台 RESTful API</title>
+    <title>服务端 RESTful API</title>
     <link rel="stylesheet" type="text/css" href="dist/swagger-ui.css?v=5" >
     <link rel="icon" type="image/png" href="dist/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="dist/favicon-16x16.png" sizes="16x16" />
@@ -39,13 +39,13 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "agora_platform_restfulapi_cn.yaml",
+        url: "server_restfulapi_cn.yaml",
         dom_id: '#swagger-ui',
-        defaultModelsExpandDepth: -1, 
+        defaultModelsExpandDepth: -1,
         deepLinking: true,
         presets: [
           SwaggerUIBundle.presets.apis,
-          
+
         ]
       })
       // End Swagger UI call region
@@ -61,7 +61,7 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    
+
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {

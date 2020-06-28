@@ -2,14 +2,14 @@ openapi: 3.0.0
 info:
 
   description: >
-    该文包含控制台 RESTful API 的详细信息，同时提供 **Try it out** 功能，使你在文档页内即能进行 RESTful API 的调试。
-    
+    该文包含服务端 RESTful API 的详细信息，同时提供 **Try it out** 功能，使你在文档页内即能进行 RESTful API 的调试。
+
     ## 认证
 
-    控制台 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
+    服务端 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
 
       - `api_key`: Customer ID （客户 ID）
-      
+
       - `api_secret`: Customer Certificate （客户证书）
 
     你可以在控制台的 [RESTful API](https://console.agora.io/restfulApi) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
@@ -19,37 +19,36 @@ info:
     ## 数据格式
 
     所有的请求都发送给域名：api.agora.io。所有的请求 URL 和请求包体内容都是区分大小写的。请求和响应内容的格式均为 JSON。
-      
+
 
     ## 主要功能
 
-    通过 HTTP 基本认证后，你可以使用该页面提供的 API 实现以下功能：
+    你可以使用该页面提供的 API 实现以下功能：
     <ul>
-      <li>通过<a href="#createProject">项目相关 API</a > 创建和管理项目。</li>
-      <li>通过<a href="#getProjectUsagesV3">用量相关 API</a > 获取指定项目的用量数据。</li>
-      <li>通过<a href="#createKickingRule">服务端踢人 API</a > 管理用户权限。</li>
-      <li>通过<a href="#/userProperty">查询在线频道信息 API</a > 获取频道相关的信息。</li>
+      <li>通过<a href="#/%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3%20API/createProject">项目相关 API</a > 创建和管理项目。</li>
+      <li>通过<a href="#/%E7%94%A8%E9%87%8F%E7%9B%B8%E5%85%B3%20API/getProjectUsagesV3">用量相关 API</a > 获取指定项目的用量数据。</li>
+      <li>通过<a href="#/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B8%A2%E4%BA%BA%20API/createKickingRule">服务端踢人 API</a > 管理用户权限。</li>
+      <li>通过<a href="#/%E6%9F%A5%E8%AF%A2%E5%9C%A8%E7%BA%BF%E9%A2%91%E9%81%93%E4%BF%A1%E6%81%AF%20API/userProperty">查询在线频道信息 API</a > 获取频道相关的信息。</li>
     </ul>
-    
+
 
     ## 调试 RESTful API
 
     你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
 
-    <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1585555550831" alt="Authorize" width="50%">
+    <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1592995564316" alt="Authorize" width="50%">
 
 
-    <div class="info-msg">注意事项：在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</div>
+    <div class="info-msg">注意事项：<ul><li>在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</li><li>在该文档内发送的请求会对你的项目产生实际影响。如果只是试用 API，建议你创建一个测试项目。</li><ul></div>
 
 
-  version: 2020.06.22
-  title: 控制台 RESTful API
-servers: 
+  version: 2020.06.28
+  title: 服务端 RESTful API
+servers:
   - url: https://api.agora.io.dev
 
-tags: 
-- name: "控制台"
+
 
 security:
   - agora_auth: []
@@ -62,15 +61,15 @@ paths:
       - "项目相关 API"
       summary: 创建项目
       operationId: createProject
-      
+
       description: 创建一个新的 Agora 项目。
-          <div class="alert info"> 一个账户最多可创建 10 个项目，包括已删除的项目。如果需要创建更多项目，请通过<a href="https://agora-ticket.agora.io/">工单系统</a >申请。</div>
+          <div class="info-msg">一个账户最多可创建 10 个项目，包括已删除的项目。如果需要创建更多项目，请通过<a href="https://agora-ticket.agora.io/">工单系统</a >申请。</i></div>
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/createProject'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -90,20 +89,20 @@ paths:
           description: >-
                    请求无效。有以下几种情况:
                    <ul>
-                   <li>项目名称不能重复</li>
-                   <li>公司已被禁用</li>
-                   <li>项目数量超出最大限制</li>
+                   <li>项目名称不能重复。</li>
+                   <li>公司已被禁用。</li>
+                   <li>项目数量超出最大限制。</li>
                    </ul>
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'  
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
     get:
       tags:
       - "项目相关 API"
@@ -114,18 +113,18 @@ paths:
         - name: id
           required: true
           in: query
-          description: 项目 ID
+          description: 项目 ID。
           schema:
             type: string
         - name: name
           required: true
           in: query
-          description: 项目名称
+          description: 项目名称。
           schema:
             type: string
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -142,66 +141,67 @@ paths:
                     "created": 1464165672
                   }
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
     delete:
       tags:
       - "项目相关 API"
       summary: 删除项目
       operationId: deleteProject
-      
+
       description: 删除指定的 Agora 项目。
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/deleteProject'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/deleteProject_response'
               example:
-                "success": true 
+                "success": true
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500'        
+          $ref: '#/components/responses/500'
   /v1/projects:
     get:
       tags:
       - "项目相关 API"
       summary: 获取所有项目
       operationId: getProjects
-      
+
       description: 获取所有的 Agora 项目信息。
       parameters: []
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/getProjects_response'
               example:
-                "project":
+                "projects":
+                  [
                   {
                     "id": "xxxx",
                     "name": "project1",
@@ -211,33 +211,34 @@ paths:
                     "status": 1,
                     "created": 1464165672
                   }
+                  ]
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
   /v1/project_status:
     post:
       tags:
       - "项目相关 API"
       summary: 禁用或启用项目
       operationId: changeProjectStatus
-      
+
       description: 禁用或启用指定的项目。
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/changeProjectStatus'
       responses:
         '200':
-          description: 操作成功
-           <div class="alert info">成功启用或禁用指定的项目时，会返回该项目的所有信息，并报告项目当前的状态。</div>
+          description: 操作成功。
+           <div class="info-msg">成功启用或禁用指定的项目时，会返回该项目的所有信息，并报告项目当前的状态。</i></div>
           content:
             application/json:
               schema:
@@ -254,31 +255,31 @@ paths:
                     "created": 1464165672
                   }
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
   /v1/recording_config:
     post:
       tags:
       - "项目相关 API"
       summary: 设置录制服务器 IP
       operationId: setRecordingServer
-      
+
       description: 设置指定项目的录制服务器的 IP 地址。
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/setRecordingServer'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -295,31 +296,31 @@ paths:
                     "created": 1464165672
                   }
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
   /v1/signkey:
     post:
       tags:
       - "项目相关 API"
       summary: 启用或禁用主要 App 证书
       operationId: changeSignKey
-      
+
       description: 启用或禁用指定项目的主要 App 证书。
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/changeSignKey'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -336,32 +337,32 @@ paths:
                     "created": 1464165672
                   }
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
   /v1/reset_signkey:
     post:
       tags:
       - "项目相关 API"
       summary: 重置主要 App 证书
       operationId: resetSignKey
-      
-      description: 重置指定项目的主要 App 证书。如果原来的主要 App 证书泄漏了，你可以使用该方法对主要 App 证书进行重置。
-                   如果该项目的主要 App 证书尚未启用，调用该方法会启用主要 App 证书。
+
+      description: 重置指定项目的主要 App 证书。
+                   <div class="info-msg"><ul><li>如果原来的主要 App 证书泄漏了，你可以使用该方法对主要 App 证书进行重置。</li><li>如果该项目的主要 App 证书尚未启用，调用该方法会启用主要 App 证书。</li></ul></i></div>
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/resetSignKey'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -378,50 +379,50 @@ paths:
                     "created": 1464165672
                   }
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
- 
+          $ref: '#/components/responses/500'
+
   /v3/usage:
     get:
       tags:
       - "用量相关 API"
       summary: 获取单个项目的用量数据
       operationId: getProjectUsagesV3
-      
+
       description: 你可以查询一年内的用量数据。建议查询时段不要包含当天，因为当天数据会持续变化。
-                   <div class="alert note">请确保填写有效的 <code>project_id</code>，否则无法获取用量数据。</div>
+                    <div class="info-msg">请确保填写有效的 <code>project_id</code>，否则无法获取用量数据。</i></div>
       parameters:
         - name: projects
           required: true
           in: query
-          description: 项目 ID
+          description: 项目 ID。
           schema:
             type: string
         - name: from_date
           required: true
           in: query
-          description: '查询开始日期: 格式 YYYY-MM-DD'
+          description: '查询开始日期: 格式 YYYY-MM-DD。'
           schema:
             type: string
         - name: to_date
           required: true
           in: query
-          description: '查询结束日期: 格式 YYYY-MM-DD'
+          description: '查询结束日期: 格式 YYYY-MM-DD。'
           schema:
-            type: string  
+            type: string
         - name: business
           required: true
           in: query
-          description: >- 
+          description: >-
                指定业务类型。可设为以下值:
                   - `default`: 默认 RTC
                   - `transcodeDuration`: 转码
@@ -432,7 +433,7 @@ paths:
             type: string
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -468,17 +469,17 @@ paths:
                   ]
                   }
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
   /v1/kicking-rule:
     post:
       tags:
@@ -487,7 +488,7 @@ paths:
       summary: 创建服务端踢人规则
       description: >-
 
-            
+
             踢人规则通过 `cname`、`uid` 和 `ip` 三个字段实现过滤，规则如下：
               - 如果填写 `ip`，不填写 `cname` 或 `uid`，则该 `ip` 无法登录 app 中的任何频道。
               - 如果填写 `cname`，不填写 `uid` 或 `ip`，则任何人都无法登录 app 中该 `cname` 对应的频道。
@@ -507,26 +508,26 @@ paths:
           $ref: '#/components/requestBodies/createKickingRule'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/createKickingRule_response'
               example:
                 status: "success"
-                id: "1953"
+                id: 1953
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500'      
+          $ref: '#/components/responses/500'
     get:
       tags:
       - 服务端踢人 API
@@ -536,12 +537,12 @@ paths:
         - name: appid
           required: true
           in: query
-          description: 控制台中项目的 App ID
+          description: 控制台中项目的 App ID。
           schema:
             type: string
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -550,7 +551,7 @@ paths:
                 status: "success"
                 ruls: [
                   {
-                    id: "1953",
+                    id: 1953,
                     appid: "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     uid: 1,
                     opid: 1406,
@@ -562,17 +563,17 @@ paths:
                 }
                 ]
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500'  
+          $ref: '#/components/responses/500'
     put:
       tags:
       - 服务端踢人 API
@@ -583,7 +584,7 @@ paths:
         $ref: '#/components/requestBodies/updateKickingRule'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -594,17 +595,17 @@ paths:
                  id: 1953
                  ts: "2018-01-09T08:45:54.545Z"
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
     delete:
       tags:
       - 服务端踢人 API
@@ -615,7 +616,7 @@ paths:
         $ref: '#/components/requestBodies/deleteKickingRule'
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -624,23 +625,23 @@ paths:
                 status: "success"
                 id: 1953
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403' 
+          $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
   /v1/channel/user/property/{appid}/{uid}/{channelName}:
-    get: 
+    get:
       tags:
       - "查询在线频道信息 API"
       summary: 查询用户状态
-      operationId: userProperty  
+      operationId: userProperty
       description: 该方法查询某个用户是否在指定频道中，以及该用户在该频道中的角色等状态。
       parameters:
         - in: path
@@ -663,7 +664,7 @@ paths:
           description: 频道名。
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -672,30 +673,26 @@ paths:
                 success: true
                 data:
                     join: 1592289039
-                    ip: 3079036539
-                    uid: 3168040478
                     in_channel: true
-                    platform: 7,
-                    account: ""
                     role: 2
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
   /v1/channel/user/{appid}/{channelName}:
-    get: 
+    get:
       tags:
       - "查询在线频道信息 API"
       summary: 获取用户列表
-      operationId: userList  
+      operationId: userList
       description: 该方法获取指定频道内的用户列表：
                   <ul>
                     <li>通信场景下，返回频道内的用户列表。</li>
@@ -713,11 +710,12 @@ paths:
           required: true
           schema:
             type: string
-          description: 频道名
+          description: 频道名。
       responses:
         '200':
-          description: 操作成功</br>
-                       不同的频道场景下，该方法返回的响应内容不同。
+          description: 操作成功。</br>
+                      <div class="info-msg">不同的频道场景下，该方法返回的响应内容不同。</i></div>
+
           content:
                 application/json:
                   schema:
@@ -741,23 +739,23 @@ paths:
                         audience: [<uid>]
                         audience_total: <count>
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/channel/appid:
-    get: 
+  /v1/channel/{appid}:
+    get:
       tags:
       - "查询在线频道信息 API"
       summary: 分页查询厂商频道列表
-      operationId: channelList  
+      operationId: channelList
       description: 该方法查询指定厂商的频道列表。
       parameters:
         - in: path
@@ -777,10 +775,10 @@ paths:
           required: false
           schema:
             type: number
-          description: 每个页面显示的列表数量，默认值为 100，最大值为 500
+          description: 每个页面显示的列表数量，默认值为 100，最大值为 500。
       responses:
         '200':
-          description: 操作成功
+          description: 操作成功。
           content:
             application/json:
               schema:
@@ -796,17 +794,17 @@ paths:
                     ]
                     total_size: 3
         '400':
-          $ref: '#/components/responses/400' 
+          $ref: '#/components/responses/400'
         '401':
-          $ref: '#/components/responses/401' 
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404' 
+          $ref: '#/components/responses/404'
         '429':
-          $ref: '#/components/responses/429' 
+          $ref: '#/components/responses/429'
         '500':
-          $ref: '#/components/responses/500'             
+          $ref: '#/components/responses/500'
 components:
   schemas:
     createProject:
@@ -817,7 +815,7 @@ components:
       properties:
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
           maxLength: 255
           minLength: 1
         enable_sign_key:
@@ -826,7 +824,7 @@ components:
                   是否启用主要 App 证书：
                     - true：启用
                     - false：不启用
-                  <div class="alert note">创建项目后，你可以调用 <code>https://api.agora.io.dev/v1/signkey</code> 启用或禁用主要 App 证书，或调用 <code>https://api.agora.io.dev/v1/reset_signkey</code> 重置主要 App 证书。</div>       
+                  <div class="info-msg">创建项目后，你可以调用 <code>https://api.agora.io/dev/v1/signkey</code> 启用或禁用主要 App 证书，或调用 <code>https://api.agora.io/dev/v1/reset_signkey</code> 重置主要 App 证书。</i></div>
           default: false
     changeProjectStatus:
       type: object
@@ -836,7 +834,7 @@ components:
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         status:
           type: number
           description: >-
@@ -852,7 +850,7 @@ components:
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
     setRecordingServer:
       type: object
       required:
@@ -861,7 +859,7 @@ components:
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         recording_server:
           type: string
           description: >-
@@ -876,7 +874,7 @@ components:
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         enable:
           type: boolean
           description: >-
@@ -891,32 +889,30 @@ components:
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
     createKickingRule:
       type: object
       required:
         - appid
-        - cname
-        - uid
         - time
         - privileges
       properties:
         appid:
           type: string
-          description: 控制台中项目的 App ID
+          description: 控制台中项目的 App ID。
         cname:
           type: string
-          description: 频道名称。如果填写，不能设为空字符串。 
+          description: （可选）频道名称。如果填写，不能设为空字符串。
         uid:
           type: string
-          description: 用户 ID，可以直接使用 SDK 的方法获取。不能设为 0。
+          description: （可选）用户 ID，可以直接使用 SDK 的方法获取。不能设为 0。
         ip:
           type: string
-          description: 想要封禁的用户 IP 地址。不能设为 0。
+          description: （可选）想要封禁的用户 IP 地址。不能设为 0。
         time:
           type: number
-          description: 封人时间，单位是分钟，取值范围为 [1, 1440]，默认值为 60。
-                        <div class="alert note"><ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li></ul></div>
+          description: 封人时间，单位是分钟，取值范围为 [1，1440]，默认值为 60。
+                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li></ul></i></div>
         privileges:
           type: array
           description: >-
@@ -941,14 +937,15 @@ components:
       properties:
         appid:
           type: string
-          description: 控制台中项目的 App ID
+          description: 控制台中项目的 App ID。
         id:
           type: number
-          description: 想要更新的规则的 ID
+          description: 想要更新的规则的 ID。
         time:
           type: number
-          description: 封人时间，单位是分钟，取值范围为 [1, 1440]，默认值为 60。
-                      <div class="alert note"><ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li></div> 
+          description: 封人时间，单位是分钟，取值范围为 [1，1440]，默认值为 60。
+                      <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li></i></div>
+
     deleteKickingRule:
       type: object
       required:
@@ -957,26 +954,26 @@ components:
       properties:
         appid:
           type: string
-          description: 控制台中项目的 App ID
+          description: 控制台中项目的 App ID。
         id:
           type: number
-          description: 想要删除的规则 ID
-    
+          description: 想要删除的规则 ID。
+
     createProject_response:
       type: object
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
         vendor_key:
           type: string
-          description: 项目的 App ID
+          description: 项目的 App ID。
         sign_key:
           type: string
-          description: 项目的主要 App 证书
+          description: 项目的主要 App 证书。
         recording_server:
           type: string
           description: >-
@@ -991,52 +988,57 @@ components:
               - 0：禁用
         created:
           type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒
+          description: 项目创建时间，Unix 时间戳，单位为毫秒。
     getProjects_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID
-        name:
-          type: string
-          description: 项目名称
-        vendor_key:
-          type: string
-          description: 项目的 App ID
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书
-        recording_server:
-          type: string
-          description: >-
-              录制项目服务器 IP：
-                - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-              项目状态：
-                - 1：启用
-                - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒
+        projects:
+          type: array
+          description: 所有项目。
+          items:
+           properties:
+              id:
+                type: string
+                description: 项目 ID。
+              name:
+                type: string
+                description: 项目名称。
+              vendor_key:
+                type: string
+                description: 项目的 App ID。
+              sign_key:
+                type: string
+                description: 项目的主要 App 证书。
+              recording_server:
+                type: string
+                description: >-
+                    录制项目服务器 IP：
+                      - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                      - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+              status:
+                type: number
+                description: >-
+                    项目状态：
+                      - 1：启用
+                      - 0：禁用
+              created:
+                type: number
+                description: 项目创建时间，Unix 时间戳，单位为毫秒。
     getProject_response:
       type: object
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
         vendor_key:
           type: string
-          description: 项目的 App ID
+          description: 项目的 App ID。
         sign_key:
           type: string
-          description: 项目的主要 App 证书
+          description: 项目的主要 App 证书。
         recording_server:
           type: string
           description: >-
@@ -1051,22 +1053,22 @@ components:
               - 0：禁用
         created:
           type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒
+          description: 项目创建时间，Unix 时间戳，单位为毫秒。
     changeProjectstatus_response:
       type: object
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
         vendor_key:
           type: string
-          description: 项目的 App ID
+          description: 项目的 App ID。
         sign_key:
           type: string
-          description: 项目的主要 App 证书
+          description: 项目的主要 App 证书。
         recording_server:
           type: string
           description: >-
@@ -1081,7 +1083,7 @@ components:
               - 0：禁用
         created:
           type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒
+          description: 项目创建时间，Unix 时间戳，单位为毫秒。
     deleteProject_response:
       type: object
       properties:
@@ -1090,22 +1092,22 @@ components:
           description: >-
             成功删除指定的项目:
                - true：成功删除指定的项目。
-               - false：（保留）
+               - false：（保留）。
     setRecordingServer_response:
       type: object
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
         vendor_key:
           type: string
-          description: 项目的 App ID
+          description: 项目的 App ID。
         sign_key:
           type: string
-          description: 项目的主要 App 证书
+          description: 项目的主要 App 证书。
         recording_server:
           type: string
           description: >-
@@ -1120,22 +1122,22 @@ components:
               - 0：禁用
         created:
           type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒
+          description: 项目创建时间，Unix 时间戳，单位为毫秒。
     changeSignKey_response:
       type: object
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
         vendor_key:
           type: string
-          description: 项目的 App ID
+          description: 项目的 App ID。
         sign_key:
           type: string
-          description: 项目的主要 App 证书
+          description: 项目的主要 App 证书。
         recording_server:
           type: string
           description: >-
@@ -1150,22 +1152,22 @@ components:
               - 0：禁用
         created:
           type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒    
+          description: 项目创建时间，Unix 时间戳，单位为毫秒。
     resetSignKey_response:
       type: object
       properties:
         id:
           type: string
-          description: 项目 ID
+          description: 项目 ID。
         name:
           type: string
-          description: 项目名称
+          description: 项目名称。
         vendor_key:
           type: string
-          description: 项目的 App ID
+          description: 项目的 App ID。
         sign_key:
           type: string
-          description: 项目的主要 App 证书
+          description: 项目的主要 App 证书。
         recording_server:
           type: string
           description: >-
@@ -1180,126 +1182,120 @@ components:
               - 0：禁用
         created:
           type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒    
+          description: 项目创建时间，Unix 时间戳，单位为毫秒。
     getProjectUsages_response:
       type: object
       properties:
         usages:
           type: array
-          description: 项目用量
-          items: 
-           properties: 
+          description: 项目用量。
+          items:
+           properties:
             project:
               type: string
-              description: 项目 ID
+              description: 项目 ID。
             daily:
               type: array
-              description: 项目日用量
+              description: 项目日用量。
               items:
                 properties:
                   date:
                     type: number
-                    description: 日期
+                    description: 日期。
                   audio:
                     type: number
-                    description: 语音时长，单位分钟
+                    description: 语音时长，单位分钟。
                   sd:
                     type: number
-                    description: 视频时长，单位分钟
+                    description: 视频时长，单位分钟。
                   hd:
                     type: number
-                    description: 高清视频时长,单位分钟
+                    description: 高清视频时长，单位分钟。
                   hdp:
                     type: number
-                    description: 超高清视频时长,单位分钟
+                    description: 超高清视频时长，单位分钟。
     getProjectUsagesV3_response:
       type: object
       properties:
         meta:
           type: object
-          description: 元数据，每个字段的属性。
+          description: 元数据，解释下面 `usage` 字段里 `durationAudioAll`, `durationVideoHd`, 和 `durationVideoHdp` 的含义。
           properties:
            "durationAudioAll":
               type: object
-              description: 总音频时长 
+              description: 总音频时长。
               properties:
-                  "cn": 
+                  "cn":
                     type: string
-                    description: 中文翻译，总音频时长 
-                  "en": 
+                    description: 解释 `durationAudioAll` 的含义（中文），即“总音频时长”。
+                  "en":
                     type: string
-                    description: 英文翻译，Total Audio Duration
-                  "unit": 
+                    description: 解释 `durationAudioAll` 的含义（英文），即 “Total Audio Duration”。
+                  "unit":
                     type: number
-                    description: 时长单位，秒
+                    description: 时长单位，秒。
            "durationVideoHd":
               type: object
-              description: 高清视频总时长 
+              description: 高清视频总时长。
               properties:
-                  "cn": 
+                  "cn":
                     type: string
-                    description: 中文翻译，高清视频时长（含本地服务端录制）" 
-                  "en": 
+                    description: 解释 `durationVideoHd` 的含义（中文），即“高清视频时长（含本地服务端录制）”。
+                  "en":
                     type: string
-                    description: 英文翻译，HD Video Duration (including On-premise Recording)
-                  "unit": 
+                    description: 解释 `durationVideoHd` 的含义（英文），即 “HD Video Duration (including On-premise Recording)”。
+                  "unit":
                     type: number
-                    description: 时长单位，秒           
+                    description: 时长单位，秒。
            "durationVideoHdp":
               type: object
-              description: 超高清视频总时长 
+              description: 超高清视频总时长。
               properties:
-                  "cn": 
+                  "cn":
                     type: string
-                    description: 中文翻译，超高清视频时长（含本地服务端录制）" 
-                  "en": 
+                    description: 解释 `durationVideoHdp` 的含义（中文），即“超高清视频时长（含本地服务端录制）”。
+                  "en":
                     type: string
-                    description: 英文翻译，HDP Video Duration (including On-premise Recording)
-                  "unit": 
+                    description: 解释 `durationVideoHdp` 的含义（英文），即 “HDP Video Duration (including On-premise Recording)”。
+                  "unit":
                     type: number
-                    description: 时长单位，秒
+                    description: 时长单位，秒。
         usages:
           type: array
-          description: 指定项目的用量
+          description: 指定项目的用量。
           items:
             properties:
               date:
                 type: number
-                description: 查询的时间，使用 UTC 时间和 Unix 时间戳
+                description: 查询的时间，使用 UTC 时间和 Unix 时间戳。
               usage:
                 type: object
-                description: 日用量
+                description: 日用量。
                 properties:
-                    "durationAudioAll": 
+                    "durationAudioAll":
                         type: number
-                        description: 音频总时长，单位为秒
+                        description: 音频总时长，单位为秒。
                     "durationVideoHd":
                         type: number
-                        description: 高清视频总时长，单位为秒
-                    "durationVideoHdp": 
+                        description: 高清视频总时长，单位为秒。
+                    "durationVideoHdp":
                         type: number
-                        description: 超高清视频总时长，单位为秒      
-      required:
-        - meta
-        - usages
+                        description: 超高清视频总时长，单位为秒。
     createKickingRule_response:
       type: object
       properties:
         status:
           type: string
-          description: 本次请求的状态
+          description: 本次请求的状态。
         id:
           type: number
           description: 规则 ID。当更新踢人规则时，需要使用该规则 ID。
-      required:
-        - status
-        - id
     listKickingRule_response:
       type: object
       properties:
         status:
           type: string
-          description: 本次请求的状态
+          description: 本次请求的状态。
         rules:
           type: array
           description: 踢人规则列表，包含如下字段：
@@ -1307,61 +1303,55 @@ components:
             properties:
               id:
                 type: number
-                description: 规则 ID
+                description: 规则 ID。
               appid:
                 type: string
-                description: 控制台中项目的 App ID
+                description: 控制台中项目的 App ID。
               uid:
                 type: string
-                description: 用户 ID
+                description: 用户 ID。
               opid:
                 type: number
-                description: 操作 ID，用于问题排查时核对操作记录
+                description: 操作 ID，用于问题排查时核对操作记录。
               cname:
                 type: string
-                description: 频道名
+                description: 频道名。
               ip:
                 type: string
-                description: IP 地址
+                description: IP 地址。
               ts:
                 type: string
-                description: 该规则生效的截止时间戳
+                description: 该规则生效的截止时间戳。
               createAt:
                 type: string
-                description: 该规则的创建时间
+                description: 该规则的创建时间。
               updateAt:
                 type: string
-                description: 该规则的更新时间
+                description: 该规则的更新时间。
     updateKickingRule_response:
       type: object
       properties:
         status:
           type: string
-          description: 本次请求的状态
+          description: 本次请求的状态。
         result:
           type: object
           properties:
            id:
             type: string
-            description: 规则 ID
+            description: 规则 ID。
            ts:
               type: string
-              description: 规则生效的截止时间
-      required:
-        - status
-        - result
+              description: 规则生效的截止时间。
     deleteKickingRule_response:
       type: object
       properties:
         status:
           type: string
-          description: 本次请求的状态
+          description: 本次请求的状态。
         id:
           type: string
-          description: 规则 ID   
-      required:
-        - status
-        - id
+          description: 规则 ID。
     userProperty_response:
       type: object
       properties:
@@ -1375,16 +1365,16 @@ components:
           type: object
           description: 用户在频道中的状态数据。
           properties:
-            join: 
+            join:
               type: number
-              description: 该用户加入频道的时间戳
+              description: 该用户加入频道的时间戳。
             in_channel:
               type: boolean
               description: >-
                          该用户是否在频道内：
                           - true：该用户在频道内
                           - false: 该用户不在频道内
-            role: 
+            role:
               type: number
               description: >-
                         该用户在频道内的角色:
@@ -1392,9 +1382,6 @@ components:
                           - 1：通信场景的用户
                           - 2：直播场景的主播
                           - 3：直播场景的观众
-      required:
-        - success
-        - data
     userList_response:
       type: object
       properties:
@@ -1408,7 +1395,7 @@ components:
           type: object
           description: 用户在频道中的状态数据。
           properties:
-            channel_exist: 
+            channel_exist:
               type: boolean
               description:  >-
                           指定查询的频道是否存在:
@@ -1417,33 +1404,30 @@ components:
             mode:
               type: number
               description: >-
-                         频道场景
+                         频道场景：
                           - 1：通信场景
                           - 2: 直播场景
-            total: 
+            total:
               type: number
-              description: 频道内的用户总人数
-            users: 
+              description: 频道内的用户总人数。
+            users:
               type: array
               description: 频道内所有用户的 ID 列表。
               items:
                type: string
-            broadcasters: 
+            broadcasters:
               type: array
-              description: 频道内所有主播的用户 ID 列表
-              items: 
+              description: 频道内所有主播的用户 ID 列表。
+              items:
                type: string
-            audience: 
+            audience:
               type: array
               description: 频道内观众的 uid 列表，最多包含前 10000 名观众。
-              items: 
+              items:
                type: string
             audience_total:
               type: number
               description: 频道内的观众总人数。
-      required:
-        - success
-        - data
     channelList_response:
       type: object
       properties:
@@ -1457,23 +1441,20 @@ components:
           type: object
           description: 响应数据。
           properties:
-            channels: 
+            channels:
               type: array
-              description: 频道列表
+              description: 频道列表。
               items:
                properties:
                  channel_name:
                   type: string
-                  description: 频道名
+                  description: 频道名。
                  user_count:
                   type: number
-                  description: 该频道内的用户人数
+                  description: 该频道内的用户人数。
             total_size:
               type: number
-              description: 频道总数
-      required:
-        - success
-        - data
+              description: 频道总数。
 
   requestBodies:
     createProject:
@@ -1578,7 +1559,7 @@ components:
     400:
       description: 请求无效。
     401:
-      description: 未经授权的（App ID/Customer Certificate匹配错误）。
+      description: 未经授权的（App ID/Customer Certificate 匹配错误）。
     403:
       description: 禁止访问。
     404:
