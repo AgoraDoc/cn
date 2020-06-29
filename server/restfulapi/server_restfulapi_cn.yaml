@@ -2,18 +2,14 @@ openapi: 3.0.0
 info:
 
   description: >
-    该文包含服务端 RESTful API 的详细信息，同时提供 **Try it out** 功能，使你在文档页内即能进行 RESTful API 的调试。
+    本文包含服务端 RESTful API 的详细信息，同时提供 **Try it out** 功能，使你在文档页内即能进行 RESTful API 的调试。
 
     ## 认证
 
-    服务端 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供 `api_key:api_secret` 通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段：
+    服务端 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供客户 ID 和客户证书通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段。
 
-      - `api_key`: Customer ID （客户 ID）
-
-      - `api_secret`: Customer Certificate （客户证书）
-
-    你可以在控制台的 [RESTful API](https://console.agora.io/restfulApi) 页面找到你的 Customer ID 和 Customer Certificate。具体生成
-    Authorization 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。你也可以使用本页的 **Try it out** 功能生成该字段。
+    你可以在控制台的 [RESTful API](https://console.agora.io/restfulApi) 页面找到你的客户 ID 和客户证书。具体生成
+    `Authorization` 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。你也可以使用本页的 **Try it out** 功能生成该字段。
 
 
     ## 数据格式
@@ -23,27 +19,29 @@ info:
 
     ## 主要功能
 
-    你可以使用该页面提供的 API 实现以下功能：
+    你可以使用本页面提供的 API 实现以下功能：
     <ul>
       <li>通过<a href="#/%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3%20API/createProject">项目相关 API</a > 创建和管理项目。</li>
       <li>通过<a href="#/%E7%94%A8%E9%87%8F%E7%9B%B8%E5%85%B3%20API/getProjectUsagesV3">用量相关 API</a > 获取指定项目的用量数据。</li>
-      <li>通过<a href="#/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B8%A2%E4%BA%BA%20API/createKickingRule">服务端踢人 API</a > 管理用户权限。</li>
+      <li>通过<a href="#/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B8%A2%E4%BA%BA%20API/createKickingRule">服务端踢人 API</a > 创建和管理服务端踢人规则。</li>
       <li>通过<a href="#/%E6%9F%A5%E8%AF%A2%E5%9C%A8%E7%BA%BF%E9%A2%91%E9%81%93%E4%BF%A1%E6%81%AF%20API/userProperty">查询在线频道信息 API</a > 获取频道相关的信息。</li>
     </ul>
+
+    <div class="info-msg">注意事项：<ul><li>本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</li><li>本节 App 证书相关功能仅对主要证书有效。</li></ul></div>
 
 
     ## 调试 RESTful API
 
-    你可以使用 **Try it out** 功能在该文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的 Customer ID 和 Customer Certificate 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
+    你可以使用 **Try it out** 功能在本文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的客户 ID 和客户证书 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
 
     <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1592995564316" alt="Authorize" width="50%">
 
 
-    <div class="info-msg">注意事项：<ul><li>在该文档页内发送请求产生的所有用量均会计入你当月的声网服务用量。</li><li>在该文档内发送的请求会对你的项目产生实际影响。如果只是试用 API，建议你创建一个测试项目。</li><ul></div>
+    <div class="info-msg">注意事项：在本文档内发送的请求会对你的项目产生实际影响。如果只是试用 API，建议你创建一个测试项目。</div>
 
 
-  version: 2020.06.28
+  version: 2020.06.30
   title: 服务端 RESTful API
 servers:
   - url: https://api.agora.io.dev
@@ -63,7 +61,7 @@ paths:
       operationId: createProject
 
       description: 创建一个新的 Agora 项目。
-          <div class="info-msg">一个账户最多可创建 10 个项目，包括已删除的项目。如果需要创建更多项目，请通过<a href="https://agora-ticket.agora.io/">工单系统</a >申请。</i></div>
+          <div class="info-msg">注意事项：一个账户最多可创建 10 个项目，包括已删除的项目。如果需要创建更多项目，请通过<a href="https://agora-ticket.agora.io/">工单系统</a >申请。</i></div>
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/createProject'
@@ -238,7 +236,7 @@ paths:
       responses:
         '200':
           description: 操作成功。
-           <div class="info-msg">成功启用或禁用指定的项目时，会返回该项目的所有信息，并报告项目当前的状态。</i></div>
+           <div class="info-msg">注意事项：成功启用或禁用指定的项目时，会返回该项目的所有信息，并报告项目当前的状态。</i></div>
           content:
             application/json:
               schema:
@@ -356,7 +354,7 @@ paths:
       operationId: resetSignKey
 
       description: 重置指定项目的主要 App 证书。
-                   <div class="info-msg"><ul><li>如果原来的主要 App 证书泄漏了，你可以使用该方法对主要 App 证书进行重置。</li><li>如果该项目的主要 App 证书尚未启用，调用该方法会启用主要 App 证书。</li></ul></i></div>
+                   <div class="info-msg">注意事项：<ul><li>如果原来的主要 App 证书泄漏了，你可以使用该方法对主要 App 证书进行重置。</li><li>如果该项目的主要 App 证书尚未启用，调用该方法会启用主要 App 证书。</li></ul></i></div>
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/resetSignKey'
@@ -395,11 +393,11 @@ paths:
     get:
       tags:
       - "用量相关 API"
-      summary: 获取单个项目的用量数据
+      summary: 获取指定项目的用量数据
       operationId: getProjectUsagesV3
 
-      description: 你可以查询一年内的用量数据。建议查询时段不要包含当天，因为当天数据会持续变化。
-                    <div class="info-msg">请确保填写有效的 <code>project_id</code>，否则无法获取用量数据。</i></div>
+      description: 获取指定项目一年内的用量数据。
+                    <div class="info-msg">注意事项：<ul><li>请确保填写有效的 <code>project_id</code>，否则无法获取用量数据。</li><li>建议查询时段不要包含当天，因为当天数据会持续变化。</li></u></i></div>
       parameters:
         - name: projects
           required: true
@@ -424,10 +422,10 @@ paths:
           in: query
           description: >-
                指定业务类型。可设为以下值:
-                  - `default`: 默认 RTC
+                  - `default`: RTC
                   - `transcodeDuration`: 转码
-                  - `recording`: 录制
-                  - `cloudRecording`: 云录制
+                  - `recording`: 本地服务端录制
+                  - `cloudRecording`: 云端录制
                   - `miniapp`: 小程序
           schema:
             type: string
@@ -485,10 +483,9 @@ paths:
       tags:
       - 服务端踢人 API
       operationId: createKickingRule
-      summary: 创建服务端踢人规则
+      summary: 创建踢人规则
       description: >-
-
-
+            在服务端创建踢人规则。</br>
             踢人规则通过 `cname`、`uid` 和 `ip` 三个字段实现过滤，规则如下：
               - 如果填写 `ip`，不填写 `cname` 或 `uid`，则该 `ip` 无法登录 app 中的任何频道。
               - 如果填写 `cname`，不填写 `uid` 或 `ip`，则任何人都无法登录 app 中该 `cname` 对应的频道。
@@ -532,7 +529,8 @@ paths:
       tags:
       - 服务端踢人 API
       operationId: listKickingRule
-      summary: 获取服务端的踢人规则列表
+      summary: 获取踢人规则列表
+      description: 获取服务端的踢人规则列表。
       parameters:
         - name: appid
           required: true
@@ -578,7 +576,8 @@ paths:
       tags:
       - 服务端踢人 API
       operationId: updateKickingRule
-      summary: 更新服务端踢人规则的生效时间
+      summary: 更新踢人规则的生效时间
+      description: 更新指定的服务端踢人规则的生效时间。
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/updateKickingRule'
@@ -610,7 +609,8 @@ paths:
       tags:
       - 服务端踢人 API
       operationId: deleteKickingRule
-      summary: 删除服务端踢人规则
+      summary: 删除踢人规则
+      description: 删除指定的服务端踢人规则。
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/deleteKickingRule'
@@ -714,7 +714,7 @@ paths:
       responses:
         '200':
           description: 操作成功。</br>
-                      <div class="info-msg">不同的频道场景下，该方法返回的响应内容不同。</i></div>
+                      <div class="info-msg">注意事项：不同的频道场景下，该方法返回的响应内容不同。</i></div>
 
           content:
                 application/json:
@@ -824,7 +824,7 @@ components:
                   是否启用主要 App 证书：
                     - true：启用
                     - false：不启用
-                  <div class="info-msg">创建项目后，你可以调用 <code>https://api.agora.io/dev/v1/signkey</code> 启用或禁用主要 App 证书，或调用 <code>https://api.agora.io/dev/v1/reset_signkey</code> 重置主要 App 证书。</i></div>
+                  <div class="info-msg">注意事项：创建项目后，你可以调用 <code>https://api.agora.io/dev/v1/signkey</code> 启用或禁用主要 App 证书，或调用 <code>https://api.agora.io/dev/v1/reset_signkey</code> 重置主要 App 证书。</i></div>
           default: false
     changeProjectStatus:
       type: object
@@ -921,7 +921,8 @@ components:
                     - `publish_audio`：发送音频
                     - `publish_video`：发送视频
 
-                  如果不设置，默认取值为 `join_channel`。
+                  如果要实现踢人，`privileges` 参数必须设置为 `join_channel`。</br>
+                  如果设置为 `publish_audio` 或 `publish_audio`，表示禁止用户发送音频或视频。
           items:
             type: string
             enum:
@@ -962,39 +963,43 @@ components:
     createProject_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID。
-        name:
-          type: string
-          description: 项目名称。
-        vendor_key:
-          type: string
-          description: 项目的 App ID。
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书。
-        recording_server:
-          type: string
-          description: >-
-            录制项目服务器 IP：
-              - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-              - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-            项目状态：
-              - 1：启用
-              - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒。
+        project:
+         type: object
+         description: 项目的具体信息。
+         properties:
+            id:
+              type: string
+              description: 项目 ID。
+            name:
+              type: string
+              description: 项目名称。
+            vendor_key:
+              type: string
+              description: 项目的 App ID。
+            sign_key:
+              type: string
+              description: 项目的主要 App 证书。
+            recording_server:
+              type: string
+              description: >-
+                录制项目服务器 IP：
+                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+            status:
+              type: number
+              description: >-
+                项目状态：
+                  - 1：启用
+                  - 0：禁用
+            created:
+              type: number
+              description: 项目创建时间，Unix 时间戳，单位为秒。
     getProjects_response:
       type: object
       properties:
         projects:
           type: array
-          description: 所有项目。
+          description: 由所有项目信息组成的数组。
           items:
            properties:
               id:
@@ -1023,67 +1028,75 @@ components:
                       - 0：禁用
               created:
                 type: number
-                description: 项目创建时间，Unix 时间戳，单位为毫秒。
+                description: 项目创建时间，Unix 时间戳，单位为秒。
     getProject_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID。
-        name:
-          type: string
-          description: 项目名称。
-        vendor_key:
-          type: string
-          description: 项目的 App ID。
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书。
-        recording_server:
-          type: string
-          description: >-
-             录制项目服务器 IP：
-                - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-            项目状态：
-              - 1：启用
-              - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒。
+        project:
+          type: object
+          description: 项目的具体信息。
+          properties:
+            id:
+              type: string
+              description: 项目 ID。
+            name:
+              type: string
+              description: 项目名称。
+            vendor_key:
+              type: string
+              description: 项目的 App ID。
+            sign_key:
+              type: string
+              description: 项目的主要 App 证书。
+            recording_server:
+              type: string
+              description: >-
+                录制项目服务器 IP：
+                    - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                    - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+            status:
+              type: number
+              description: >-
+                项目状态：
+                  - 1：启用
+                  - 0：禁用
+            created:
+              type: number
+              description: 项目创建时间，Unix 时间戳，单位为秒。
     changeProjectstatus_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID。
-        name:
-          type: string
-          description: 项目名称。
-        vendor_key:
-          type: string
-          description: 项目的 App ID。
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书。
-        recording_server:
-          type: string
-          description: >-
-            录制项目服务器 IP：
-              - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-              - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-            项目状态：
-              - 1：启用
-              - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒。
+        project:
+          type: object
+          description: 项目的具体信息。
+          properties:
+            id:
+              type: string
+              description: 项目 ID。
+            name:
+              type: string
+              description: 项目名称。
+            vendor_key:
+              type: string
+              description: 项目的 App ID。
+            sign_key:
+              type: string
+              description: 项目的主要 App 证书。
+            recording_server:
+              type: string
+              description: >-
+                录制项目服务器 IP：
+                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+            status:
+              type: number
+              description: >-
+                项目状态：
+                  - 1：启用
+                  - 0：禁用
+            created:
+              type: number
+              description: 项目创建时间，Unix 时间戳，单位为秒。
     deleteProject_response:
       type: object
       properties:
@@ -1096,93 +1109,105 @@ components:
     setRecordingServer_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID。
-        name:
-          type: string
-          description: 项目名称。
-        vendor_key:
-          type: string
-          description: 项目的 App ID。
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书。
-        recording_server:
-          type: string
-          description: >-
-            录制项目服务器 IP：
-              - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-              - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-            项目状态：
-              - 1：启用
-              - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒。
+        project:
+          type: object
+          description: 项目的具体信息。
+          properties:
+            id:
+              type: string
+              description: 项目 ID。
+            name:
+              type: string
+              description: 项目名称。
+            vendor_key:
+              type: string
+              description: 项目的 App ID。
+            sign_key:
+              type: string
+              description: 项目的主要 App 证书。
+            recording_server:
+              type: string
+              description: >-
+                录制项目服务器 IP：
+                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+            status:
+              type: number
+              description: >-
+                项目状态：
+                  - 1：启用
+                  - 0：禁用
+            created:
+              type: number
+              description: 项目创建时间，Unix 时间戳，单位为秒。
     changeSignKey_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID。
-        name:
-          type: string
-          description: 项目名称。
-        vendor_key:
-          type: string
-          description: 项目的 App ID。
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书。
-        recording_server:
-          type: string
-          description: >-
-            录制项目服务器 IP：
-              - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-              - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-            项目状态：
-              - 1：启用
-              - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒。
+       project:
+         type: object
+         description: 项目的具体信息。
+         properties:
+            id:
+              type: string
+              description: 项目 ID。
+            name:
+              type: string
+              description: 项目名称。
+            vendor_key:
+              type: string
+              description: 项目的 App ID。
+            sign_key:
+              type: string
+              description: 项目的主要 App 证书。
+            recording_server:
+              type: string
+              description: >-
+                录制项目服务器 IP：
+                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+            status:
+              type: number
+              description: >-
+                项目状态：
+                  - 1：启用
+                  - 0：禁用
+            created:
+              type: number
+              description: 项目创建时间，Unix 时间戳，单位为秒。
     resetSignKey_response:
       type: object
       properties:
-        id:
-          type: string
-          description: 项目 ID。
-        name:
-          type: string
-          description: 项目名称。
-        vendor_key:
-          type: string
-          description: 项目的 App ID。
-        sign_key:
-          type: string
-          description: 项目的主要 App 证书。
-        recording_server:
-          type: string
-          description: >-
-            录制项目服务器 IP：
-              - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-              - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
-        status:
-          type: number
-          description: >-
-            项目状态：
-              - 1：启用
-              - 0：禁用
-        created:
-          type: number
-          description: 项目创建时间，Unix 时间戳，单位为毫秒。
+        project:
+         type: object
+         description: 项目的具体信息。
+         properties:
+            id:
+              type: string
+              description: 项目 ID。
+            name:
+              type: string
+              description: 项目名称。
+            vendor_key:
+              type: string
+              description: 项目的 App ID。
+            sign_key:
+              type: string
+              description: 项目的主要 App 证书。
+            recording_server:
+              type: string
+              description: >-
+                录制项目服务器 IP：
+                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+            status:
+              type: number
+              description: >-
+                项目状态：
+                  - 1：启用
+                  - 0：禁用
+            created:
+              type: number
+              description: 项目创建时间，Unix 时间戳，单位为秒。
     getProjectUsages_response:
       type: object
       properties:
@@ -1219,7 +1244,7 @@ components:
       properties:
         meta:
           type: object
-          description: 元数据，解释下面 `usage` 字段里 `durationAudioAll`, `durationVideoHd`, 和 `durationVideoHdp` 的含义。
+          description: 元数据，解释 `usage` 字段中 `durationAudioAll`, `durationVideoHd`, 和 `durationVideoHdp` 的含义。
           properties:
            "durationAudioAll":
               type: object
@@ -1227,10 +1252,10 @@ components:
               properties:
                   "cn":
                     type: string
-                    description: 解释 `durationAudioAll` 的含义（中文），即“总音频时长”。
+                    description: 解释 `durationAudioAll` 的中文含义，即“总音频时长”。
                   "en":
                     type: string
-                    description: 解释 `durationAudioAll` 的含义（英文），即 “Total Audio Duration”。
+                    description: 解释 `durationAudioAll` 的英文含义，即 “Total Audio Duration”。
                   "unit":
                     type: number
                     description: 时长单位，秒。
@@ -1240,10 +1265,10 @@ components:
               properties:
                   "cn":
                     type: string
-                    description: 解释 `durationVideoHd` 的含义（中文），即“高清视频时长（含本地服务端录制）”。
+                    description: 解释 `durationVideoHd` 的中文含义，即“高清视频时长（含本地服务端录制）”。
                   "en":
                     type: string
-                    description: 解释 `durationVideoHd` 的含义（英文），即 “HD Video Duration (including On-premise Recording)”。
+                    description: 解释 `durationVideoHd` 的英文含义，即 “HD Video Duration (including On-premise Recording)”。
                   "unit":
                     type: number
                     description: 时长单位，秒。
@@ -1253,10 +1278,10 @@ components:
               properties:
                   "cn":
                     type: string
-                    description: 解释 `durationVideoHdp` 的含义（中文），即“超高清视频时长（含本地服务端录制）”。
+                    description: 解释 `durationVideoHdp` 的中文含义，即“超高清视频时长（含本地服务端录制）”。
                   "en":
                     type: string
-                    description: 解释 `durationVideoHdp` 的含义（英文），即 “HDP Video Duration (including On-premise Recording)”。
+                    description: 解释 `durationVideoHdp` 的英文含义，即 “HDP Video Duration (including On-premise Recording)”。
                   "unit":
                     type: number
                     description: 时长单位，秒。
@@ -1286,7 +1311,7 @@ components:
       properties:
         status:
           type: string
-          description: 本次请求的状态。
+          description: 本次请求的状态。`"success"` 表示请求成功。
         id:
           type: number
           description: 规则 ID。当更新踢人规则时，需要使用该规则 ID。
@@ -1295,7 +1320,7 @@ components:
       properties:
         status:
           type: string
-          description: 本次请求的状态。
+          description: 本次请求的状态。`"success"` 表示请求成功。
         rules:
           type: array
           description: 踢人规则列表，包含如下字段：
@@ -1318,22 +1343,22 @@ components:
                 description: 频道名。
               ip:
                 type: string
-                description: IP 地址。
+                description: 用户的 IP 地址。
               ts:
                 type: string
-                description: 该规则生效的截止时间戳。
+                description: 该规则生效的截止时间，使用 UTC 时间和 Unix 时间戳。
               createAt:
                 type: string
-                description: 该规则的创建时间。
+                description: 该规则的创建时间，使用 UTC 时间和 Unix 时间戳。
               updateAt:
                 type: string
-                description: 该规则的更新时间。
+                description: 该规则的更新时间，使用 UTC 时间和 Unix 时间戳。
     updateKickingRule_response:
       type: object
       properties:
         status:
           type: string
-          description: 本次请求的状态。
+          description: 本次请求的状态。`"success"` 表示请求成功。
         result:
           type: object
           properties:
@@ -1342,13 +1367,13 @@ components:
             description: 规则 ID。
            ts:
               type: string
-              description: 规则生效的截止时间。
+              description: 规则生效的截止时间，使用 UTC 时间和 Unix 时间戳。
     deleteKickingRule_response:
       type: object
       properties:
         status:
           type: string
-          description: 本次请求的状态。
+          description: 本次请求的状态。`"success"` 表示请求成功。
         id:
           type: string
           description: 规则 ID。
@@ -1367,7 +1392,7 @@ components:
           properties:
             join:
               type: number
-              description: 该用户加入频道的时间戳。
+              description: 该用户加入频道的时间戳，Unix 时间戳，单位为秒。
             in_channel:
               type: boolean
               description: >-
