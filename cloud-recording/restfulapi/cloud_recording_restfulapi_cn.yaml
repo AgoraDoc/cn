@@ -469,7 +469,7 @@ components:
         uid:
           type: string
           description: >-
-            字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，32 位无符号整数，例如 `"527841"`。
+            字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，例如 `"527841"`。
 
             需满足以下条件：
 
@@ -1474,7 +1474,7 @@ components:
     206:
       description: 整个录制过程中没有用户发流，或部分录制文件没有上传到第三方云存储。
     400:
-      description: 请求的语法错误（如参数错误），服务器无法理解。
+      description: 请求的语法错误（如参数错误），服务器无法理解。如果你填入的 App ID 没有开通云端录制权限，也会返回 400。
     401:
       description: 未经授权的（App ID/Customer Certificate匹配错误）。
     404:
