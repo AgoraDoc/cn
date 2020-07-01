@@ -21,10 +21,10 @@ info:
 
     你可以使用本页面提供的 API 实现以下功能：
     <ul>
-      <li>通过<a href="#/%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3%20API/createProject">项目相关 API</a > 创建和管理项目。</li>
-      <li>通过<a href="#/%E7%94%A8%E9%87%8F%E7%9B%B8%E5%85%B3%20API/getProjectUsagesV3">用量相关 API</a > 获取指定项目的用量数据。</li>
-      <li>通过<a href="#/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B8%A2%E4%BA%BA%20API/createKickingRule">服务端踢人 API</a > 创建和管理服务端踢人规则。</li>
-      <li>通过<a href="#/%E6%9F%A5%E8%AF%A2%E5%9C%A8%E7%BA%BF%E9%A2%91%E9%81%93%E4%BF%A1%E6%81%AF%20API/userProperty">查询在线频道信息 API</a > 获取频道相关的信息。</li>
+      <li>创建和管理项目。</li>
+      <li>获取指定项目的用量数据。</li>
+      <li>创建和管理服务端踢人规则。</li>
+      <li>获取用户角色、用户列表、频道列表的信息。</li>
     </ul>
 
     <div class="info-msg">注意事项：<ul><li>本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</li><li>本节 App 证书相关功能仅对主要证书有效。</li></ul></div>
@@ -44,7 +44,7 @@ info:
   version: 2020.06.30
   title: 服务端 RESTful API
 servers:
-  - url: https://api.agora.io.dev
+  - url: https://api.agora.io
 
 
 
@@ -53,7 +53,7 @@ security:
 
 
 paths:
-  /v1/project:
+  /dev/v1/project:
     post:
       tags:
       - "项目相关 API"
@@ -103,7 +103,7 @@ paths:
           $ref: '#/components/responses/500'
     get:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 获取指定项目
       operationId: getProject
       description: 获取指定的 Agora 项目的信息。
@@ -152,7 +152,7 @@ paths:
           $ref: '#/components/responses/500'
     delete:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 删除项目
       operationId: deleteProject
 
@@ -181,10 +181,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/projects:
+  /dev/v1/projects:
     get:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 获取所有项目
       operationId: getProjects
 
@@ -222,10 +222,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/project_status:
+  /dev/v1/project_status:
     post:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 禁用或启用项目
       operationId: changeProjectStatus
 
@@ -264,10 +264,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/recording_config:
+  /dev/v1/recording_config:
     post:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 设置录制服务器 IP
       operationId: setRecordingServer
 
@@ -305,10 +305,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/signkey:
+  /dev/v1/signkey:
     post:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 启用或禁用主要 App 证书
       operationId: changeSignKey
 
@@ -346,10 +346,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/reset_signkey:
+  /dev/v1/reset_signkey:
     post:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 重置主要 App 证书
       operationId: resetSignKey
 
@@ -389,10 +389,10 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /v3/usage:
+  /dev/v3/usage:
     get:
       tags:
-      - "用量相关 API"
+      - "查询项目用量"
       summary: 获取指定项目的用量数据
       operationId: getProjectUsagesV3
 
@@ -478,10 +478,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/kicking-rule:
+  /dev/v1/kicking-rule:
     post:
       tags:
-      - 服务端踢人 API
+      - 踢人规则管理
       operationId: createKickingRule
       summary: 创建踢人规则
       description: >-
@@ -527,7 +527,7 @@ paths:
           $ref: '#/components/responses/500'
     get:
       tags:
-      - 服务端踢人 API
+      - 踢人规则管理
       operationId: listKickingRule
       summary: 获取踢人规则列表
       description: 获取服务端的踢人规则列表。
@@ -574,7 +574,7 @@ paths:
           $ref: '#/components/responses/500'
     put:
       tags:
-      - 服务端踢人 API
+      - 踢人规则管理
       operationId: updateKickingRule
       summary: 更新踢人规则的生效时间
       description: 更新指定的服务端踢人规则的生效时间。
@@ -607,7 +607,7 @@ paths:
           $ref: '#/components/responses/500'
     delete:
       tags:
-      - 服务端踢人 API
+      - 踢人规则管理
       operationId: deleteKickingRule
       summary: 删除踢人规则
       description: 删除指定的服务端踢人规则。
@@ -636,10 +636,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/channel/user/property/{appid}/{uid}/{channelName}:
+  /dev/v1/channel/user/property/{appid}/{uid}/{channelName}:
     get:
       tags:
-      - "查询在线频道信息 API"
+      - 查询在线频道信息
       summary: 查询用户状态
       operationId: userProperty
       description: 该方法查询某个用户是否在指定频道中，以及该用户在该频道中的角色等状态。
@@ -687,10 +687,10 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/channel/user/{appid}/{channelName}:
+  /dev/v1/channel/user/{appid}/{channelName}:
     get:
       tags:
-      - "查询在线频道信息 API"
+      - 查询在线频道信息
       summary: 获取用户列表
       operationId: userList
       description: 该方法获取指定频道内的用户列表：
@@ -750,13 +750,13 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /v1/channel/{appid}:
+  /dev/v1/channel/{appid}:
     get:
       tags:
-      - "查询在线频道信息 API"
-      summary: 分页查询厂商频道列表
+      - 查询在线频道信息
+      summary: 分页查询项目的频道列表
       operationId: channelList
-      description: 该方法查询指定厂商的频道列表。
+      description: 该方法查询指定项目下的频道列表。
       parameters:
         - in: path
           name: appid
@@ -769,7 +769,7 @@ paths:
           required: false
           schema:
             type: number
-          description: 厂商频道列表的起始页面，默认值为 0。
+          description: 你想要查询的页面，默认值为 0。
         - in: query
           name: page_size
           required: false
