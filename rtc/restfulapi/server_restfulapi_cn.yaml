@@ -27,7 +27,7 @@ info:
       <li>获取用户角色、用户列表、频道列表的信息。</li>
     </ul>
 
-    <div class="info-msg">注意事项：<ul><li>本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</li><li>本节 App 证书相关功能仅对主要证书有效。</li></ul></div>
+    <div class="info-msg">注意事项：本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持</div>
 
 
     ## 调试 RESTful API
@@ -56,7 +56,7 @@ paths:
   /dev/v1/project:
     post:
       tags:
-      - "项目相关 API"
+      - "项目管理"
       summary: 创建项目
       operationId: createProject
 
@@ -236,7 +236,6 @@ paths:
       responses:
         '200':
           description: 操作成功。
-           <div class="info-msg">注意事项：成功启用或禁用指定的项目时，会返回该项目的所有信息，并报告项目当前的状态。</i></div>
           content:
             application/json:
               schema:
@@ -397,7 +396,7 @@ paths:
       operationId: getProjectUsagesV3
 
       description: 获取指定项目一年内的用量数据。
-                    <div class="info-msg">注意事项：<ul><li>请确保填写有效的 <code>project_id</code>，否则无法获取用量数据。</li><li>建议查询时段不要包含当天，因为当天数据会持续变化。</li></u></i></div>
+                    <div class="info-msg">注意事项：<ul><li>请确保填写有效的项目 ID，否则无法获取用量数据。</li><li>建议查询时段不要包含当天，因为当天数据会持续变化。</li></u></i></div>
       parameters:
         - name: projects
           required: true
@@ -422,7 +421,7 @@ paths:
           in: query
           description: >-
                指定业务类型。可设为以下值:
-                  - `default`: RTC
+                  - `default`: 音视频。不包括小程序的用量。
                   - `transcodeDuration`: 转码
                   - `recording`: 本地服务端录制
                   - `cloudRecording`: 云端录制
@@ -490,8 +489,6 @@ paths:
               - 如果填写 `ip`，不填写 `cname` 或 `uid`，则该 `ip` 无法登录 app 中的任何频道。
               - 如果填写 `cname`，不填写 `uid` 或 `ip`，则任何人都无法登录 app 中该 `cname` 对应的频道。
               - 如果填写 `cname` 和 `uid`，不填写 `ip`，则该 `uid` 无法登录 app 中该 `cname` 对应的频道。
-
-            如果 `time` 字段设置为 `0`，则表示不封禁，服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。<br>
 
             用户被踢出频道后，会收到网络连接已被服务器禁止回调：
               - Android: [`onConnectionStateChanged`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler.html#a31b2974a574ec45e62bb768e17d1f49e) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
@@ -770,12 +767,13 @@ paths:
           schema:
             type: number
           description: 你想要查询的页面，默认值为 0。
+                       <div class="info-msg">注意事项：<code>page_no</code> 的取值不能大于（频道总数/每页显示的频道数 - 1）。否则，指定的页面将不包含任何频道列表。</i></div>
         - in: query
           name: page_size
           required: false
           schema:
             type: number
-          description: 每个页面显示的列表数量，默认值为 100，最大值为 500。
+          description: 每个页面显示的频道数量，默认值为 100，最大值为 500。
       responses:
         '200':
           description: 操作成功。
@@ -864,8 +862,10 @@ components:
           type: string
           description: >-
                     项目的录制服务器 IP：
-                      - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。
-                      - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+                    <ul>
+                      <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。</li>
+                      <li>如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。</li>
+                      </ul>
     changeSignKey:
       type: object
       required:
@@ -902,13 +902,13 @@ components:
           description: 控制台中项目的 App ID。
         cname:
           type: string
-          description: （可选）频道名称。如果填写，不能设为空字符串。
+          description: 频道名称。如果填写，不能设为空字符串。
         uid:
           type: string
-          description: （可选）用户 ID，可以直接使用 SDK 的方法获取。不能设为 0。
+          description: 用户 ID，可以直接使用 SDK 的方法获取。不能设为 0。
         ip:
           type: string
-          description: （可选）想要封禁的用户 IP 地址。不能设为 0。
+          description: 想要封禁的用户 IP 地址。不能设为 0。
         time:
           type: number
           description: 封人时间，单位是分钟，取值范围为 [1，1440]，默认值为 60。
@@ -982,9 +982,9 @@ components:
             recording_server:
               type: string
               description: >-
-                录制项目服务器 IP：
-                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+                    录制项目服务器 IP：
+                        - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
+                        - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
             status:
               type: number
               description: >-
@@ -1017,9 +1017,10 @@ components:
               recording_server:
                 type: string
                 description: >-
-                    录制项目服务器 IP：
-                      - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                      - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+                         录制项目服务器 IP：
+                          <ul>
+                           <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；</li>
+                           <li>如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。</li>
               status:
                 type: number
                 description: >-
@@ -1051,9 +1052,11 @@ components:
             recording_server:
               type: string
               description: >-
-                录制项目服务器 IP：
-                    - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                    - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+                        录制项目服务器 IP：
+                         <ul>
+                            <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；</li>
+                            <li>如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。</li>
+                            </ul>
             status:
               type: number
               description: >-
@@ -1392,7 +1395,7 @@ components:
           properties:
             join:
               type: number
-              description: 该用户加入频道的时间戳，Unix 时间戳，单位为秒。
+              description: 该用户加入频道的时间戳，Unix 时间戳，单位为秒。当 `in_channel` 的值为 `true` 时，才会返回此字段。
             in_channel:
               type: boolean
               description: >-
@@ -1407,6 +1410,8 @@ components:
                           - 1：通信场景的用户
                           - 2：直播场景的主播
                           - 3：直播场景的观众
+
+                         当 `in_channel` 的值为 `true` 时，才会返回此字段。
     userList_response:
       type: object
       properties:
@@ -1432,27 +1437,29 @@ components:
                          频道场景：
                           - 1：通信场景
                           - 2: 直播场景
+
+                         当 `channel_exist` 的值为 `true` 时，才会返回此字段。
             total:
               type: number
-              description: 频道内的用户总人数。
+              description: 频道内的用户总人数。在通信场景 （`mode` 的值为 `1`）下，才会返回此字段。
             users:
               type: array
-              description: 频道内所有用户的 ID 列表。
+              description: 频道内所有用户的 ID 列表。在通信场景 （`mode` 的值为 `1`）下，才会返回此字段。
               items:
                type: string
             broadcasters:
               type: array
-              description: 频道内所有主播的用户 ID 列表。
+              description: 频道内所有主播的用户 ID 列表。在直播场景 （`mode` 的值为 `2`）下，才会返回此字段。
               items:
                type: string
             audience:
               type: array
-              description: 频道内观众的 uid 列表，最多包含前 10000 名观众。
+              description: 频道内观众的 uid 列表，最多包含前 10000 名观众。在直播场景 （`mode` 的值为 `2`）下，才会返回此字段。
               items:
                type: string
             audience_total:
               type: number
-              description: 频道内的观众总人数。
+              description: 频道内的观众总人数。在直播场景 （`mode` 的值为 `2`）下，才会返回此字段。
     channelList_response:
       type: object
       properties:
@@ -1469,6 +1476,7 @@ components:
             channels:
               type: array
               description: 频道列表。
+                <div class="info-msg">注意事项：当指定的页面将不包含频道列表时，此字段返回值为空。</i></div>
               items:
                properties:
                  channel_name:
