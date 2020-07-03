@@ -27,12 +27,12 @@ info:
       <li>获取用户角色、用户列表、频道列表的信息。</li>
     </ul>
 
-    <div class="info-msg">注意事项：本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持</div>
+    <div class="info-msg">注意事项：本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</div>
 
 
     ## 调试 RESTful API
 
-    你可以使用 **Try it out** 功能在本文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的客户 ID 和客户证书 分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
+    你可以使用 **Try it out** 功能在本文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的客户 ID 和客户证书分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
 
 
     <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1592995564316" alt="Authorize" width="50%">
@@ -407,13 +407,13 @@ paths:
         - name: from_date
           required: true
           in: query
-          description: '查询开始日期: 格式 YYYY-MM-DD。'
+          description: '查询开始日期，格式 YYYY-MM-DD。'
           schema:
             type: string
         - name: to_date
           required: true
           in: query
-          description: '查询结束日期: 格式 YYYY-MM-DD。'
+          description: '查询结束日期，格式 YYYY-MM-DD。'
           schema:
             type: string
         - name: business
@@ -422,10 +422,10 @@ paths:
           description: >-
                指定业务类型。可设为以下值:
                   - `default`: 音视频。不包括小程序的用量。
-                  - `transcodeDuration`: 转码
-                  - `recording`: 本地服务端录制
-                  - `cloudRecording`: 云端录制
-                  - `miniapp`: 小程序
+                  - `transcodeDuration`: 转码。
+                  - `recording`: 本地服务端录制。
+                  - `cloudRecording`: 云端录制。
+                  - `miniapp`: 小程序。
           schema:
             type: string
       responses:
@@ -493,7 +493,7 @@ paths:
             用户被踢出频道后，会收到网络连接已被服务器禁止回调：
               - Android: [`onConnectionStateChanged`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler.html#a31b2974a574ec45e62bb768e17d1f49e) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
               - iOS/macOS: [`connectionChangedToState`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/oc/Protocols/AgoraRtcEngineDelegate.html#//api/name/rtcEngine:connectionChangedToState:reason:) 回调报告 `AgoraConnectionChangedBannedByServer(3)`。
-              - Web: [`onclient-banned`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/web/interfaces/agorartc.client.html#on)。
+              - Web: [`Client.on("client-banned")`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/web/interfaces/agorartc.client.html#on)。
               - Windows: [`onConnectionStateChanged`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/cpp/classagora_1_1rtc_1_1_i_rtc_engine_event_handler.html#af409b2e721d345a65a2c600cea2f5eb4) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
               - Electron: [`AgoraRtcEngine.on("connectionStateChanged")`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/electron/classes/agorartcengine.html#on) 回调报告 `3`。
               - Unity: [`OnConnectionStateChangedHandler`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/unity/namespaceagora__gaming__rtc.html#adae7694cb602375ccbc14be3062a230c) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
@@ -911,7 +911,7 @@ components:
           description: 想要封禁的用户 IP 地址。不能设为 0。
         time:
           type: number
-          description: 封人时间，单位是分钟，取值范围为 [1，1440]，默认值为 60。
+          description: 封人时间，单位是分钟，取值范围为 [1,1440]，默认值为 60。
                         <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li></ul></i></div>
         privileges:
           type: array
@@ -944,7 +944,7 @@ components:
           description: 想要更新的规则的 ID。
         time:
           type: number
-          description: 封人时间，单位是分钟，取值范围为 [1，1440]，默认值为 60。
+          description: 封人时间，单位是分钟，取值范围为 [1,1440]，默认值为 60。
                       <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li></i></div>
 
     deleteKickingRule:
@@ -982,9 +982,12 @@ components:
             recording_server:
               type: string
               description: >-
-                    录制项目服务器 IP：
-                        - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                        - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+
+                  录制项目服务器 IP：
+
+                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。
+
+                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
             status:
               type: number
               description: >-
@@ -999,7 +1002,7 @@ components:
       properties:
         projects:
           type: array
-          description: 由所有项目信息组成的数组。
+          description: 所有项目的具体信息。
           items:
            properties:
               id:
@@ -1019,8 +1022,9 @@ components:
                 description: >-
                          录制项目服务器 IP：
                           <ul>
-                           <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；</li>
+                           <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。</li>
                            <li>如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。</li>
+                           </ul>
               status:
                 type: number
                 description: >-
@@ -1054,7 +1058,7 @@ components:
               description: >-
                         录制项目服务器 IP：
                          <ul>
-                            <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；</li>
+                            <li>如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。</li>
                             <li>如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。</li>
                             </ul>
             status:
@@ -1089,8 +1093,10 @@ components:
               type: string
               description: >-
                 录制项目服务器 IP：
-                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
             status:
               type: number
               description: >-
@@ -1108,7 +1114,7 @@ components:
           description: >-
             成功删除指定的项目:
                - true：成功删除指定的项目。
-               - false：（保留）。
+               - false：（预留）。
     setRecordingServer_response:
       type: object
       properties:
@@ -1132,8 +1138,10 @@ components:
               type: string
               description: >-
                 录制项目服务器 IP：
-                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
             status:
               type: number
               description: >-
@@ -1166,8 +1174,10 @@ components:
               type: string
               description: >-
                 录制项目服务器 IP：
-                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
             status:
               type: number
               description: >-
@@ -1200,8 +1210,10 @@ components:
               type: string
               description: >-
                 录制项目服务器 IP：
-                  - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段；
-                  - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.9.0 及之前版本，请关注此字段。
+
+                - 如果你使用的是本地服务端录制 SDK v1.11.0 及之后版本，请忽略此字段。
             status:
               type: number
               description: >-
@@ -1260,7 +1272,7 @@ components:
                     type: string
                     description: 解释 `durationAudioAll` 的英文含义，即 “Total Audio Duration”。
                   "unit":
-                    type: number
+                    type: string
                     description: 时长单位，秒。
            "durationVideoHd":
               type: object
@@ -1273,7 +1285,7 @@ components:
                     type: string
                     description: 解释 `durationVideoHd` 的英文含义，即 “HD Video Duration (including On-premise Recording)”。
                   "unit":
-                    type: number
+                    type: string
                     description: 时长单位，秒。
            "durationVideoHdp":
               type: object
@@ -1286,7 +1298,7 @@ components:
                     type: string
                     description: 解释 `durationVideoHdp` 的英文含义，即 “HDP Video Duration (including On-premise Recording)”。
                   "unit":
-                    type: number
+                    type: string
                     description: 时长单位，秒。
         usages:
           type: array
@@ -1388,7 +1400,7 @@ components:
           description:  >-
                        本次请求的状态:
                         - true: 请求成功
-                        - false: （保留）
+                        - false: （预留）
         data:
           type: object
           description: 用户在频道中的状态数据。
@@ -1454,7 +1466,7 @@ components:
                type: string
             audience:
               type: array
-              description: 频道内观众的 uid 列表，最多包含前 10000 名观众。在直播场景 （`mode` 的值为 `2`）下，才会返回此字段。
+              description: 频道内观众的 uid 列表，最多包含前 10,000 名观众。在直播场景 （`mode` 的值为 `2`）下，才会返回此字段。
               items:
                type: string
             audience_total:
@@ -1468,7 +1480,7 @@ components:
           description:  >-
                        本次请求的状态:
                         - true: 请求成功
-                        - false: （保留）
+                        - false: （预留）
         data:
           type: object
           description: 响应数据。
@@ -1476,7 +1488,7 @@ components:
             channels:
               type: array
               description: 频道列表。
-                <div class="info-msg">注意事项：当指定的页面将不包含频道列表时，此字段返回值为空。</i></div>
+                <div class="info-msg">注意事项：当指定的页面不包含频道列表时，此字段返回值为空。</i></div>
               items:
                properties:
                  channel_name:
