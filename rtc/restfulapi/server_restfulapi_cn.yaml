@@ -654,7 +654,7 @@ paths:
             type: string
           description: 用户 ID，可以通过 SDK 获取。
         - in: path
-          name: cname
+          name: channelName
           required: true
           schema:
             type: string
@@ -703,7 +703,7 @@ paths:
             type: string
           description: 控制台中项目的 App ID。
         - in: path
-          name: cname
+          name: channelName
           required: true
           schema:
             type: string
