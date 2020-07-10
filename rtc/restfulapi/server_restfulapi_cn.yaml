@@ -398,7 +398,7 @@ paths:
       description: 获取指定项目一年内的用量数据。
                     <div class="info-msg">注意事项：<ul><li>请确保填写有效的项目 ID，否则无法获取用量数据。</li><li>建议查询时段不要包含当天，因为当天数据会持续变化。</li></u></i></div>
       parameters:
-        - name: projects
+        - name: project_id
           required: true
           in: query
           description: 项目 ID。
