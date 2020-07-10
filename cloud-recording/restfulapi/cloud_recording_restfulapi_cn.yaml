@@ -1358,8 +1358,8 @@ components:
                         - "123"
                         - "456"
                     subscribeAudioUids:
-                        - “123”
-                        - “456”
+                        - "123"
+                        - "456"
                     subscribeUidGroup: 0
                   recordingFileConfig:
                     avFileType: ["hls"]
