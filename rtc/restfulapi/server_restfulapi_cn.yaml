@@ -32,7 +32,7 @@ info:
 
     ## 调试 RESTful API
 
-    你可以使用 **Try it out** 功能在本文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的客户 ID 和客户证书分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
+    你可以使用 **Try it out** 功能在本文档页内进行 RESTful API 的调试。调试前你需要点击下方的 **Authorize** 进行鉴权。将你的客户 ID 和客户证书分别填入 **客户 ID** 和 **客户证书**，然后点击 **Authorize**，完成鉴权。</div>
 
 
     <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1592995564316" alt="Authorize" width="50%">
