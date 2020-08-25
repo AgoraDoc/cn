@@ -545,11 +545,11 @@ paths:
                 $ref: '#/components/schemas/listKickingRule_response'
               example:
                 status: "success"
-                ruls: [
+                rules: [
                   {
                     id: 1953,
                     appid: "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    uid: 1,
+                    uid: 589517928,
                     opid: 1406,
                     cname: "11",
                     ip: "192.168.0.1",
@@ -652,8 +652,9 @@ paths:
           name: uid
           required: true
           schema:
-            type: string
-          description: 用户 ID，可以通过 SDK 获取。
+            type: number
+          description: 用户 ID，整数。可以通过 SDK 获取。
+                        <div class="info-msg">注意事项：暂不支持 String 型用户名（User Account），请确保使用整型用户 ID。</i></div>
         - in: path
           name: channelName
           required: true
@@ -905,7 +906,7 @@ components:
           type: string
           description: 频道名称。如果填写，不能设为空字符串。
         uid:
-          type: string
+          type: number
           description: 用户 ID，可以直接使用 SDK 的方法获取。不能设为 0。
         ip:
           type: string
@@ -1349,7 +1350,7 @@ components:
                 type: string
                 description: 控制台中项目的 App ID。
               uid:
-                type: string
+                type: number
                 description: 用户 ID。
               opid:
                 type: number
@@ -1574,7 +1575,7 @@ components:
           example:
             appid: "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2"
             cname: "channel1"
-            uid: ""
+            uid: 589517928
             ip: ""
             time: 60
             privileges: ["join_channel"]
