@@ -487,8 +487,9 @@ paths:
       description: >-
             在服务端创建踢人规则。</br>
             踢人规则通过 `cname`、`uid` 和 `ip` 三个字段实现过滤，规则如下：
-              - 如果填写 `ip`，不填写 `cname` 或 `uid`，则该 `ip` 无法登录 app 中的任何频道。
-              - 如果填写 `cname`，不填写 `uid` 或 `ip`，则任何人都无法登录 app 中该 `cname` 对应的频道。
+              - 如果填写 `ip`，不填写 `cname` 和 `uid`，则该 `ip` 无法登录 app 中的任何频道。
+              - 如果填写 `cname`，不填写 `uid` 和 `ip`，则任何人都无法登录 app 中该 `cname` 对应的频道。
+              - 如果填写 `uid`，不填写 `cname` 和 `ip`，则该 `uid`无法登录 app 中的任何频道。
               - 如果填写 `cname` 和 `uid`，不填写 `ip`，则该 `uid` 无法登录 app 中该 `cname` 对应的频道。
 
             用户被踢出频道后，会收到网络连接已被服务器禁止回调：
@@ -904,7 +905,7 @@ components:
           description: 控制台中项目的 App ID。
         cname:
           type: string
-          description: 频道名称。如果填写，不能设为空字符串。
+          description: 频道名称。
         uid:
           type: number
           description: 用户 ID，可以直接使用 SDK 的方法获取。不能设为 0。
