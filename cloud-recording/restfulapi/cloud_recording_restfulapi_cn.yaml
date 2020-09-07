@@ -293,10 +293,7 @@ paths:
       - "云端录制"
       summary: 查询云端录制状态
       operationId: query
-      description: 开始录制后，你可以调用 query 查询录制状态。
-
-
-        `query` 请求仅在会话内有效。如果录制启动错误，或录制已结束，调用 `query` 将返回 404。建议你同时使用回调服务，以获得云端录制所有的事件通知和具体信息。如需使用回调服务，请参考 [API 回调](https://docs.agora.io/cn/cloud-recording/cloud_recording_callback_rest)。
+      description: 开始录制后，你可以调用 query 查询录制状态。`query` 请求仅在会话内有效。如果录制启动错误，或录制已结束，调用 `query` 将返回 404。
 
         <div class="info-msg">注意事项：每个 App ID 每秒钟的请求数限制为 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</i></div>
       requestBody:
