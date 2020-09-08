@@ -679,27 +679,27 @@ components:
                             type: number
                             format: float
                             description: >-
-                              屏幕里该画面左上角的横坐标的相对值，范围是 [0.0,1.0]。从左到右布局，0.0
+                              屏幕里该画面左上角的横坐标的相对值，范围是 [0.0,1.0]，精确到小数点后六位。从左到右布局，0.0
                               在最左端，1.0 在最右端。
                           y_axis:
                             type: number
                             format: float
                             description: >-
-                              屏幕里该画面左上角的纵坐标的相对值，范围是 [0.0,1.0]。从上到下布局，0.0 在最上端，1.0 在最下端。
+                              屏幕里该画面左上角的纵坐标的相对值，范围是 [0.0,1.0]，精确到小数点后六位。从上到下布局，0.0 在最上端，1.0 在最下端。
                           width:
                             type: number
                             format: float
-                            description: 该画面宽度的相对值，取值范围是 [0.0,1.0]。
+                            description: 该画面宽度的相对值，取值范围是 [0.0,1.0]，精确到小数点后六位。
                           height:
                             type: number
                             format: float
-                            description: 该画面高度的相对值，取值范围是 [0.0,1.0]。
+                            description: 该画面高度的相对值，取值范围是 [0.0,1.0]，精确到小数点后六位。
                           alpha:
                             type: number
                             default: 1.0
                             format: float
                             description: >-
-                              图像的透明度。取值范围是 [0.0,1.0] 。0.0 表示图像为透明的，1.0
+                              图像的透明度。取值范围是 [0.0,1.0]，精确到小数点后六位。0.0 表示图像为透明的，1.0
                               表示图像为完全不透明的。
                           render_mode:
                             type: integer
