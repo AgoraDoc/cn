@@ -1679,7 +1679,7 @@ components:
     400:
       description: 请求的语法错误（如参数错误），服务器无法理解。如果你填入的 App ID 没有开通云端录制权限，也会返回 400。
     401:
-      description: 未经授权的（App ID/Customer Certificate匹配错误）。
+      description: 未经授权的（客户 ID/客户密钥匹配错误）。
     404:
       description: 服务器无法根据请求找到资源（网页）。
     500:
