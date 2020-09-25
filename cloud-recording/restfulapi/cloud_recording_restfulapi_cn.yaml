@@ -1031,62 +1031,10 @@ components:
                         type: string
                         description: 错误处理策略。目前仅可设置为默认值 `"error_abort"`，表示如果当前扩展服务发生错误，其他扩展服务均停止。
                       serviceParam:
-                        type: object
-                        required:
-                          - accessKey
-                          - secretKey
-                          - regionId
-                          - apiData
-                        description: 扩展服务的具体参数设置。当使用阿里视频点播服务时，你需要设置以下参数：
-                        properties:
-                          accessKey:
-                            type: string
-                            description: 阿里云访问秘钥 AccessKey 中的 `AccessKeyId`。详见[阿里云文档](https://help.aliyun.com/document_detail/53045.html)。
-                          secretKey:
-                            type: string
-                            description: 阿里云访问秘钥 AccessKey 中的 `AccessKeySecret`。详见[阿里云文档](https://help.aliyun.com/document_detail/53045.html)。
-                          regionId:
-                            type: string
-                            description: 接入区域标识。详见[阿里云文档](https://help.aliyun.com/document_detail/98194.html)。
-                          apiData:
-                            type: object
-                            required:
-                              - videoData
-                            description: 阿里视频点播服务的详细设置。
-                            properties:
-                              videoData:
-                                type: object
-                                required:
-                                  - title
-                                description: 视频设置。你可以至[阿里云文档中心](https://help.aliyun.com/document_detail/55407.html)获取各参数的详细解释。
-                                properties:
-                                  title:
-                                    type: string
-                                    description: 视频标题。
-                                  description:
-                                    type: string
-                                    description: 视频描述。
-                                  coverUrl:
-                                    type: string
-                                    description: 自定义视频封面的 URL 地址。
-                                  cateId:
-                                    type: string
-                                    description: 字符串内容为视频分类 ID。
-                                  tags:
-                                    type: string
-                                    description: 视频标签。
-                                  templateGroupId:
-                                    type: string
-                                    description: 转码模板组 ID。
-                                  userData:
-                                    type: string
-                                    description: 自定义设置。
-                                  storageLocation:
-                                    type: string
-                                    description: 存储地址。
-                                  workflowId:
-                                    type: string
-                                    description: 工作流 ID。
+                        oneOf:
+                          - $ref: '#/components/schemas/阿里视频点播服务'
+                          - $ref: '#/components/schemas/页面录制'
+
     update:
       type: object
       required:
@@ -1488,6 +1436,120 @@ components:
                 - `"backuped"`：本次录制的文件已经全部上传完成，但是至少有一个 TS 文件上传到了 Agora 云备份。Agora 服务器会自动将这部分文件继续上传至指定的第三方云存储。
 
                 - `"unknown"`：未知状态。
+    阿里视频点播服务:
+      type: object
+      required:
+        - accessKey
+        - secretKey
+        - regionId
+        - apiData
+      description: 扩展服务的具体参数设置。当使时，你需要设置以下参数：
+      properties:
+        accessKey:
+          type: string
+          description: 阿里云访问秘钥 Acce`AccessKeyId`。详见[阿里云文档](httpaliyun.com/document_detail/53045.html)。
+        secretKey:
+          type: string
+          description: 阿里云访问秘钥 Acce`AccessKeySecret`。详见[阿里云文档](httpaliyun.com/document_detail/53045.html)。
+        regionId:
+          type: string
+          description: 接入区域标识。详见[阿里云文档]help.aliyun.com/document_detail/98194.html)。
+        apiData:
+          type: object
+          required:
+            - videoData
+          description: 阿里视频点播服务的详细设置。
+          properties:
+            videoData:
+              type: object
+              required:
+                - title
+              description: 视频设置。你可以至(https://help.aliyun.com/documen55407.html)获取各参数的详细解释。
+              properties:
+                title:
+                  type: string
+                  description: 视频标题。
+                description:
+                  type: string
+                  description: 视频描述。
+                coverUrl:
+                  type: string
+                  description: 自定义视频封面的 URL 地址。
+                cateId:
+                  type: string
+                  description: 字符串内容为视频分类 ID。
+                tags:
+                  type: string
+                  description: 视频标签。
+                templateGroupId:
+                  type: string
+                  description: 转码模板组 ID。
+                userData:
+                  type: string
+                  description: 自定义设置。
+                storageLocation:
+                  type: string
+                  description: 存储地址。
+                workflowId:
+                  type: string
+                  description: 工作流 ID。
+    页面录制:
+      type: object
+      required:
+        - accessKey
+        - secretKey
+        - regionId
+        - apiData
+      description: 扩展服务的具体参数设置。当使时，你需要设置以下参数：
+      properties:
+        accessKey:
+          type: string
+          description: 阿里云访问秘钥 Acce`AccessKeyId`。详见[阿里云文档](httpaliyun.com/document_detail/53045.html)。
+        secretKey:
+          type: string
+          description: 阿里云访问秘钥 Acce`AccessKeySecret`。详见[阿里云文档](httpaliyun.com/document_detail/53045.html)。
+        regionId:
+          type: string
+          description: 接入区域标识。详见[阿里云文档]help.aliyun.com/document_detail/98194.html)。
+        apiData:
+          type: object
+          required:
+            - videoData
+          description: 阿里视频点播服务的详细设置。
+          properties:
+            videoData:
+              type: object
+              required:
+                - title
+              description: 视频设置。你可以至(https://help.aliyun.com/documen55407.html)获取各参数的详细解释。
+              properties:
+                title:
+                  type: string
+                  description: 视频标题。
+                description:
+                  type: string
+                  description: 视频描述。
+                coverUrl:
+                  type: string
+                  description: 自定义视频封面的 URL 地址。
+                cateId:
+                  type: string
+                  description: 字符串内容为视频分类 ID。
+                tags:
+                  type: string
+                  description: 视频标签。
+                templateGroupId:
+                  type: string
+                  description: 转码模板组 ID。
+                userData:
+                  type: string
+                  description: 自定义设置。
+                storageLocation:
+                  type: string
+                  description: 存储地址。
+                workflowId:
+                  type: string
+                  description: 工作流 ID。
   requestBodies:
     acquire:
       content:
@@ -1679,7 +1741,7 @@ components:
     400:
       description: 请求的语法错误（如参数错误），服务器无法理解。如果你填入的 App ID 没有开通云端录制权限，也会返回 400。
     401:
-      description: 未经授权的（App ID/Customer Certificate匹配错误）。
+      description: 未经授权的（客户 ID/客户密钥匹配错误）。
     404:
       description: 服务器无法根据请求找到资源（网页）。
     500:
