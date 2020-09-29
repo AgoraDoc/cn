@@ -42,6 +42,12 @@ info:
     <div class="info-msg">注意事项：在本文档内发送的请求会对你的项目产生实际影响。如果只是试用 API，建议你创建一个测试项目。</div>
 
 
+    ## 查看参数解释
+
+    要查看各参数的详细解释，请点击 <b>Schema</b>。
+
+    <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1601374744792" alt="Schema" width="50%">
+
   version: 2020.07.29
   title: 服务端 RESTful API
 servers:
