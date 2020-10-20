@@ -824,15 +824,15 @@ components:
                     当 `vendor` = 0，即第三方云存储为七牛云时：
 
 
-                      - 0：Huadong
+                      - 0：华东
 
-                      - 1：Huabei
+                      - 1：华北
 
-                      - 2：Huanan
+                      - 2：华南
 
-                      - 3：Beimei
+                      - 3：北美
 
-                      - 4：Dongnanya
+                      - 4：东南亚
 
 
                     当 `vendor` = 1，即第三方云存储为 Amazon S3 时：
@@ -1679,7 +1679,7 @@ components:
     400:
       description: 请求的语法错误（如参数错误），服务器无法理解。如果你填入的 App ID 没有开通云端录制权限，也会返回 400。
     401:
-      description: 未经授权的（App ID/Customer Certificate匹配错误）。
+      description: 未经授权的（客户 ID/客户密钥匹配错误）。
     404:
       description: 服务器无法根据请求找到资源（网页）。
     500:

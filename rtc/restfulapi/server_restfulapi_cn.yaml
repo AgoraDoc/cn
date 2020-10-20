@@ -28,7 +28,7 @@ info:
       <li>获取用户角色、用户列表、频道列表的信息。</li>
     </ul>
 
-    <div class="info-msg">注意事项：本文 RESTful API 调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</i></div>
+    <div class="info-msg">注意事项：查询在线频道信息的每个 API 调用频率上限为每秒 20 次，其他每个 API 的调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</i></div>
 
 
     ## 调试 RESTful API
@@ -41,6 +41,12 @@ info:
 
     <div class="info-msg">注意事项：在本文档内发送的请求会对你的项目产生实际影响。如果只是试用 API，建议你创建一个测试项目。</div>
 
+
+    ## 查看参数解释
+
+    要查看各参数的详细解释，请点击 <b>Schema</b>。
+
+    <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1601374019968" alt="Schema" width="50%">
 
   version: 2020.07.29
   title: 服务端 RESTful API
