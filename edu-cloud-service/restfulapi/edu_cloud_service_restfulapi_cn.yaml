@@ -642,8 +642,8 @@ paths:
     put:
       tags:
         - 房间直播
-      summary: updateUserState
-      operationId: put
+      summary: 更新用户状态
+      operationId: updateUserState
       description: 调用该方法更新指定用户的状态。
       parameters:
         - $ref: "#/components/parameters/appid"
@@ -1025,8 +1025,8 @@ paths:
     get:
       tags:
         - "房间直播"
-      summary: getStreamList
-      operationId: get
+      summary: 获取流列表
+      operationId: getStreamList
       description: 调用该方法获取指定房间内的流列表。
       parameters:
         - $ref: "#/components/parameters/appid"
