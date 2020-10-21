@@ -904,6 +904,7 @@ components:
       required:
         - appid
         - time
+        - time_in_seconds
         - privileges
       properties:
         appid:
@@ -921,7 +922,11 @@ components:
         time:
           type: number
           description: 封人时间，单位是分钟，取值范围为 [1,1440]，默认值为 60。
-                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li></ul></i></div>
+                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置其中的一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
+        time_in_seconds:
+          type: number
+          description: 封人时间，单位是秒，取值范围为 [10,86430]，默认值为 3600。
+                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>10</code> 之间，服务端自动改设为 <code>10</code>。</li><li>设置的值大于 <code>86430</code>，服务端自动改设为 <code>86430</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置其中的一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
         privileges:
           type: array
           description: >-
@@ -944,6 +949,7 @@ components:
         - appid
         - id
         - time
+        - time_in_seconds
       properties:
         appid:
           type: string
@@ -954,7 +960,11 @@ components:
         time:
           type: number
           description: 封人时间，单位是分钟，取值范围为 [1,1440]，默认值为 60。
-                      <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li></i></div>
+                      <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
+        time_in_seconds:
+          type: number
+          description: 封人时间，单位是秒，取值范围为 [10,86430]，默认值为 3600。
+                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>10</code> 之间，服务端自动改设为 <code>10</code>。</li><li>设置的值大于 <code>86430</code>，服务端自动改设为 <code>86430</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
 
     deleteKickingRule:
       type: object
