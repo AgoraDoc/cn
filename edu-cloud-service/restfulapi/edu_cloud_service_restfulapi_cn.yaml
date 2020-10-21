@@ -2,15 +2,18 @@ openapi: 3.0.0
 info:
 
   description: >
-    本页介绍 Agora 教育云服务 RESTful API 的详细信息，同时提供 **Try it out** 功能，使你在文档页内即能进行 RESTful API 的调试。
+    本页介绍 Agora 教育云服务 RESTful API 的详细信息。Agora 教育云服务能够实现房间、用户和流的管理以及状态变更的消息通知。
 
     ## 认证方式
 
-    教育云录制 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供客户 ID 和客户密钥通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段。
+    教育云服务 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供客户 ID 和客户密钥通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段。
 
     你可以在控制台的 [RESTful API](https://console.agora.io/restfulApi) 页面找到你的客户 ID 和客户密钥。具体生成
-    `Authorization` 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。你也可以使用本页的 **Try it out** 功能生成该字段。
+    `Authorization` 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
 
+    你也可以使用本页的 **Try it out** 功能生成该字段。
+
+    <div class="info-msg"><i class="fa fa-info-circle"></i>注意：教育云服务的<a href="./#/消息通知">消息通知</a>是基于 Agora RTM SDK 封装的接口，而非 HTTP 接口。因此你无需关心消息通知的 path 和参数，只需了解消息通知的返回结果。</div>
   version: 2020.10.15
   title: Agora Edu Cloud Service
 servers:
@@ -19,13 +22,21 @@ servers:
 security:
   - agora_auth: []
 
+tags:
+    - name: 房间预设
+      description: 本节包含直播前需要进行的设置
+    - name: 房间直播
+      description: 本节包含直播中可进行的操作
+    - name: 消息通知
+      description: 本节包含教育云服务向客户端发送的各类消息通知和具体介绍
+
 paths:
   /scene/apps/{appId}/v1/rooms/{roomUuid}/config:
     post:
       tags:
       - "房间预设"
       summary: 创建房间
-      operationId: post
+      operationId: createRoom
       description: 调用该方法创建一个房间并进行配置。
       parameters:
         - $ref: "#/components/parameters/appid"
@@ -47,7 +58,7 @@ paths:
                   description: 房间名称，用于显示，长度在 64 字节以内。
                 roleConfig:
                   type: object
-                  description: 角色配置，用于指定可以进入房间的角色。
+                  description: 房间角色配置。你可以指定可以进入房间的角色，例如主播、观众。
                   required:
                       - host
                       - audience
@@ -62,19 +73,17 @@ paths:
                           default: -1
                         verifyType:
                           type: integer
-                          description: 验证类型，可设为：
-
-                            - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
-
-                            - 1：不允许匿名，表示只有指定用户才能进入房间，开发者可通过**房间-添加用户**接口预先指定能够进入房间的用户，这样可以提高安全性。
+                          description: >-
+                            验证类型，可设为：
+                              - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
+                              - 1：不允许匿名，表示只有预先指定的用户才能进入房间。你可通过[添加用户](./#/房间预设/addUser)接口预先指定能够进入房间的用户，这样可以提高安全性。
                           default: 0
                         subscribe:
                           type: integer
-                          description: 客户端是否同步此类角色数据：
-
-                            - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
-
-                            - 1：订阅，表示客户端会同步这类角色，方便开发者处理用户信息。
+                          description: >-
+                            客户端是否同步此类角色数据：
+                              - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
+                              - 1：订阅，表示客户端会同步此类角色数据，以便于处理用户信息。
                           default: 1
                     audience:
                       type: object
@@ -86,19 +95,17 @@ paths:
                           default: -1
                         verifyType:
                           type: integer
-                          description: 验证类型，可设为：
-
-                            - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
-
-                            - 1：不允许匿名，表示只有指定用户才能进入房间，开发者可通过**房间-添加用户**接口预先指定能够进入房间的用户，这样可以提高安全性。
+                          description: >-
+                            验证类型，可设为：
+                              - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
+                              - 1：不允许匿名，表示只有预先指定的用户才能进入房间。你可通过[添加用户](./#/房间预设/addUser)接口预先指定能够进入房间的用户，这样可以提高安全性。
                           default: 0
                         subscribe:
                           type: integer
-                          description: 客户端是否同步此类角色数据：
-
-                            - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
-
-                            - 1：订阅，表示客户端会同步这类角色，方便开发者处理用户信息。
+                          description: >-
+                            客户端是否同步此类角色数据：
+                              - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
+                              - 1：订阅，表示客户端会同步此类角色数据，以便于处理用户信息。
                           default: 1
             example:
       responses:
@@ -106,8 +113,8 @@ paths:
           $ref: "#/components/responses/200"
     put:
       tags:
-      - "房间预设"
-      summary: 更新房间
+        - "房间预设"
+      summary: 更新房间配置
       operationId: put
       description: 调用该方法更新指定房间的配置。
       parameters:
@@ -130,14 +137,14 @@ paths:
                   description: 房间名称，用于显示，长度在 64 字节以内。
                 roleConfig:
                   type: object
-                  description: 角色配置，用于指定可以进入房间的角色。
+                  description: 房间角色配置。你可以指定可以进入房间的角色，例如主播、观众。
                   required:
                       - host
                       - audience
                   properties:
                     host:
                       type: object
-                      description: 主播的具体配置。
+                      description: 具体某一角色配置项，长度在 20 字节以内。例如主播。
                       properties:
                         limit:
                           type: integer
@@ -145,23 +152,21 @@ paths:
                           default: -1
                         verifyType:
                           type: integer
-                          description: 验证类型，可设为：
-
-                            - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
-
-                            - 1：不允许匿名，表示只有指定用户才能进入房间，开发者可通过**房间-添加用户**接口预先指定能够进入房间的用户，这样可以提高安全性。
+                          description: >-
+                            验证类型，可设为：
+                              - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
+                              - 1：不允许匿名，表示只有预先指定的用户才能进入房间。你可通过[添加用户](./#/房间预设/addUser)接口预先指定能够进入房间的用户，这样可以提高安全性。
                           default: 0
                         subscribe:
                           type: integer
-                          description: 客户端是否同步此类角色数据：
-
-                            - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
-
-                            - 1：订阅，表示客户端会同步这类角色，方便开发者处理用户信息。
+                          description: >-
+                            客户端是否同步此类角色数据：
+                              - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
+                              - 1：订阅，表示客户端会同步此类角色数据，以便于处理用户信息。
                           default: 1
                     audience:
                       type: object
-                      description: 观众的具体配置。
+                      description: 具体某一角色配置项，长度在 20 字节以内。例如观众。
                       properties:
                         limit:
                           type: integer
@@ -169,19 +174,17 @@ paths:
                           default: -1
                         verifyType:
                           type: integer
-                          description: 验证类型，可设为：
-
-                            - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
-
-                            - 1：不允许匿名，表示只有指定用户才能进入房间，开发者可通过**房间-添加用户**接口预先指定能够进入房间的用户，这样可以提高安全性。
+                          description: >-
+                            验证类型，可设为：
+                              - 0：允许匿名，表示任何用户都可以直接从客户端进入房间。
+                              - 1：不允许匿名，表示只有预先指定的用户才能进入房间。你可通过[添加用户](./#/房间预设/addUser)接口预先指定能够进入房间的用户，这样可以提高安全性。
                           default: 0
                         subscribe:
                           type: integer
-                          description: 客户端是否同步此类角色数据：
-
-                            - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
-
-                            - 1：订阅，表示客户端会同步这类角色，方便开发者处理用户信息。
+                          description: >-
+                            客户端是否同步此类角色数据：
+                              - 0：不订阅，表示客户端不同步此类角色数据，设置此项可提高客户端整体性能。
+                              - 1：订阅，表示客户端会同步此类角色数据，以便于处理用户信息。
                           default: 1
             example:
       responses:
@@ -190,7 +193,7 @@ paths:
     get:
       tags:
       - "房间预设"
-      summary: 查询房间
+      summary: 查询房间配置
       operationId: get
       description: 调用该方法查询指定房间的配置。
       parameters:
@@ -208,10 +211,10 @@ paths:
                 properties:
                   code:
                     type: integer
-                    description: 错误码。0 表示请求成功，非 0 表示失败。
+                    description: 业务状态码。0 表示请求成功，非 0 表示失败。
                   msg:
                     type: string
-                    description: 错误描述。
+                    description: 具体描述。
                   data:
                     type: object
                     properties:
@@ -254,8 +257,8 @@ paths:
       tags:
       - "房间预设"
       summary: 添加用户
-      operationId: put
-      description: 调用该方法为指定房间添加一个用户。
+      operationId: addUser
+      description: 调用该方法指定能够进入房间的用户。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -397,7 +400,7 @@ paths:
       tags:
           - "房间直播"
       summary: 用户进入房间
-      operationId: post
+      operationId: enterRoom
       description: 调用该方法让指定用户进入房间。
       parameters:
           - $ref: "#/components/parameters/appid"
@@ -639,7 +642,7 @@ paths:
     put:
       tags:
         - 房间直播
-      summary: 更新用户状态
+      summary: updateUserState
       operationId: put
       description: 调用该方法更新指定用户的状态。
       parameters:
@@ -676,7 +679,7 @@ paths:
       tags:
           - "房间直播"
       summary: 获取用户列表
-      operationId: get
+      operationId: getUserList
       description: 调用该方法获取指定房间内的所有用户。
       parameters:
         - $ref: "#/components/parameters/appid"
@@ -728,10 +731,10 @@ paths:
                 properties:
                   code:
                     type: integer
-                    description: 错误码。0 表示请求成功，非 0 表示失败。
+                    description: 业务状态码。0 表示请求成功，非 0 表示失败。
                   msg:
                     type: string
-                    description: 错误描述。
+                    description: 具体描述。
                   data:
                     type: object
                     properties:
@@ -778,7 +781,7 @@ paths:
       tags:
         - 房间直播
       summary: 发送私聊消息
-      operationId: post
+      operationId: sendPeerChat
       description: 调用该方法向指定用户发送消息。
       parameters:
         - $ref: "#/components/parameters/appid"
@@ -817,7 +820,7 @@ paths:
       tags:
         - "房间直播"
       summary: 获取用户和流列表
-      operationId: get
+      operationId: getUserStreamList
       description: 调用该方法获取指定房间内的所有用户和流列表。
       parameters:
         - $ref: "#/components/parameters/appid"
@@ -840,12 +843,13 @@ paths:
                 properties:
                   code:
                     type: integer
-                    description: 错误码。0 表示请求成功，非 0 表示失败。
+                    description: 业务状态码。0 表示请求成功，非 0 表示失败。
                   msg:
                     type: string
-                    description: 错误描述。
+                    description: 具体描述。
                   data:
                     type: object
+                    description: 数据
                     properties:
                         total:
                           type: integer
@@ -877,7 +881,7 @@ paths:
                                   - 1：禁止。
                               updateTime:
                                 type: string
-                                description: 更新时间，UTC 时间戳。
+                                description: 用户状态更新时间，UTC 时间戳。
                               state:
                                 type: string
                                 description: 用户是否在房间内：
@@ -900,41 +904,77 @@ paths:
                                     videoSourceType:
                                       type: integer
                                       description: 视频来源：
+
+                                        - 0：无。
+                                
+                                        - 1：摄像头。
+
+                                        - 2：屏幕。
                                     audioSourceType:
                                       type: integer
-                                      description: 
+                                      description: 音频来源：
+
+                                        - 0：无。
+
+                                        - 1：麦克风。
                                     videoState:
                                       type: integer
-                                      description: 
+                                      description: 视频状态：
+                                
+                                        - 0：关闭。
+
+                                        - 1：开启。
+
+                                        - 2：禁用。
                                     audioState:
                                       type: integer
-                                      description:
+                                      description: 音频状态：
+                                
+                                        - 0：关闭。
+
+                                        - 1：开启。
+
+                                        - 2：禁用。
                                     updateTime:
                                       type: integer
-                                      description:
+                                      description: 流状态更新时间，UTC 时间戳。
                                     state:
                                       type: integer
-                                      description:
+                                      description: 流是否有效：
+
+                                        - 0：无效。
+
+                                        - 1：有效。
   /scene/apps/{appId}/v1/rooms/{roomUuid}/users/{userUuid}/properties/{key}:
     put:
       tags:
           - "房间直播"
       summary: 设置用户属性
-      operationId: put
+      operationId: setUserProperty
       description: 调用该方法设置指定用户的属性。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
         - $ref: "#/components/parameters/userid"
-        - in: path
-          name: key
-          required: true
-          description: 属性名，必须为可见字符且长度不得超过 32 字节。
-          schema:
-            type: string
+        - $ref: "#/components/parameters/key"
         - $ref: "#/components/parameters/contentType"
         - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+                  description: 属性值，长度不超过 8 KB。设为 null 表示删除该属性。
+                cause:
+                  type: object
+                  description: 属性变化的原因，可携带任意对象。只对当前消息通知事件有效，作为处理和判断依据，不会持久化到 `userProperties` 中。
       responses:
         "200":
           $ref: "#/components/responses/200"
@@ -942,9 +982,9 @@ paths:
     post:
       tags:
           - "房间直播"
-      summary: 剔除用户
-      operationId: post
-      description: 调用该方法让指定用户离开房间。
+      summary: 踢出用户
+      operationId: kickUser
+      description: 调用该方法将指定用户从房间中踢出。
       parameters:
           - $ref: "#/components/parameters/appid"
           - $ref: "#/components/parameters/roomid"
@@ -959,8 +999,8 @@ paths:
     get:
       tags:
           - "房间直播"
-      summary: 获取房间消息列表
-      operationId: get
+      summary: 获取消息通知列表
+      operationId: getSequence
       description: 调用该方法
       parameters:
       responses:
@@ -969,102 +1009,745 @@ paths:
       tags:
         - "房间直播"
       summary: 切换房间状态
-      operationId: get
-      description: 调用该方法
+      operationId: updateRoomState
+      description: 调用该方法切换房间状态。
       parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/roomState"
+        - $ref: "#/components/parameters/contentType"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/token"
       responses:
+        "200":
+          $ref: "#/components/responses/200"
   /scene/apps/{appId}/v1/rooms/{roomUuid}/users/streams:
     get:
       tags:
         - "房间直播"
-      summary: 获取流列表
+      summary: getStreamList
       operationId: get
-      description: 调用该方法
+      description: 调用该方法获取指定房间内的流列表。
       parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/contentType"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/token"
+        - $ref: "#/components/parameters/nextId"
+        - $ref: "#/components/parameters/count"
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: 业务状态码。0 表示请求成功，非 0 表示失败。
+                  msg:
+                    type: string
+                    description: 具体描述。
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: 当前返回条数。
+                      total:
+                        type: integer
+                        description: 总数。
+                      nextId:
+                        type: string
+                        description: 下一次起始 ID。
+                      list:
+                        type: array
+                        description: 流列表。
+                        items:
+                          type: object
+                          properties:
+                            fromUser:
+                              type: object
+                              description: 发送该流的用户。
+                              properties:
+                                userName:
+                                  type: string
+                                  description: 用户名。
+                                userUuid:
+                                  type: string
+                                  description: 用户 uuid。
+                                role:
+                                  type: string
+                                  description: 用户角色。
+                            streamUuid:
+                              type: string
+                              description: 流 uuid。
+                            streamName:
+                              type: string
+                              description: 流名称。
+                            videoSourceType:
+                              type: integer
+                              description: >-
+                                视频来源：
+                                - 0：无。
+                                - 1：摄像头。
+                                - 2：屏幕。
+                            audioSourceType:
+                              type: integer
+                              description: >-
+                                音频来源：
+                                - 0：无。
+                                - 1：麦克风。
+                            videoState:
+                              type: integer
+                              description: >-
+                                视频状态：
+                                - 0：关闭。
+                                - 1：开启。
+                                - 2：禁用。
+                            audioState:
+                              type: integer
+                              description: >-
+                                音频状态：
+                                - 0：关闭。
+                                - 1：开启。
+                                - 2：禁用。
+                            updateTime:
+                              type: integer
+                              description: 流状态更新时间，UTC 时间戳。
+                            state:
+                              type: integer
+                              description: >-
+                                流是否有效：
+                                - 0：无效。
+                                - 1：有效。
   /scene/apps/{appId}/v1/rooms/{roomUuid}/users/{userUuid}/streams/{streamUuid}:
     post:
       tags:
         - "房间直播"
-      summary: 获取流列表
-      operationId: get
-      description: 调用该方法
+      summary: 创建流
+      operationId: createStream
+      description: 调用该方法创建流。
       parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/userid"
+        - $ref: "#/components/parameters/streamid"
+        - $ref: "#/components/parameters/contentType"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                streamName:
+                  type: string
+                  description: 流名称。
+                videoSourceType:
+                  type: integer
+                  description: 视频来源：
+
+                    - 0：无。
+
+                    - 1：摄像头。
+
+                    - 2：屏幕共享。
+                audioSourceType:
+                  type: integer
+                  description: 音频来源：
+
+                    - 0：无。
+
+                    - 1：麦克风。
+                videoState:
+                  type: integer
+                  description: 视频状态：
+
+                    - 0：开启。
+
+                    - 1：关闭。
+
+                    - 2：禁用。
+                audioSate:
+                  type: integer
+                  description: 音频状态：
+
+                    - 0：开启。
+
+                    - 1：关闭。
+
+                    - 2：禁用。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: 业务状态码。0 表示请求成功，非 0 表示失败。
+                  msg:
+                    type: string
+                    description: 具体描述。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      streamUuid:
+                        type: string
+                        description: 流的唯一标识符 uuid。
+                      rtcToken:
+                        type: string
+                        description: 流对应的用于加入 RTC 频道的 token。
   /scene/v1/rtm/room/state:
     get:
       tags:
         - "消息通知"
       summary: 房间状态改变
-      operationId: get
-      description: 房间状态变化时，云服务会在房间内全量同步此消息。
+      operationId: onRoomState
+      description: 房间状态变化时，教育云服务会在房间内全量同步此消息。对应的上行接口为[切换房间状态](./#/房间直播/updateRoomState)。
       responses:
-        "200": 
-
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      state:
+                        type: integer
+                        description: >-
+                          房间当前状态：
+                          - 0：未开始。
+                          - 1：进行中。
+                          - 2：已结束，新用户无法进入。
+                      startTime:
+                        type: integer
+                        description: 房间开始时间。房间开始后此字段有值。
+                      operator:
+                        type: object
+                        description: 进行该操作的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
   /scene/v1/rtm/room/roles/mute:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 禁用状态改变
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 房间内禁用状态变化时，教育云服务会在房间内全量同步此消息。对应的上行接口为[xxx](./#/房间直播/)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      muteChat:
+                        type: object
+                        description: 是否禁止文字聊天。
+                      muteAudio:
+                        type: object
+                        description: 是否禁止音频。
+                      muteVideo:
+                        type: object
+                        description: 是否禁止视频。
+                      operator:
+                        type: object
+                        description: 进行该操作的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
   /scene/v1/rtm/room/chat:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 收到房间聊天消息
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 全量同步房间内聊天消息。对应的上行接口为[xxx](./#/房间直播/)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      fromUser:
+                        type: object
+                        description: 发送该消息的用户。
+                        properties:
+                          userName:
+                            type: string
+                            description: 用户名。
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          role:
+                            type: string
+                            description: 用户角色。
+                      message:
+                        type: string
+                        description: 消息内容。
+                      type:
+                        type: integer
+                        description: >-
+                          消息类型：
+                          - 1：文本。
   /scene/v1/rtm/room/properties:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 房间属性更新
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 房间属性更新时，教育云服务会在房间内全量同步此消息。对应的上行接口为[切换房间状态](./#/房间直播/setUserProperty)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      action:
+                        type: integer
+                        description: >-
+                          操作：
+                          - 1：更新属性。
+                          - 2：删除属性。
+                      changeProperties:
+                        type: object
+                        description: 变更的房间属性，字典表结构。
+                      cause:
+                        type: object
+                        description: 发生变更的原因。
+                      operator:
+                        type: object
+                        description: 进行该操作的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
   /scene/v1/rtm/room/user:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 用户状态更新
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 用户状态更新时，教育云服务会全量同步此消息。对应的上行接口为[](./#/房间直播/updateUserState)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      userUuid:
+                        type: string
+                        description: 用户 uuid。
+                      userName:
+                        type: string
+                        description: 用户名。
+                      role:
+                        type: integer
+                        description: 用户角色。
+                      muteChat:
+                        type: integer
+                        description: >-
+                          是否禁止聊天：
+                          - 0：不禁止。
+                          - 1：禁止。
+                      operator:
+                        type: object
+                        description: 进行该操作的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
   /scene/v1/rtm/room/user/properties:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 用户属性更新
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 用户属性更新时，教育云服务会在房间内全量同步此消息。对应的上行接口为[更新用户属性](./#/房间直播/setUserProperty)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      fromUser:
+                        type: object
+                        description: 属性被更新的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
+                      action:
+                        type: integer
+                        description: >-
+                          操作：
+                          - 1：更新属性。
+                          - 2：删除属性。
+                      changeProperties:
+                        type: object
+                        description: 变更的用户属性，字典表结构。
+                      cause:
+                        type: object
+                        description: 发生变更的原因。
+                      operator:
+                        type: object
+                        description: 进行该操作的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
   /scene/v1/rtm/channel/stream:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 流更新
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: >-
+        新增、修改或删除流时，教育云服务会增量同步此消息。对应的上行接口为：
+          - [创建流](./#/房间直播/createStream)
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      fromUser:
+                        type: object
+                        description: 发送该流的用户。
+                        properties:
+                          userName:
+                            type: string
+                            description: 用户名。
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          role:
+                            type: string
+                            description: 用户角色。
+                      streamUuid:
+                        type: string
+                        description: 流 uuid。
+                      streamName:
+                        type: string
+                        description: 流名称。
+                      videoSourceType:
+                        type: integer
+                        description: >-
+                          视频来源：
+                          - 0：无。
+                          - 1：摄像头。
+                          - 2：屏幕。
+                      audioSourceType:
+                        type: integer
+                        description: >-
+                          音频来源：
+                          - 0：无。
+                          - 1：麦克风。
+                      videoState:
+                        type: integer
+                        description: >-
+                          视频状态：
+                          - 0：关闭。
+                          - 1：开启。
+                          - 2：禁用。
+                      audioState:
+                        type: integer
+                        description: >-
+                          音频状态：
+                          - 0：关闭。
+                          - 1：开启。
+                          - 2：禁用。
+                      updateTime:
+                        type: integer
+                        description: 流状态更新时间，UTC 时间戳。
+                      operator:
+                        type: object
+                        description: 进行该操作的用户。
+                        properties:
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          userName:
+                            type: string
+                            description: 用户名。
+                          role:
+                            type: string
+                            description: 用户角色。
   /scene/v1/rtm/channel/extension:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 收到房间自定义消息
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 全量同步房间内自定义消息。对应的上行接口为[xxx](./#/房间直播/)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      fromUser:
+                        type: object
+                        description: 发送该消息的用户。
+                        properties:
+                          userName:
+                            type: string
+                            description: 用户名。
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          role:
+                            type: string
+                            description: 用户角色。
+                      message:
+                        type: string
+                        description: 消息内容。
   /scene/v1/rtm/peer:
     get:
       tags:
         - "消息通知"
-      summary: 房间状态改变
+      summary: 收到点对点聊天消息
       operationId: get
-      description: 房间状态变化时，此消息会全量同步。
+      description: 全量同步点对点聊天消息。对应的上行接口为[xxx](./#/房间直播/)。
       responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cmd:
+                    type: integer
+                    description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+                  version:
+                    type: integer
+                    description: 消息通知服务的版本。
+                  ts:
+                    type: integer
+                    description: 声网服务器发出该消息通知的 UTC 时间戳。
+                  sequence:
+                    type: integer
+                    description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                      fromUser:
+                        type: object
+                        description: 发送该消息的用户。
+                        properties:
+                          userName:
+                            type: string
+                            description: 用户名。
+                          userUuid:
+                            type: string
+                            description: 用户 uuid。
+                          role:
+                            type: string
+                            description: 用户角色。
+                      fromRoom:
+                        type: object
+                        description: 如发送该消息的用户在某一房间内，则会有此字段。
+                        properties:
+                          roomUuid:
+                            type: string
+                            description: 房间 uuid。
+                          roomName:
+                            type: string
+                            description: 房间名。
+                      message:
+                        type: string
+                        description: 消息内容。
 components:
   responses:
     200:
@@ -1094,7 +1777,7 @@ components:
       in: path
       schema:
         type: string
-      description: 房间的唯一标识符，也是加入 RTC 和 RTM 的频道名。长度在 64 字节以内。以下为支持的字符集范围（共 89 个字符）：
+      description: 房间 uuid，这是房间的唯一标识符，也是加入 RTC 和 RTM 的频道名。长度在 64 字节以内。以下为支持的字符集范围（共 89 个字符）：
 
         - 26 个小写英文字母 a-z
 
@@ -1190,3 +1873,55 @@ components:
         - 0：（默认）不包含。
 
         - 1：包含。
+    key:
+      in: path
+      name: key
+      required: true
+      description: 属性名，必须为可见字符且长度不得超过 32 字节。
+      schema:
+        type: string
+    roomState:
+      in: path
+      name: roomState
+      schema:
+        type: integer
+      required: true
+      description: 房间当前状态：
+
+        - 0：未开始。
+
+        - 1：进行中。
+
+        - 2：已结束，新用户无法进入。
+    streamid:
+      in: path
+      name: streamUuid
+      required: true
+      schema:
+        type: string
+      description: 流 uuid。这是流的唯一标识符，也是加入 RTC 频道收发流id。取值范围 1 到 (2<sup>32</sup>-1)。如果设为 0 会自动生成一个 uuid。
+  securitySchemes:
+    agora_auth:
+      type: http
+      scheme: basic
+  x-description:
+    cmd:
+      description: 消息通知的类型。客户端可以通过该字段判断这个消息通知的内容。
+    version:
+      type: integer
+      description: 消息通知服务的版本。
+    ts:
+      type: integer
+      description: 声网服务器发出该消息通知的 UTC 时间戳。
+    sequence:
+      type: integer
+      description: 消息序号，房间内全局自增，用来标识唯一一条消息，并保证状态变更有序性。
+    roomState:
+      type: integer
+      description: 房间当前状态：
+
+        - 0：未开始。
+
+        - 1：进行中。
+
+        - 2：已结束，新用户无法进入。
