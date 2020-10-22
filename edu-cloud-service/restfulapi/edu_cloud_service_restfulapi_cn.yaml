@@ -2,7 +2,11 @@ openapi: 3.0.0
 info:
 
   description: >
-    本页介绍 Agora 教育云服务 RESTful API 的详细信息。Agora 教育云服务能够实现房间、用户和流的管理以及状态变更的消息通知。
+    声网为后端开发能力不够的开发者提供 Agora 教育云服务，实现房间、用户和流的状态管理以及状态变更的消息通知。
+
+    你可使用 Agora 教育云服务，并配合 Agora RTC SDK、Agora RTM SDK、Agora 云端录制服务和第三方 Netless 白板 SDK，快速搭建在线互动教学场景。
+
+    本页介绍 Agora 教育云服务 RESTful API 的详细信息。
 
     ## 认证方式
 
@@ -586,14 +590,6 @@ paths:
                                     流是否有效:
                                       - 0: 无效。
                                       - 1: 有效。
-                          sysConfig:
-                            type: object
-                            description: 系统配置。
-                            properties:
-                              sequenceTimeout:
-                                type: integer
-                                description: 毫秒。
-                                default: 3000
   /scene/apps/{appId}/v1/rooms/{roomUuid}/users/{userUuid}:
     put:
       tags:
