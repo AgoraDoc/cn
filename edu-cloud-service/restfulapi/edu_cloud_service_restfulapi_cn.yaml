@@ -598,7 +598,7 @@ paths:
       operationId: updateUserState
       description: 调用该方法更新指定用户的状态。
 
-        调用此接口更新用户状态后，教育云服务会向客户端发送**用户状态更新**消息通知。
+        调用此接口更新用户状态后，教育云服务会向客户端发送[用户状态更新](./#/消息通知/userStateChanged)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
