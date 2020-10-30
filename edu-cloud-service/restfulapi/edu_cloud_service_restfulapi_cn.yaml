@@ -269,7 +269,6 @@ paths:
           application/json:
             schema:
               type: array
-              description: xxx
               required:
                 - userUuid
                 - userName
@@ -387,33 +386,8 @@ paths:
           schema:
             type: string
           description: 用户角色，可传多个。
-        - in: query
-          name: nextId
-          required: false
-          schema:
-            type: string
-          description: xxx
-        - in: query
-          name: count
-          required: false
-          schema:
-            type: string
-          description: 需获取的用户个数。默认为 1000。
-        - in: query
-          name: updateTimeOffset
-          required: false
-          schema:
-            type: string
-          description: 更新时间偏移，UTC 时间戳。
-        - in: query
-          name: includeOffline
-          required: false
-          schema:
-            type: string
-          description: >-
-            是否包含已离开房间的用户:
-            - 0: （默认）不包含。
-            - 1: 包含。
+        - $ref: "#/components/parameters/nextId"
+        - $ref: "#/components/parameters/count"
       responses:
         '200':
           description: 操作成功。
@@ -1834,14 +1808,14 @@ components:
       required: false
       schema:
         type: string
-      description: TODO
+      description: 下一批数据的起始 ID。第一次获取可传 null，之后获取传响应结果里得到的 nextId。
     count:
       in: query
       name: count
       required: false
       schema:
         type: string
-      description: 需获取的数量。
+      description: 获取个数，默认值为 1000。
     updateTimeOffset:
       in: query
       name: updateTimeOffset
