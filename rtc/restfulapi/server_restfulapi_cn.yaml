@@ -28,7 +28,7 @@ info:
       <li>获取用户角色、用户列表、频道列表的信息。</li>
     </ul>
 
-    <div class="info-msg">注意事项：查询在线频道信息的每个 API 调用频率上限为每秒 20 次，其他每个 API 的调用频率上限为每秒 10 次。如需提高此限制，请<a href="https://agora-ticket.agora.io">提交工单</a>联系技术支持。</i></div>
+    <div class="info-msg">注意事项：查询在线频道信息的每个 API 调用频率上限为每秒 20 次，其他每个 API 的调用频率上限为每秒 10 次。如果调用频率超出限制，请参考<a href="https://docs.agora.io/cn/faq/restful_api_call_frequency">如何处理服务端 RESTful API 调用超出频率限制?</a>优化调用频率。</i></div>
 
 
     ## 调试 RESTful API
