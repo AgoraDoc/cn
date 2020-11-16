@@ -107,6 +107,19 @@ paths:
                               - 1: 订阅，表示客户端会同步此类角色数据，以便于处理用户信息。
                           default: 1
             example:
+              roomName: "class"
+              roleConfig: {
+                "host": {
+                  "limit": 0,
+                  "verifyType": 0,
+                  "subscribe": 0
+                },
+                "audience": {
+                  "limit": 0,
+                  "verifyType": 0,
+                  "subscribe": 0
+                }
+              }
       responses:
         '200':
           $ref: "#/components/responses/200"
