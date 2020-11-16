@@ -6,14 +6,19 @@ info:
 
     ## 认证方式
 
-    教育云服务 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要提供客户 ID 和客户密钥通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段。
+    教育云服务 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要根据 Agora 提供的客户 ID 和客户密钥通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段。
 
-    你可以在控制台的 [RESTful API](https://console.agora.io/restfulApi) 页面找到你的客户 ID 和客户密钥。具体生成
-    `Authorization` 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
+    参考以下步骤获取 Agora 客户 ID 和客户密钥：
+    1. 登录 [Agora 控制台](https://console.agora.io/)，点击页面右上角的用户名，在下拉列表中打开 **RESTful API** 页面。
+    2. 点击**下载**，即可获取客户 ID（`customerId`）和客户密钥（`customerSecret`）。
 
-    你也可以使用本页的 **Try it out** 功能生成该字段。
+    具体生成 `Authorization` 字段的方法请参考 [RESTful API 认证](https://docs.agora.io/cn/faq/restful_authentication)。
 
-    <div class="warning-msg"><i class="fa fa-info-circle"></i>注意: 本页的<b>消息通知</b>是基于 Agora RTM SDK 封装的接口，而非 HTTP 接口。因此你无需关心消息通知的 path 和 parameters，只需关注消息通知的返回结果 responses。</div>
+    ## 调试教育云服务 RESTful API
+
+    在本页面，你可以通过 **Try it out** 功能进行教育云服务 RESTful API 的调试。调试前你必须点击下方的 **Authorize** 按钮，将你在 Agora 控制台获取到的客户 ID 和客户密钥分别填入 **Username** 和 **Password**，然后点击 **Authorize**，完成鉴权。</div>
+
+    <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1605533054922" alt="Authorize" width="50%">
 
   version: 2020.10.15
   title: Agora 教育云服务
@@ -107,7 +112,7 @@ paths:
                               - 1: 订阅，表示客户端会同步此类角色数据，以便于处理用户信息。
                           default: 1
             example:
-              roomName: "class"
+              roomName: "test-class"
               roleConfig: {
                 "host": {
                   "limit": 0,
@@ -132,8 +137,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
       requestBody:
         description: 需要在请求包体中传入以下参数。
         content:
@@ -211,8 +214,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
       responses:
         '200':
           description: 操作成功。
@@ -272,8 +273,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
       requestBody:
         description: 需要在请求包体中传入以下参数。
         content:
@@ -339,8 +338,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
       requestBody:
         description: 需要在请求包体中传入以下参数。
         content:
@@ -388,8 +385,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
         - in: query
           name: role
@@ -466,8 +461,6 @@ paths:
           - $ref: "#/components/parameters/appid"
           - $ref: "#/components/parameters/roomid"
           - $ref: "#/components/parameters/userid"
-          - $ref: "#/components/parameters/contentType"
-          - $ref: "#/components/parameters/authorization"
       requestBody:
         description: 你需要在请求包体中传入以下参数。
         content:
@@ -685,8 +678,6 @@ paths:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
         - $ref: "#/components/parameters/userid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
       requestBody:
         description: 你需要在请求包体中传入以下参数。
@@ -728,8 +719,6 @@ paths:
           schema:
             type: string
           description: 待接收消息的用户的 uuid。
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
       requestBody:
         description: 你需要在请求包体中传入以下参数。
@@ -761,8 +750,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
         - $ref: "#/components/parameters/role"
         - $ref: "#/components/parameters/nextId"
@@ -885,8 +872,6 @@ paths:
         - $ref: "#/components/parameters/roomid"
         - $ref: "#/components/parameters/userid"
         - $ref: "#/components/parameters/key"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
       requestBody:
         description: 你需要在请求包体中传入以下参数。
@@ -917,8 +902,6 @@ paths:
           - $ref: "#/components/parameters/appid"
           - $ref: "#/components/parameters/roomid"
           - $ref: "#/components/parameters/userid"
-          - $ref: "#/components/parameters/contentType"
-          - $ref: "#/components/parameters/authorization"
           - $ref: "#/components/parameters/token"
       responses:
         "200":
@@ -945,8 +928,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
         - $ref: "#/components/parameters/nextId"
         - $ref: "#/components/parameters/count"
@@ -1004,8 +985,6 @@ paths:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
         - $ref: "#/components/parameters/roomState"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
       responses:
         "200":
@@ -1020,8 +999,6 @@ paths:
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
         - $ref: "#/components/parameters/nextId"
         - $ref: "#/components/parameters/count"
@@ -1124,8 +1101,6 @@ paths:
         - $ref: "#/components/parameters/roomid"
         - $ref: "#/components/parameters/userid"
         - $ref: "#/components/parameters/streamid"
-        - $ref: "#/components/parameters/contentType"
-        - $ref: "#/components/parameters/authorization"
         - $ref: "#/components/parameters/token"
       requestBody:
         description: 你需要在请求包体中传入以下参数。
