@@ -282,6 +282,76 @@ paths:
                           删除用户的结果: 
                             - 成功删除该用户。
                             - 该用户不存在。
+    get: 
+      tags:
+        - "房间直播"
+      summary: 获取用户列表
+      operationId: getUserList
+      description: 调用该接口获取指定房间内的用户列表。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/token"
+        - $ref: "#/components/parameters/role"
+        - $ref: "#/components/parameters/nextId"
+        - $ref: "#/components/parameters/count"
+      responses:
+        '200':
+          description: 操作成功。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: >-
+                      业务状态码：
+                        - 0: 请求成功。
+                        - 非 0: 请求失败。
+                  msg:
+                    type: string
+                    description: 具体描述。
+                  data:
+                    type: object
+                    description: 数据。
+                    properties:
+                        total:
+                          type: integer
+                          description: 总数。
+                        nextId:
+                          type: string
+                          description: 下一次起始 ID，如果没有下一批，则为 null。
+                        list:
+                          type: array
+                          description: 用户列表。
+                          items:
+                            type: object
+                            properties:
+                              userName:
+                                type: string
+                                description: 用户名称，用于显示。
+                              userUuid:
+                                type: string
+                                description: 用户 uuid，用户的唯一标识符。
+                              role:
+                                type: string
+                                description: 用户在房间内的角色。
+                              muteChat:
+                                type: integer
+                                description: >-
+                                  是否禁止用户文字聊天:
+                                    - 0: 不禁止。
+                                    - 1: 禁止。
+                              updateTime:
+                                type: string
+                                description: 用户状态更新时间，UTC 时间戳（毫秒）。
+                              state:
+                                type: string
+                                description: >-
+                                  用户是否在房间内:
+                                    - 0: 不在房间内。
+                                    - 1: 在房间内。
   /scene/apps/{appId}/v1/rooms/{roomUuid}/users/{userUuid}/entry:
     post:
       tags:
@@ -490,14 +560,12 @@ paths:
                                     视频状态:
                                       - 0: 关闭。
                                       - 1: 开启。
-                                      - 2: 禁用。
                                 audioState:
                                   type: integer
                                   description: >-
                                     音频状态:
                                       - 0: 关闭。
                                       - 1: 开启。
-                                      - 2: 禁用。
                                 updateTime:
                                   type: integer
                                   description: 流状态更新时间，UTC 时间戳（毫秒）。
@@ -550,8 +618,6 @@ paths:
       summary: 发送点对点聊天消息
       operationId: sendPeerChat
       description: 调用该接口向指定用户发送点对点消息。
-
-        调用此接口发送点对点消息后，教育云服务会向客户端发送[收到点对点聊天消息](./#/消息通知/peerChatReceived)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -582,6 +648,95 @@ paths:
       responses:
         '200':
           $ref: "#/components/responses/200"
+  /scene/apps/{appId}/v1/rooms/{roomUuid}/users/{toUserUuid}/messages/peer:
+    post:
+      tags:
+        - 房间直播
+      summary: 发送点对点自定义消息
+      operationId: sendPeerCustomMessage
+      description: 调用该接口向指定用户发送点对点自定义消息。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - in: path
+          name: toUserUuid
+          required: true
+          schema:
+            type: string
+          description: 待接收消息的用户的 uuid。
+        - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: 消息内容，不能超过 32 KB。
+      responses:
+        '200':
+          $ref: "#/components/responses/200"
+  /scene/apps/{appId}/v1/rooms/{roomUuid}/chat/channel:
+    post:
+      tags:
+        - 房间直播
+      summary: 发送房间聊天消息
+      operationId: sendRoomChat
+      description: 调用该接口发送房间聊天消息。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+                - type
+              properties:
+                message:
+                  type: string
+                  description: 消息内容，不能超过 32 KB。
+                type:
+                  type: integer
+                  description: 消息类型，目前仅支持设为 `1`，文本消息。
+                  default: 1
+      responses:
+        '200':
+          $ref: "#/components/responses/200"
+  /scene/apps/{appId}/v1/rooms/{roomUuid}/message/channel:
+    post:
+      tags:
+        - 房间直播
+      summary: 发送房间自定义消息
+      operationId: sendRoomChat
+      description: 调用该接口发送房间自定义消息。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: 消息内容，不能超过 32 KB。
+      responses:
+        '200':
+          $ref: "#/components/responses/200"
   /scene/apps/{appId}/v1/rooms/{roomUuid}/users/userStreams:
     get:
       tags:
@@ -596,8 +751,6 @@ paths:
         - $ref: "#/components/parameters/role"
         - $ref: "#/components/parameters/nextId"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/updateTimeOffset"
-        - $ref: "#/components/parameters/includeOffline"
       responses:
         '200':
           description: 操作成功。
@@ -627,7 +780,7 @@ paths:
                           description: 下一次起始 ID，如果没有下一批，则为 null。
                         list:
                           type: array
-                          description: 用户和流列表。
+                          description: 用户列表。
                           items:
                             type: object
                             properties:
@@ -686,14 +839,12 @@ paths:
                                         视频状态:
                                           - 0: 关闭。
                                           - 1: 开启。
-                                          - 2: 禁用。
                                     audioState:
                                       type: integer
                                       description: >-
                                         音频状态:
                                           - 0: 关闭。
                                           - 1: 开启。
-                                          - 2: 禁用。
                                     updateTime:
                                       type: integer
                                       description: 流状态更新时间，UTC 时间戳（毫秒）。
@@ -903,7 +1054,7 @@ paths:
                               description: 流 uuid。
                             streamName:
                               type: string
-                              description: 流名称。
+                              description: 流名称，用于显示。
                             videoSourceType:
                               type: integer
                               description: >-
@@ -923,14 +1074,12 @@ paths:
                                 视频状态:
                                 - 0: 关闭。
                                 - 1: 开启。
-                                - 2: 禁用。
                             audioState:
                               type: integer
                               description: >-
                                 音频状态:
                                 - 0: 关闭。
                                 - 1: 开启。
-                                - 2: 禁用。
                             updateTime:
                               type: integer
                               description: 流状态更新时间，UTC 时间戳（毫秒）。
@@ -962,7 +1111,7 @@ paths:
               properties:
                 streamName:
                   type: string
-                  description: 流名称。
+                  description: 流名称，用于显示。
                 videoSourceType:
                   type: integer
                   description: >-
@@ -982,14 +1131,12 @@ paths:
                     视频状态:
                       - 0: 开启。
                       - 1: 关闭。
-                      - 2: 禁用。
                 audioSate:
                   type: integer
                   description: >-
                     音频状态:
                       - 0: 开启。
                       - 1: 关闭。
-                      - 2: 禁用。
       responses:
         '200':
           description: 操作成功。
@@ -1017,6 +1164,101 @@ paths:
                       rtcToken:
                         type: string
                         description: 流对应的用于加入 RTC 频道的 token。
+    put:
+      tags:
+        - "房间直播"
+      summary: 更新流
+      operationId: updateStream
+      description: 调用该接口更新流。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/userid"
+        - $ref: "#/components/parameters/streamid"
+        - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                streamName:
+                  type: string
+                  description: 流名称，用于显示。
+                videoSourceType:
+                  type: integer
+                  description: >-
+                    视频来源:
+                      - 0: 无。
+                      - 1: 摄像头。
+                      - 2: 屏幕共享。
+                audioSourceType:
+                  type: integer
+                  description: >-
+                    音频来源:
+                      - 0: 无。
+                      - 1: 麦克风。
+                videoState:
+                  type: integer
+                  description: >-
+                    视频状态:
+                      - 0: 开启。
+                      - 1: 关闭。
+                audioSate:
+                  type: integer
+                  description: >-
+                    音频状态:
+                      - 0: 开启。
+                      - 1: 关闭。
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+    delete:
+      tags:
+        - "房间直播"
+      summary: 删除流
+      operationId: deleteStream
+      description: 调用该接口删除流。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/userid"
+        - $ref: "#/components/parameters/streamid"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+  /scene/apps/{appId}/v1/rooms/{roomUuid}/properties/{key}:
+    put:
+      tags:
+          - "房间直播"
+      summary: 设置房间属性
+      operationId: setUserProperty
+      description: 调用该接口设置指定房间的属性。
+      parameters:
+        - $ref: "#/components/parameters/appid"
+        - $ref: "#/components/parameters/roomid"
+        - $ref: "#/components/parameters/key"
+        - $ref: "#/components/parameters/token"
+      requestBody:
+        description: 你需要在请求包体中传入以下参数。
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+                  description: 属性值，长度不超过 8 KB。设为 null 表示删除该属性。
+                cause:
+                  type: object
+                  description: 修改属性的原因，可携带任意对象。只对当前房间属性更新消息通知有效，作为处理和判断依据，不会持久化到 `roomProperties` 中。
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
 components:
   schemas:
     roomConfig:
