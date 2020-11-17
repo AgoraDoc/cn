@@ -35,8 +35,6 @@ tags:
       description: 本节包含直播前可进行的操作。
     - name: 房间直播
       description: 本节包含直播中可进行的操作。
-    - name: 消息通知
-      description: 本节包含教育云服务向客户端发送的各类消息通知。
 
 paths:
   /scene/apps/{appId}/v1/rooms/{roomUuid}/config:
