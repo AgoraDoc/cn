@@ -4,9 +4,19 @@ info:
   description: >
     本页介绍 Agora 教育云服务 RESTful API 的详细信息，并提供 RESTful API 调试。
 
-    ## 认证方式
+    ## 基本信息
 
-    教育云服务 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要根据 Agora 提供的客户 ID 和客户密钥通过 Basic HTTP 认证并填入 HTTP 请求头部的 `Authorization` 字段。
+    ### 域名
+
+    所有请求都发送给域名：api.agora.io。
+
+    ### 数据格式
+
+    所有请求的 Content-Type 类型为 application/json。
+
+    ### 认证方式
+
+    教育云服务 RESTful API 仅支持 HTTPS 协议。发送请求时，你需要通过 Basic HTTP 认证：根据 Agora 提供的客户 ID 和客户密钥生成一个 Credential （使用 Base64 算法编码），并将该 Credential 填入请求头部的 `Authorization` 字段。
 
 
     参考以下步骤获取 Agora 客户 ID 和客户密钥：
