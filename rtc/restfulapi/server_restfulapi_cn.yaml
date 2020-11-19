@@ -499,9 +499,9 @@ paths:
               - 如果填写 `cname` 和 `uid`，不填写 `ip`，则该 `uid` 无法登录 app 中该 `cname` 对应的频道。
 
             用户被踢出频道后，会收到网络连接已被服务器禁止回调：
-              - Android: [`onConnectionStateChanged`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler.html#a31b2974a574ec45e62bb768e17d1f49e) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
+              - Android: [`onConnectionStateChanged`](./API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler.html#a31b2974a574ec45e62bb768e17d1f49e) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
               - iOS/macOS: [`connectionChangedToState`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/oc/Protocols/AgoraRtcEngineDelegate.html#//api/name/rtcEngine:connectionChangedToState:reason:) 回调报告 `AgoraConnectionChangedBannedByServer(3)`。
-              - Web: [`Client.on("client-banned")`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/web/interfaces/agorartc.client.html#on)。
+              - Web: [`Client.on("client-banned")`](https://docs.agora.io/cn/Video/API%20Reference/web/interfaces/agorartc.client.html#agorartc.client.html#on)。
               - Windows: [`onConnectionStateChanged`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/cpp/classagora_1_1rtc_1_1_i_rtc_engine_event_handler.html#af409b2e721d345a65a2c600cea2f5eb4) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
               - Electron: [`AgoraRtcEngine.on("connectionStateChanged")`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/electron/classes/agorartcengine.html#on) 回调报告 `3`。
               - Unity: [`OnConnectionStateChangedHandler`](https://docs.agora.io/cn/Agora%20Platform/API%20Reference/unity/namespaceagora__gaming__rtc.html#adae7694cb602375ccbc14be3062a230c) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
