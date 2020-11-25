@@ -706,7 +706,7 @@ paths:
                      </ul>
                 <div class="info-msg">注意事项：<ul>
                   <li>同一频道内的用户必须使用相同的频道场景。否则，查询结果可能不准确。</li>
-                  <li>获取用户列表 API 和<a href="#userProperty">查询用户状态</a> API 均能用于同步在线频道状态信息。相比查询用户状态 API ，获取用户列表 API 所需调用频率低，查询效率高。因此，Agora 更推荐使用获取用户列表 API。</li>
+                  <li>获取用户列表 API 和<a href="#/查询在线频道信息/userProperty">查询用户状态</a> API 均能用于同步在线频道状态信息。相比查询用户状态 API ，获取用户列表 API 所需调用频率低，查询效率高。因此，Agora 更推荐使用获取用户列表 API。</li>
                   </ul></i></div>
       parameters:
         - in: path
