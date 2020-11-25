@@ -499,12 +499,12 @@ paths:
               - 如果填写 `cname` 和 `uid`，不填写 `ip`，则该 `uid` 无法登录 app 中该 `cname` 对应的频道。
 
             用户被踢出频道后，会收到网络连接已被服务器禁止回调：
-              - Android: [`onConnectionStateChanged`](https://docs.agora.io/cn/Video/API%20Reference/java/classio_1_1agora_1_1rtc_1_1_i_rtc_engine_event_handler.html#a31b2974a574ec45e62bb768e17d1f49e) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
-              - iOS/macOS: [`connectionChangedToState`](https://docs.agora.io/cn/Video/API%20Reference/oc/Constants/AgoraConnectionChangedReason.html) 回调报告 `AgoraConnectionChangedBannedByServer(3)`。
-              - Web: [`Client.on("client-banned")`](https://docs.agora.io/cn/Video/API%20Reference/web/interfaces/agorartc.client.html#agorartc.client.html#on)。
-              - Windows: [`onConnectionStateChanged`](https://docs.agora.io/cn/Video/API%20Reference/cpp/namespaceagora_1_1rtc.html#a329573b5363b2065b4069e5bf6013144) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
-              - Electron: [`AgoraRtcEngine.on("connectionStateChanged")`](https://docs.agora.io/cn/Video/API%20Reference/electron/classes/agorartcengine.html#on) 回调报告 `3`。
-              - Unity: [`OnConnectionStateChangedHandler`](https://docs.agora.io/cn/Video/API%20Reference/unity/namespaceagora__gaming__rtc.html#a7de814471dc592069cd7c7f2181bfb35) 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
+              - Android: `onConnectionStateChanged` 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
+              - iOS/macOS: `connectionChangedToState` 回调报告 `AgoraConnectionChangedBannedByServer(3)`。
+              - Web: `Client.on("client-banned")`。
+              - Windows: `onConnectionStateChanged` 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
+              - Electron: `AgoraRtcEngine.on("connectionStateChanged")` 回调报告 `3`。
+              - Unity: `OnConnectionStateChangedHandler` 回调报告 `CONNECTION_CHANGED_BANNED_BY_SERVER(3)`。
       parameters: []
       requestBody:
           $ref: '#/components/requestBodies/createKickingRule'
@@ -704,6 +704,10 @@ paths:
                     <li>通信场景下，返回频道内的用户列表。</li>
                      <li>直播场景下，返回频道内的主播列表和观众列表。</li>
                      </ul>
+                <div class="info-msg">注意事项：<ul>
+                  <li>同一频道内的用户必须使用相同的频道场景。否则，查询结果可能不准确。</li>
+                  <li>获取用户列表 API 和<a href="#userProperty">查询用户状态</a> API 均能用于同步在线频道状态信息。相比查询用户状态 API ，获取用户列表 API 所需调用频率低，查询效率高。因此，Agora 更推荐使用获取用户列表 API。</li>
+                  </ul></i></div>
       parameters:
         - in: path
           name: appid
@@ -763,6 +767,7 @@ paths:
       summary: 分页查询项目的频道列表
       operationId: channelList
       description: 该方法查询指定项目下的频道列表。
+              <div class="info-msg">注意事项：如果频道内的人数频繁变化，查询结果可能不准确，可能会出现同一频道重复出现在不同分页中，或者某一频道未出现在任何分页中的情况。</i></div>
       parameters:
         - in: path
           name: appid
