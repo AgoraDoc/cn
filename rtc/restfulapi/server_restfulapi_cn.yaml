@@ -661,7 +661,9 @@ paths:
           schema:
             type: number
           description: 用户 ID，整数。可以通过 SDK 获取。
-                        <div class="info-msg">注意事项：暂不支持 String 型用户名（User Account），请确保使用整型用户 ID。</i></div>
+                      <div class="warning-msg"><i class="fa fa-warning"></i>
+                        注意事项：暂不支持 String 型用户名（User Account），请确保使用整型用户 ID。
+                       </div>
         - in: path
           name: channelName
           required: true
@@ -704,10 +706,10 @@ paths:
                     <li>通信场景下，返回频道内的用户列表。</li>
                      <li>直播场景下，返回频道内的主播列表和观众列表。</li>
                      </ul>
-                <div class="info-msg">注意事项：<ul>
+                <div class="info-msg"><i class="fa fa-warning"></i>注意事项：<ul>
                   <li>同一频道内的用户必须使用相同的频道场景。否则，查询结果可能不准确。</li>
-                  <li>获取用户列表 API 和<a href="https://docs.agora.io/cn/rtc/restfulapi/#/%E6%9F%A5%E8%AF%A2%E5%9C%A8%E7%BA%BF%E9%A2%91%E9%81%93%E4%BF%A1%E6%81%AF/userProperty">查询用户状态</a> API 均能用于同步在线频道状态信息。相比查询用户状态 API ，获取用户列表 API 所需调用频率低，查询效率高。因此，Agora 更推荐使用获取用户列表 API。</li>
-                  </ul></i></div>
+                  <li>本方法和<a href="https://docs.agora.io/cn/rtc/restfulapi/#/%E6%9F%A5%E8%AF%A2%E5%9C%A8%E7%BA%BF%E9%A2%91%E9%81%93%E4%BF%A1%E6%81%AF/userProperty">查询用户状态</a>方法均能用于同步在线频道状态信息。相比查询用户状态方法，获取用户列表方法所需的调用频率低，查询效率高。因此，Agora 更推荐使用获取用户列表方法。</li>
+                  </ul></div>
       parameters:
         - in: path
           name: appid
@@ -724,7 +726,7 @@ paths:
       responses:
         '200':
           description: 操作成功。</br>
-                      <div class="info-msg">注意事项：不同的频道场景下，该方法返回的响应内容不同。</i></div>
+                      <div class="info-msg"><i class="fa fa-warning"></i>注意事项：不同的频道场景下，该方法返回的响应内容不同。</div>
 
           content:
                 application/json:
@@ -767,7 +769,7 @@ paths:
       summary: 分页查询项目的频道列表
       operationId: channelList
       description: 该方法查询指定项目下的频道列表。
-              <div class="info-msg">注意事项：如果频道内的人数频繁变化，查询结果可能不准确，可能会出现同一频道重复出现在不同分页中，或者某一频道未出现在任何分页中的情况。</i></div>
+              <div class="info-msg"><i class="fa fa-warning"></i>注意事项：如果频道内的人数频繁变化，查询结果可能不准确，可能会出现同一频道重复出现在不同分页中，或者某一频道未出现在任何分页中的情况。</div>
       parameters:
         - in: path
           name: appid
@@ -836,7 +838,7 @@ components:
                   是否启用主要 App 证书：
                     - true：启用
                     - false：不启用
-                  <div class="info-msg">注意事项：创建项目后，你可以调用 <code>https://api.agora.io/dev/v1/signkey</code> 启用或禁用主要 App 证书，或调用 <code>https://api.agora.io/dev/v1/reset_signkey</code> 重置主要 App 证书。</i></div>
+                  <div class="info-msg"><i class="fa fa-warning"></i>注意事项：创建项目后，你可以调用 <code>https://api.agora.io/dev/v1/signkey</code> 启用或禁用主要 App 证书，或调用 <code>https://api.agora.io/dev/v1/reset_signkey</code> 重置主要 App 证书。</div>
           default: false
     changeProjectStatus:
       type: object
@@ -927,11 +929,11 @@ components:
         time:
           type: number
           description: 封人时间，单位是分钟，取值范围为 [1,1440]，默认值为 60。
-                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置其中的一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
+                        <div class="info-msg"><i class="fa fa-warning"></i>注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置其中的一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></div>
         time_in_seconds:
           type: number
           description: 封人时间，单位是秒，取值范围为 [10,86430]，默认值为 3600。
-                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>10</code> 之间，服务端自动改设为 <code>10</code>。</li><li>设置的值大于 <code>86430</code>，服务端自动改设为 <code>86430</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置其中的一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
+                        <div class="info-msg"><i class="fa fa-warning"></i>注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>10</code> 之间，服务端自动改设为 <code>10</code>。</li><li>设置的值大于 <code>86430</code>，服务端自动改设为 <code>86430</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置其中的一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></div>
         privileges:
           type: array
           description: >-
@@ -965,11 +967,11 @@ components:
         time:
           type: number
           description: 封人时间，单位是分钟，取值范围为 [1,1440]，默认值为 60。
-                      <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
+                      <div class="info-msg"><i class="fa fa-warning"></i>注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>1</code> 之间，服务端自动改设为 <code>1</code>。</li><li>设置的值大于 <code>1440</code>，服务端自动改设为 <code>1440</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。 </li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></div>
         time_in_seconds:
           type: number
           description: 封人时间，单位是秒，取值范围为 [10,86430]，默认值为 3600。
-                        <div class="info-msg">注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>10</code> 之间，服务端自动改设为 <code>10</code>。</li><li>设置的值大于 <code>86430</code>，服务端自动改设为 <code>86430</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></i></div>
+                        <div class="info-msg"><i class="fa fa-warning"></i>注意事项：<ul><li>设置的值在 <code>0</code> 到 <code>10</code> 之间，服务端自动改设为 <code>10</code>。</li><li>设置的值大于 <code>86430</code>，服务端自动改设为 <code>86430</code>。</li><li>设置的值为 <code>0</code>， 表示不封禁。服务端会对频道内符合设定规则的用户进行下线一次的操作。用户可以重新登录进入频道。</li><li><code>time</code> 和 <code>time_in_seconds</code> 两个参数只需设置一个。如果同时设置，将使用 <code>time_in_seconds</code> 参数。</li></ul></div>
 
     deleteKickingRule:
       type: object
@@ -1512,7 +1514,7 @@ components:
             channels:
               type: array
               description: 频道列表。
-                <div class="info-msg">注意事项：当指定的页面不包含频道列表时，此字段返回值为空。</i></div>
+                <div class="info-msg"><i class="fa fa-warning"></i>注意事项：当指定的页面不包含频道列表时，此字段返回值为空。</div>
               items:
                properties:
                  channel_name:
