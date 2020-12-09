@@ -32,6 +32,10 @@ info:
 
     <img style="display:block;" src="https://web-cdn.agora.io/docs-files/1605533054922" alt="Authorize" width="30%">
 
+    ## 教育云服务消息通知
+
+    教育云服务通过 Agora RTM SDK 的频道消息和点对点消息向客户端发送消息通知。各类消息通知的具体字段介绍详见[教育云服务消息通知](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful)。
+
   version: 2020.10.15
   title: Agora 教育云服务
 servers:
@@ -591,9 +595,10 @@ paths:
         - 房间直播
       summary: 更新用户状态
       operationId: updateUserState
-      description: 调用该接口更新指定用户的状态。
-
-        调用此接口更新用户状态后，教育云服务会向客户端发送[用户状态更新](./#/消息通知/userStateChanged)消息通知。
+      description: >-
+        调用该接口更新指定用户的状态。
+        
+        调用此接口更新用户状态后，教育云服务会向客户端发送[用户状态更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#userStateUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -627,7 +632,10 @@ paths:
         - 房间直播
       summary: 发送点对点聊天消息
       operationId: sendPeerChat
-      description: 调用该接口向指定用户发送点对点消息。
+      description: >-
+        调用该接口向指定用户发送点对点消息。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[收到点对点聊天消息]](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#p2pChatMessageReceived)的消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -664,7 +672,10 @@ paths:
         - 房间直播
       summary: 发送点对点自定义消息
       operationId: sendPeerCustomMessage
-      description: 调用该接口向指定用户发送点对点自定义消息。
+      description: >- 
+        调用该接口向指定用户发送点对点自定义消息。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[收到点对点自定义消息]](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#p2pCustomMessageReceived)的消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -696,7 +707,10 @@ paths:
         - 房间直播
       summary: 发送房间聊天消息
       operationId: sendRoomChat
-      description: 调用该接口发送房间聊天消息。
+      description: >-
+        调用该接口发送房间聊天消息。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[收到房间聊天消息]](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomChatReceived)的消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -727,7 +741,10 @@ paths:
         - 房间直播
       summary: 发送房间自定义消息
       operationId: sendRoomChat
-      description: 调用该接口发送房间自定义消息。
+      description: >-
+        调用该接口发送房间自定义消息。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[收到房间自定义消息]](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomCustomMessageReceived)的消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -870,9 +887,10 @@ paths:
           - "房间直播"
       summary: 设置用户属性
       operationId: setUserProperty
-      description: 调用该接口设置指定用户的属性。
+      description: >-
+        调用该接口设置指定用户的属性。
 
-        调用此接口设置用户属性后，教育云服务会向客户端发送[用户属性更新](./#/消息通知/userPropertyUpdated)消息通知。
+        调用此接口更新用户状态后，教育云服务会向客户端发送[用户属性更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#userPropertyUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -893,7 +911,7 @@ paths:
                   description: 属性值，长度不超过 8 KB。设为 null 表示删除该属性。
                 cause:
                   type: object
-                  description: 修改属性的原因，可携带任意对象。只对当前[用户属性更新](./#/消息通知/userPropertyUpdated)消息通知有效，作为处理和判断依据，不会持久化到 `userProperties` 中。
+                  description: 修改属性的原因，可携带任意对象。只对当前[用户属性更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#userPropertyUpdated)消息通知有效，作为处理和判断依据，不会持久化到 `userProperties` 中。
       responses:
         "200":
           $ref: "#/components/responses/200"
@@ -903,7 +921,10 @@ paths:
           - "房间直播"
       summary: 踢出用户
       operationId: kickUser
-      description: 调用该接口将指定用户从房间中踢出。
+      description: >-
+        调用该接口将指定用户从房间中踢出。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[用户进出房间](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomEntry)消息通知。
       parameters:
           - $ref: "#/components/parameters/appid"
           - $ref: "#/components/parameters/roomid"
@@ -916,19 +937,17 @@ paths:
     get:
       tags:
           - "房间直播"
-      summary: 获取消息通知列表
+      summary: 获取消息通知
       operationId: getSequence
       description: >-
-        调用该接口获取以下消息通知列表：
-          - [房间状态改变](./#/消息通知/roomStateChanged)
-          - [禁用状态改变](./#/消息通知/muteStateChanged)
-          - [房间属性更新](./#/消息通知/roomPropertyUpdated)
-          - [用户状态改变](./#/消息通知/userStateChanged)
-          - [用户属性更新](./#/消息通知/userPropertyUpdated)
-          - [流更新](./#/消息通知/streamUpdated)
-          - [收到房间聊天消息](./#/消息通知/roomChatReceived)
-          - [收到房间自定义消息](./#/消息通知/roomMessageReceived)
-          - [收到点对点聊天消息](./#/消息通知/peerChatReceived)
+        调用该接口获取以下消息通知：
+          - [房间状态更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomStateUpdated)
+          - [房间属性更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomPropertyUpdated)
+          - [用户状态更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#userStateUpdated)
+          - [用户属性更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#userPropertyUpdated)
+          - [流更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomStreamUpdated)
+          - [收到房间聊天消息](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomChatReceived)
+          - [收到房间自定义消息](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomCustomMessageReceived)
 
         返回值的实际数据详见各类消息通知中的返回值数据。
       parameters:
@@ -937,6 +956,7 @@ paths:
         - $ref: "#/components/parameters/token"
         - $ref: "#/components/parameters/nextId"
         - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/cmd"
       responses:
         '200':
           description: 操作成功。
@@ -988,8 +1008,10 @@ paths:
         - "房间直播"
       summary: 更新房间状态
       operationId: updateRoomState
-      description: 调用该接口更新房间状态。
-        调用此接口更新房间状态后，教育云服务会向客户端发送[房间状态改变](./#/消息通知/roomStateChanged)消息通知。
+      description: >-
+        调用该接口更新房间状态。
+        
+        调用此接口更新房间状态后，教育云服务会向客户端发送[房间状态更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomStateUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -1105,7 +1127,10 @@ paths:
         - "房间直播"
       summary: 创建流
       operationId: createStream
-      description: 调用该接口创建流。
+      description: >-
+        调用该接口创建流。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[流新增](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomStreamUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -1179,7 +1204,10 @@ paths:
         - "房间直播"
       summary: 更新流
       operationId: updateStream
-      description: 调用该接口更新流。
+      description: >-
+        调用该接口更新流。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[流更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomStreamUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -1229,7 +1257,10 @@ paths:
         - "房间直播"
       summary: 删除流
       operationId: deleteStream
-      description: 调用该接口删除流。
+      description: >- 
+        调用该接口删除流。
+
+        调用此接口更新用户状态后，教育云服务会向客户端发送[流删除](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomStreamUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -1245,7 +1276,10 @@ paths:
           - "房间直播"
       summary: 设置房间属性
       operationId: setUserProperty
-      description: 调用该接口设置指定房间的属性。
+      description: >-
+        调用该接口设置指定房间的属性。
+
+        调用此接口更新房间状态后，教育云服务会向客户端发送[房间属性更新](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#roomPropertyUpdated)消息通知。
       parameters:
         - $ref: "#/components/parameters/appid"
         - $ref: "#/components/parameters/roomid"
@@ -1475,6 +1509,12 @@ components:
       schema:
         type: string
       description: 流 uuid。这是流的唯一标识符，也是加入 RTC 频道收发流id。取值范围 1 到 (2<sup>32</sup>-1)。如果设为 0 会自动生成一个 uuid。
+    cmd:
+      in: query
+      name: cmd
+      schema:
+        type: integer
+      description: 消息通知的类型，可以通过该字段查询指定消息通知。各类消息通知的 cmd 可参见[消息通知的字段介绍](https://docs.agora.io/cn/One-to-one%20Classroom/edu_cloud_service_notifications?platform=RESTful#commonProperty)。
   securitySchemes:
     agora_auth:
       type: http
