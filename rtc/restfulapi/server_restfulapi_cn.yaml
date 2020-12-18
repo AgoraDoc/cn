@@ -979,7 +979,7 @@ components:
                     - `publish_video`：发送视频
 
                   如果要实现踢人，`privileges` 参数必须设置为 `join_channel`。</br>
-                  如果设置为 `publish_audio` 或 `publish_audio`，表示禁止用户发送音频或视频。
+                  如果设置为 `publish_audio` 或 `publish_video`，表示禁止用户发送音频或视频。
           items:
             type: string
             enum:
