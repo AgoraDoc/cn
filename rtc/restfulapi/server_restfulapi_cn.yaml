@@ -73,8 +73,8 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/createProject'
       responses:
-        '200':
-          description: 操作成功。
+        '201':
+          description: 请求成功并创建了新的资源。
           content:
             application/json:
               schema:
@@ -86,7 +86,7 @@ paths:
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 1,
                     "created": 1464165672
                   }
@@ -104,6 +104,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -135,16 +137,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/getProject_response'
               example:
-                "project":
-                  {
+                "projects":
+                 [
+                   {
                     "id": "xxxx",
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 1,
                     "created": 1464165672
                   }
+                 ]
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -153,6 +157,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -184,6 +190,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -212,7 +220,7 @@ paths:
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 1,
                     "created": 1464165672
                   }
@@ -225,6 +233,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -254,7 +264,7 @@ paths:
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 0,
                     "created": 1464165672
                   }
@@ -266,6 +276,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -295,7 +307,7 @@ paths:
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 1,
                     "created": 1464165672
                   }
@@ -307,6 +319,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -336,7 +350,7 @@ paths:
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 1,
                     "created": 1464165672
                   }
@@ -348,6 +362,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -378,7 +394,7 @@ paths:
                     "name": "project1",
                     "vendor_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
                     "sign_key": "4855xxxxxxxxxxxxxxxxxxxxxxxxeae2",
-                    "recording_server": "10.2.2.8:8080",
+                    "recording_server": null,
                     "status": 1,
                     "created": 1464165672
                   }
@@ -390,6 +406,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -480,6 +498,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -526,6 +546,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -573,6 +595,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -606,6 +630,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -630,7 +656,11 @@ paths:
                 status: "success"
                 id: 1953
         '400':
-          $ref: '#/components/responses/400'
+          description: >-
+                   请求无效。有以下几种情况:
+                   <ul>
+                   <li>不支持的媒体类型。请确保 <code>Headers</code> 中的 <code>Content-Type</code> 设置为 <code>application/json</code>。</li>
+                   </ul>
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -691,6 +721,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -758,6 +790,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -815,6 +849,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '415':
+          $ref: '#/components/responses/415'
         '429':
           $ref: '#/components/responses/429'
         '500':
@@ -943,7 +979,7 @@ components:
                     - `publish_video`：发送视频
 
                   如果要实现踢人，`privileges` 参数必须设置为 `join_channel`。</br>
-                  如果设置为 `publish_audio` 或 `publish_audio`，表示禁止用户发送音频或视频。
+                  如果设置为 `publish_audio` 或 `publish_video`，表示禁止用户发送音频或视频。
           items:
             type: string
             enum:
@@ -1635,6 +1671,8 @@ components:
       description: 禁止访问。
     404:
       description: 请求的资源未找到。
+    415:
+      description: 不支持的媒体类型。请确保 `Headers` 中的 `Content-Type` 设置为 `application/json`。
     429:
       description: 请求过于频繁。
     500:

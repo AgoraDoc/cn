@@ -81,7 +81,11 @@ paths:
           required: true
           schema:
             type: string
-          description: 你的项目使用的 App ID。必须使用和待录制的频道相同的 [App ID](https://docs.agora.io/cn/Agora%20Platform/terms?platform=All%20Platforms#appid)。
+          description: 你的项目使用的 App ID。
+
+            - 对于页面录制，只需输入开通了云端录制服务的 App ID。
+
+            - 其他情况下，必须使用和待录制的频道相同的 App ID，且该 App ID 需要开通云端录制服务。
       requestBody:
         $ref: '#/components/requestBodies/acquire'
       responses:
@@ -138,11 +142,13 @@ paths:
           schema:
             type: string
           description: >-
-              录制模式，支持单流模式 `individual` 和合流模式 `mix` （默认模式）。
+              录制模式，支持以下几种录制模式：
 
-              - 单流模式下，分开录制频道内每个 UID 的音频流和视频流，每个 UID 均有其对应的音频文件和视频文件。
+              - 单流模式 `individual`：分开录制频道内每个 UID 的音频流和视频流，每个 UID 均有其对应的音频文件和视频文件。
 
-              - 合流模式下，频道内所有 UID 的音视频混合录制为一个音视频文件。
+              - 合流模式 `mix` ：（默认模式）频道内所有 UID 的音视频混合录制为一个音视频文件。
+
+              - 页面录制模式 `web`：将指定网页的页面内容和音频混合录制为一个音视频文件。
       requestBody:
         $ref: '#/components/requestBodies/start'
       responses:
@@ -322,7 +328,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 录制模式，支持单流模式 individual 和合流模式 mix （默认模式）。
+          description: 录制模式，支持单流模式 `individual` 、合流模式 `mix` （默认模式）和页面录制模式 `web`。
       responses:
         '200':
           description: 操作成功
@@ -427,7 +433,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 录制模式，支持单流模式 individual 和合流模式 mix （默认模式）。
+          description: 录制模式，支持单流模式 `individual` 、合流模式 `mix` （默认模式）和页面录制模式 `web`。
       requestBody:
         $ref: '#/components/requestBodies/stop'
       responses:
@@ -484,7 +490,11 @@ components:
       properties:
         cname:
           type: string
-          description: 待录制的频道名。
+          description: >-
+
+            - 非页面录制模式下，该参数用于设置待录制的频道名。
+
+            - 对于页面录制，该参数用于区分录制进程。字符串长度不得超过 128 字节。通过 `appid`, `cname` 以及 `uid` 可以定位一个唯一的录制实例。如果你想多次录制同一个页面，可以使用相同的 `cname` 和不同的 `uid` 来进行组织和区分。
         uid:
           type: string
           description: >-
@@ -506,6 +516,10 @@ components:
               type: integer
               default: 72
               description: 云端录制 RESTful API 的调用时效，从成功开启云端录制并获得 `sid` （录制 ID）后开始计算，单位为小时。超时后，你将无法调用 `query`，`updateLayout`，和 `stop` 方法。`resourceExpiredHour` 需大于等于 `1`， 且小于等于 `720`，默认值为 `72`。
+            scene:
+              type: integer
+              default: 0
+              description: 用于设置云端录制资源使用场景，`0` 表示分配实时音视频录制资源，`1` 表示分配页面录制资源。
     start:
       type: object
       required:
@@ -515,29 +529,18 @@ components:
       properties:
         cname:
           type: string
-          description: 待录制的频道名。
+          description: >-
+
+            - 非页面录制模式下，该参数用于设置待录制的频道名。
+
+            - 对于页面录制，该参数用于区分录制进程。字符串长度不得超过 128 字节。
         uid:
           type: string
           description: 字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，需要和你在 `acquire` 请求中输入的 UID 相同。
         clientRequest:
           type: object
-          required:
-            - recordingConfig
           description: >-
-            特定的客户请求参数。`clientRequest` 中各参数的关系及限制：
-
-              - 无论何种情况，都需要进行流订阅的设置。
-              - 音视频录制文件和截图只能择一设置。
-              - 每一种扩展服务都有特定的兼容性要求，详情可见下表：
-
-              | 参数 | 配置内容 | 互斥关系 | 录制模式 |
-              | :-------------------------------------------------- |      :---------------------------------------             |      :---------------------------------------------------------- | :------- |
-              | `recordingConfig`              | 流订阅      |      无        | 不限     |
-              | `recordingFileConfig`       | 音视频录制文件  |   不可与 `snapshotConfig` 同时设置。   | 不限     |
-              | `snapshotConfig`     | 截图文件 | 不可与 `recordingFileConfig` 或阿里视频点播服务同时设置。| 仅限单流 |
-              | `extensionServiceConfig`| 阿里视频点播服务（`aliyun_vod_service`） |   不可与 `snapshotConfig` 或 `storageConfig` 同时设置。       | 仅限合流 |
-              | `storageConfig`       | 第三方云存储      | 不可与阿里视频点播服务同时设置。    | 不限     |
-
+            特定的客户请求参数。
 
           properties:
             token:
@@ -764,7 +767,11 @@ components:
                 avFileType:
                   type: array
                   default: ["hls"]
-                  description: 由多个字符串组成的数组，指定录制的视频文件类型。目前只支持默认值 ["hls"]，即录制生成 M3U8 和 TS 文件。
+                  description: 由多个字符串组成的数组，指定录制的视频文件类型。云端录制会生成 `avFileType` 中包含的所有文件类型。目前支持以下值：
+
+                    - `"hls"`：默认值，即录制生成 M3U8 和 TS 文件。
+
+                    - `"mp4"`：录制生成 MP4 文件。只有在页面录制模式（`web`）下，才可设置 `"mp4"`，且设置 `"mp4"` 时必须同时设置 `"hls"`，否则会收到错误码 `2`。录制服务会在当前 MP4 文件时长超过 2 小时或大小超过 2 GB 时创建一个新的 MP4 文件。
                   items:
                     type: string
             snapshotConfig:
@@ -1024,82 +1031,33 @@ components:
                 errorHandlePolicy:
                   type: string
                   description: 错误处理策略。目前仅可设置为默认值 "error_abort"，表示当某一扩展服务发生错误后，订阅及其他非扩展服务均停止。
+                apiVersion:
+                  type: string
+                  description: 云端录制 RESTful API 的版本号，默认为 `"v1"`。
                 extensionServices:
                   type: array
                   required:
                     - serviceName
                     - serviceParam
                   description: 由每个扩展服务的设置组成的数组。
+
+                    <div class="alert note">目前尚不支持同时设置多个扩展服务。</div>
+
                   items:
                     type: object
                     properties:
                       serviceName:
                         type: string
                         description: >-
-                          扩展服务的名称。要使用阿里视频点播服务（VoD），你需要将其设置为 `"aliyun_vod_service"`。
-
-                          <div class="warning-msg"><i class="fa fa-warning">注意事项：使用阿里视频点播服务，需要注意以下参数的设置：<ul><li>请求 URL 中的 <code>mode</code> 参数必须设为 <code>mix</code>。</li><li>不可设置 <code>snapshotConfig</code> 或 <code>storageConfig</code>。</li></ul></div>
-
+                          扩展服务的名称。要使用阿里视频点播服务（VoD），你需要将其设置为 `"aliyun_vod_service"`。要进行页面录制，你需要将其设置为 `"web_recorder_service"`。
                       errorHandlePolicy:
                         type: string
                         description: 错误处理策略。目前仅可设置为默认值 `"error_abort"`，表示如果当前扩展服务发生错误，其他扩展服务均停止。
                       serviceParam:
-                        type: object
-                        required:
-                          - accessKey
-                          - secretKey
-                          - regionId
-                          - apiData
-                        description: 扩展服务的具体参数设置。当使用阿里视频点播服务时，你需要设置以下参数：
-                        properties:
-                          accessKey:
-                            type: string
-                            description: 阿里云访问秘钥 AccessKey 中的 `AccessKeyId`。详见[阿里云文档](https://help.aliyun.com/document_detail/53045.html)。
-                          secretKey:
-                            type: string
-                            description: 阿里云访问秘钥 AccessKey 中的 `AccessKeySecret`。详见[阿里云文档](https://help.aliyun.com/document_detail/53045.html)。
-                          regionId:
-                            type: string
-                            description: 接入区域标识。详见[阿里云文档](https://help.aliyun.com/document_detail/98194.html)。
-                          apiData:
-                            type: object
-                            required:
-                              - videoData
-                            description: 阿里视频点播服务的详细设置。
-                            properties:
-                              videoData:
-                                type: object
-                                required:
-                                  - title
-                                description: 视频设置。你可以至[阿里云文档中心](https://help.aliyun.com/document_detail/55407.html)获取各参数的详细解释。
-                                properties:
-                                  title:
-                                    type: string
-                                    description: 视频标题。
-                                  description:
-                                    type: string
-                                    description: 视频描述。
-                                  coverUrl:
-                                    type: string
-                                    description: 自定义视频封面的 URL 地址。
-                                  cateId:
-                                    type: string
-                                    description: 字符串内容为视频分类 ID。
-                                  tags:
-                                    type: string
-                                    description: 视频标签。
-                                  templateGroupId:
-                                    type: string
-                                    description: 转码模板组 ID。
-                                  userData:
-                                    type: string
-                                    description: 自定义设置。
-                                  storageLocation:
-                                    type: string
-                                    description: 存储地址。
-                                  workflowId:
-                                    type: string
-                                    description: 工作流 ID。
+                        oneOf:
+                          - $ref: '#/components/schemas/阿里视频点播服务'
+                          - $ref: '#/components/schemas/页面录制'
+
     update:
       type: object
       required:
@@ -1245,7 +1203,11 @@ components:
       properties:
         cname:
           type: string
-          description: 待录制的频道名。
+          description: >-
+
+            - 非页面录制模式下，该参数用于设置待录制的频道名。
+
+            - 对于页面录制，该参数用于区分录制进程。字符串长度不得超过 128 字节。
         uid:
           type: string
           description: 字符串内容为云端录制服务在频道内使用的 UID，用于标识该录制服务，需要和你在 `acquire` 请求中输入的 UID 相同。
@@ -1386,32 +1348,14 @@ components:
                 properties:
                   serviceName:
                     type: string
-                    description: 扩展服务类型。 "aliyun_vod_service" 代表阿里视频点播服务。
+                    description: 扩展服务类型。 "aliyun_vod_service" 代表阿里视频点播服务。`"web_recorder_service"` 代表页面录制。
                   payload:
-                    type: object
-                    description: 该扩展服务的状态信息。
-                    properties:
-                      state:
-                        type: string
-                        description: >-
-                          将订阅内容上传至扩展服务的状态。
-
-                            - `"inProgress"`：正在将录制文件上传至扩展服务。
-                            - `"idle"`：无发流端，上传停止。
-                      videoInfo:
-                        type: array
-                        description: M3U8 文件和视频 ID 的对应关系。每个 M3U8 文件上传至阿里视频点播服务后，都会生成一个视频 ID。
-                        items:
-                          properties:
-                            fileName:
-                              type: string
-                              description: M3U8 文件的文件名。
-                            videoId:
-                              type: string
-                              description: 视频 ID。
+                    oneOf:
+                      - $ref: '#/components/schemas/阿里视频点播服务状态信息'
+                      - $ref: '#/components/schemas/页面录制状态信息'
             subServiceStatus:
               type: object
-              description: 云端录制子模块的状态。
+              description: 云端录制子模块的状态。页面录制模式下不会返回该字段。
               properties:
                 recordingService:
                   type: string
@@ -1441,7 +1385,7 @@ components:
           description: 录制 ID。成功开始云端录制后，你会得到一个 sid （录制 ID)。该 ID 是一次录制周期的唯一标识。
         serverResponse:
           type: object
-          description: 服务器返回的具体信息。
+          description: 服务器返回的具体信息。该字段中的子元素与你在 `start` 请求中的设置有关。例如，如果你在 `start` 请求中设置了 `snapshotConfig` 或 `extensionServiceConfig`，则 `stop` 不会返回 `fileListMode` 字段。
           properties:
             fileListMode:
               type: string
@@ -1501,6 +1445,208 @@ components:
                 - `"backuped"`：本次录制的文件已经全部上传完成，但是至少有一个 TS 文件上传到了 Agora 云备份。Agora 服务器会自动将这部分文件继续上传至指定的第三方云存储。
 
                 - `"unknown"`：未知状态。
+            extensionServiceState:
+              type: object
+              properties:
+                serviceName:
+                  type: string
+                  description: 服务类型。 `"upload_service"` 代表上传服务，`"web_recorder_service"` 代表页面录制。
+                payload:
+                  oneOf:
+                    - $ref: '#/components/schemas/上传服务状态'
+                    - $ref: '#/components/schemas/页面录制状态'
+    阿里视频点播服务:
+      type: object
+      required:
+        - accessKey
+        - secretKey
+        - regionId
+        - apiData
+      description: 阿里视频点播服务的的具体参数设置。
+      properties:
+        accessKey:
+          type: string
+          description: 阿里云访问秘钥 AccessKey 中的 `AccessKeyId`。详见[阿里云文档](https://help.aliyun.com/document_detail/53045.html)。
+        secretKey:
+          type: string
+          description: 阿里云访问秘钥 AccessKey 中的 `AccessKeySecret`。详见[阿里云文档](https://help.aliyun.com/document_detail/53045.html)。
+        regionId:
+          type: string
+          description: 接入区域标识。详见[阿里云文档](https://help.aliyun.com/document_detail/98194.html)。
+        apiData:
+          type: object
+          required:
+            - videoData
+          description: 阿里视频点播服务的详细设置。
+          properties:
+            videoData:
+              type: object
+              required:
+                - title
+              description: 视频设置。你可以至[阿里云文档中心](https://help.aliyun.com/document_detail/55407.html)获取各参数的详细解释。
+              properties:
+                title:
+                  type: string
+                  description: 视频标题。
+                description:
+                  type: string
+                  description: 视频描述。
+                coverUrl:
+                  type: string
+                  description: 自定义视频封面的 URL 地址。
+                cateId:
+                  type: string
+                  description: 字符串内容为视频分类 ID。
+                tags:
+                  type: string
+                  description: 视频标签。
+                templateGroupId:
+                  type: string
+                  description: 转码模板组 ID。
+                userData:
+                  type: string
+                  description: 自定义设置。
+                storageLocation:
+                  type: string
+                  description: 存储地址。
+                workflowId:
+                  type: string
+                  description: 工作流 ID。
+    页面录制:
+      type: object
+      required:
+        - url
+        - audioProfile
+        - videoWidth
+        - videoHeight
+        - maxRecordingHour
+      description: 页面录制的具体参数设置。
+      properties:
+        url:
+          type: string
+          description: 设置待录制页面的地址。
+        videoBitrate:
+          type: string
+          maximum: 50
+          minimum: 8000
+          description: 输出视频的码率，单位为 Kbps。针对不同的输出视频分辨率，`videoBitrate` 的默认值不同：
+
+            - 1280 × 720：默认值为 1130
+
+            - 960 × 720：默认值为 910
+
+            - 848 × 480：默认值为 610
+
+            - 640 × 480：默认值为 400
+
+            - 其他情况下，默认值均为 300
+        videoFps:
+          type: string
+          default: 15
+          maximum: 60
+          minimum: 5
+          description: 输出视频的帧率，单位为 fps。
+        audioProfile:
+          type: number
+          description: 设置输出音频的采样率、码率、编码模式和声道数。
+
+            - `0`：48 kHz 采样率，音乐编码，单声道，编码码率约 48 Kbps
+
+            - `1`：48 kHz 采样率，音乐编码，单声道，编码码率约 128 Kbps
+
+            - `2`：48 kHz 采样率，音乐编码，双声道，编码码率约 192 Kbps
+        videoWidth:
+          type: number
+          description: 设置输出视频的宽度，单位为 pixel，范围为 [480,1280]。`videoWidth` 和 `videoHeight` 的乘积需小于等于 1280 x 720。
+        videoHeight:
+          type: number
+          description: 设置输出视频的高度，单位为 pixel，范围为 [480,1280]。`videoWidth` 和 `videoHeight` 的乘积需小于等于 1280 x 720。
+        maxRecordingHour:
+          type: number
+          description: 设置录制的最大时长，单位为小时。当录制时长超过 `maxRecordingHour`，录制会自动停止。`maxRecordingHour` 需大于等于 `1`，且小于等于 `720`。建议 `maxRecordingHour` 不超过你在 `acquire` 方法中设置的 `resourceExpiredHour` 的值。
+
+    阿里视频点播服务状态信息:
+      type: object
+      description: 阿里视频点播服务的状态信息。
+      properties:
+        state:
+          type: string
+          description: >-
+            将订阅内容上传至扩展服务的状态：
+
+              - `"inProgress"`：正在将录制文件上传至扩展服务。
+
+              - `"idle"`：无发流端，上传停止。
+        videoInfo:
+          type: array
+          description: M3U8 文件和视频 ID 的对应关系。每个 M3U8 文件上传至阿里视频点播服务后，都会生成一个视频 ID。
+          items:
+            properties:
+              fileName:
+                type: string
+                description: M3U8 文件的文件名。
+              videoId:
+                type: string
+                description: 视频 ID。
+    页面录制状态信息:
+      type: object
+      description: 页面录制的状态信息。
+      properties:
+        state:
+          type: string
+          description: >-
+            将订阅内容上传至扩展服务的状态：
+              - `"init"`：服务正在初始化。
+
+              - `"inProgress"`：服务启动完成，正在进行中。
+
+              - `"exit"`：服务退出。
+        fileList:
+          type: array
+          description: 由每个录制文件的具体信息组成的数组。
+          items:
+            properties:
+              fileName:
+                type: string
+                description: 录制产生的 M3U8 或 MP4 文件的文件名。
+              sliceStartTime:
+                type: number
+                description: 该文件的录制开始时间，Unix 时间戳，单位为毫秒。
+    上传服务状态:
+      type: object
+      description: 该服务的状态信息。
+      properties:
+        uploadingStatus:
+          type: string
+          description: 当前上传服务的状态
+            - `"uploaded"`：本次录制的文件已经全部上传至指定的第三方云存储
+
+            - `"backuped"`：本次录制的文件已经全部上传完成，但是至少有一个 TS 文件上传到了 Agora 云备份。Agora 服务器会自动将这部分文件继续上传至指定的第三方云存储
+
+            - `"unknown"`：未知状态。
+    页面录制状态:
+
+      type: object
+      description: 该服务的状态信息。
+      properties:
+        state:
+          type: string
+          description: 将订阅内容上传至扩展服务的状态。
+
+             - `"init"`：服务正在初始化。
+
+             - `"inProgress"`：服务启动完成，正在进行中。
+
+             - `"exit"`：服务退出。
+        fileList:
+          type: object
+          properties:
+            fileName:
+              type: string
+              description: 录制产生的 M3U8 或 MP4 文件的文件名。
+            sliceStartTime:
+              type: number
+              description: 该文件的录制开始时间，Unix 时间戳，单位为毫秒。
   requestBodies:
     acquire:
       content:
@@ -1612,7 +1758,44 @@ components:
                      }]
                    }
                }
-
+            页面录制:
+              value:
+                cname: "httpClient463224"
+                uid: "527841"
+                clientRequest: {
+                    token: "<token if any>",
+                    extensionServiceConfig: {
+                         errorHandlePolicy: "error_abort",
+                         extensionServices: [{
+                              serviceName: "web_recorder_service",
+                              errorHandlePolicy: "error_abort",
+                              serviceParam: {
+                                  url: "https://xxxxx",
+                                  audioProfile: 0,
+                                  videoWidth: 1280,
+                                  videoHeight: 720,
+                                  maxRecordingHour: 72
+                             }
+                         }]
+                   },
+                    recordingFileConfig: {
+                        avFileType: [
+                            "hls",
+                            "mp4"
+                       ]
+                   },
+                    storageConfig: {
+                        vendor: 2,
+                        region: 3,
+                        bucket: "xxxxx",
+                        accessKey: "xxxxx",
+                        secretKey: "xxxxx",
+                        fileNamePrefix: [
+                            "directory1",
+                            "directory2"
+                       ]
+                   }
+              }
       description: 该 API 需要在请求包体中传入以下参数。
       required: true
     update:
