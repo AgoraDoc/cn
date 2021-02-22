@@ -163,39 +163,39 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-    delete:
-      tags:
-      - "项目管理"
-      summary: 删除项目
-      operationId: deleteProject
-
-      description: 删除指定的 Agora 项目。
-      parameters: []
-      requestBody:
-        $ref: '#/components/requestBodies/deleteProject'
-      responses:
-        '200':
-          description: 操作成功。
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/deleteProject_response'
-              example:
-                "success": true
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '415':
-          $ref: '#/components/responses/415'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
+    # delete:
+    #   tags:
+    #   - "项目管理"
+    #   summary: 删除项目
+    #   operationId: deleteProject
+    #
+    #   description: 删除指定的 Agora 项目。
+    #   parameters: []
+    #   requestBody:
+    #     $ref: '#/components/requestBodies/deleteProject'
+    #   responses:
+    #     '200':
+    #       description: 操作成功。
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/deleteProject_response'
+    #           example:
+    #             "success": true
+    #     '400':
+    #       $ref: '#/components/responses/400'
+    #     '401':
+    #       $ref: '#/components/responses/401'
+    #     '403':
+    #       $ref: '#/components/responses/403'
+    #     '404':
+    #       $ref: '#/components/responses/404'
+    #     '415':
+    #       $ref: '#/components/responses/415'
+    #     '429':
+    #       $ref: '#/components/responses/429'
+    #     '500':
+    #       $ref: '#/components/responses/500'
   /dev/v1/projects:
     get:
       tags:
@@ -908,14 +908,14 @@ components:
                     <li>0：禁用</li>
                     <li>1：启用</li>
                     </ul>
-    deleteProject:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-          description: 项目 ID，可以通过调用获取所有项目 API 获取。
+    # deleteProject:
+    #   type: object
+    #   required:
+    #     - id
+    #   properties:
+    #     id:
+    #       type: string
+    #       description: 项目 ID，可以通过调用获取所有项目 API 获取。
     setRecordingServer:
       type: object
       required:
@@ -1181,15 +1181,15 @@ components:
             created:
               type: number
               description: 项目创建时间，Unix 时间戳，单位为秒。
-    deleteProject_response:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: >-
-            成功删除指定的项目:
-               - true：成功删除指定的项目。
-               - false：（预留）。
+    # deleteProject_response:
+    #   type: object
+    #   properties:
+    #     success:
+    #       type: boolean
+    #       description: >-
+    #         成功删除指定的项目:
+    #            - true：成功删除指定的项目。
+    #            - false：（预留）。
     setRecordingServer_response:
       type: object
       properties:
@@ -1609,15 +1609,15 @@ components:
             status: 0
       description: 该 API 需要在请求包体中传入以下参数。
       required: true
-    deleteProject:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/deleteProject'
-          example:
-            id: "xxxx"
-      description: 该 API 需要在请求包体中传入以下参数。
-      required: true
+    # deleteProject:
+    #   content:
+    #     application/json:
+    #       schema:
+    #         $ref: '#/components/schemas/deleteProject'
+    #       example:
+    #         id: "xxxx"
+    #   description: 该 API 需要在请求包体中传入以下参数。
+    #   required: true
     setRecordingServer:
       content:
         application/json:
