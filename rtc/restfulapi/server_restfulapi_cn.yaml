@@ -519,13 +519,19 @@ paths:
 
             封禁用户权限的规则通过 `cname`、`uid` 和 `ip` 三个字段实现过滤，规则如下：
              - 当 `privileges` 设为 `join_channel` 时:
-               - 如果填写 `ip`，不填写 `cname` 和 `uid`，则该 `ip` 无法登录 app 中的任何频道。
+               - 如果填写 `ip`，不填写 `cname` 和 `uid`，则所有使用该 `ip` 的用户都无法登录 app 中的任何频道。
+                  <div class="warning-msg"><i class="fa fa-warning"></i>
+                        注意事项：使用 <code>ip</code> 作为过滤字段，可能会错误地封禁不该被封禁的用户，例如，多人共享一个 IP 地址。
+                       </div>
                - 如果填写 `cname`，不填写 `uid` 和 `ip`，则任何人都无法登录 app 中该 `cname` 对应的频道。
+                 <div class="warning-msg"><i class="fa fa-warning"></i>
+                        注意事项：使用 <code>cname</code> 作为过滤字段，相当于封禁该 `cname` 对应的频道。
+                       </div>
                - 如果填写 `uid`，不填写 `cname` 和 `ip`，则该 `uid`无法登录 app 中的任何频道。
                - 如果填写 `cname` 和 `uid`，不填写 `ip`，则该 `uid` 无法登录 app 中该 `cname` 对应的频道。
 
              - 当 `privileges` 设为 `publish_audio` 或 `publish_video` 时，过滤规则如下：
-               - 如果填写 `ip`，不填写 `cname` 和 `uid`，则该 `ip` 无法在 app 中的任何频道内发送音频或视频流。
+               - 如果填写 `ip`，不填写 `cname` 和 `uid`，则所有使用该 `ip` 的用户都无法在 app 中的任何频道内发送音频或视频流。
                - 如果填写 `cname`，不填写 `uid` 和 `ip`，则任何人都无法在该 `cname` 对应的频道内发送音频或视频流。
                - 如果填写 `uid`，不填写 `cname` 和 `ip`，则该 `uid`无法在 app 中的任何频道内发送音频或视频流。
                - 如果填写 `cname` 和 `uid`，不填写 `ip`，则该 `uid` 无法在该 `cname` 对应的频道发送音频或视频流。
